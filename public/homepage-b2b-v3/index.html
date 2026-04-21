@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PKG Battery — Đối tác pin lithium & sạc công nghiệp toàn diện cho doanh nghiệp</title>
+  <meta name="description" content="PKG Battery cung cấp giải pháp pin lithium công nghiệp cho xe nâng điện, AGV/robot, xe điện du lịch, ESS lưu trữ năng lượng. Tư vấn kỹ thuật chuyên sâu. OEM/ODM. Phục vụ doanh nghiệp Việt Nam, FDI và đối tác quốc tế." />
+  <meta name="keywords" content="pin lithium công nghiệp, xe nâng điện, AGV robot, ESS lưu trữ năng lượng, bộ sạc công nghiệp, OEM ODM pin lithium, PKG Battery" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:        #C8181E;
+      --red-deep:   #A01318;
+      --red-mid:    #D92025;
+      --red-glow:   rgba(200,24,30,0.18);
+      --red-subtle: rgba(200,24,30,0.08);
+      --black:      #080808;
+      --near-black: #0E0E0E;
+      --dark:       #141414;
+      --dark-2:     #1A1A1A;
+      --dark-3:     #212121;
+      --gray-900:   #181818;
+      --gray-800:   #242424;
+      --gray-700:   #373737;
+      --gray-600:   #4A4A4A;
+      --gray-500:   #666666;
+      --gray-400:   #8A8A8A;
+      --gray-300:   #ADADAD;
+      --gray-200:   #D0D0D0;
+      --gray-100:   #E8E8E8;
+      --gray-50:    #F4F4F4;
+      --gray-10:    #F9F9F9;
+      --white:      #FFFFFF;
+      --off-white:  #FAFAFA;
+
+      --font:       'Inter', 'DM Sans', system-ui, sans-serif;
+      --container:  1340px;
+      --sv:         120px;          /* section vertical padding */
+
+      --ease-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in:    cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font);
+      background: var(--off-white);
+      color: var(--near-black);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── LAYOUT ── */
+    .wrap { max-width: var(--container); margin: 0 auto; padding: 0 56px; }
+    @media (max-width: 768px) { .wrap { padding: 0 24px; } }
+    @media (max-width: 1100px) { .wrap { padding: 0 36px; } }
+
+    /* ── TYPE SYSTEM ── */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--red);
+    }
+    .eyebrow::before {
+      content: ''; display: block; width: 22px; height: 2px; background: var(--red); flex-shrink: 0;
+    }
+    .eyebrow.white { color: rgba(255,255,255,0.6); }
+    .eyebrow.white::before { background: var(--red); }
+
+    .h-display { font-size: clamp(44px, 5.5vw, 76px); font-weight: 900; letter-spacing: -0.04em; line-height: 1.02; }
+    .h-section  { font-size: clamp(34px, 3.8vw, 54px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; }
+    .h-medium   { font-size: clamp(26px, 2.5vw, 38px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.15; }
+    .h-small    { font-size: clamp(20px, 1.8vw, 26px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; }
+
+    .body-lg    { font-size: clamp(16px, 1.4vw, 19px); line-height: 1.72; color: var(--gray-500); font-weight: 400; }
+    .body-md    { font-size: 15px; line-height: 1.7; color: var(--gray-500); }
+    .body-sm    { font-size: 13px; line-height: 1.65; color: var(--gray-400); }
+
+    .stat-num   { font-size: clamp(36px, 5vw, 68px); font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.025em;
+      text-decoration: none; padding: 13px 30px; border: none; cursor: pointer;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.3s, color 0.2s, border-color 0.2s;
+      white-space: nowrap;
+    }
+    .btn svg { width: 14px; height: 14px; transition: transform 0.2s; flex-shrink: 0; }
+    .btn:hover svg { transform: translateX(3px); }
+    .btn-red {
+      background: var(--red); color: #fff;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+    }
+    .btn-red:hover { background: var(--red-deep); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(200,24,30,0.35); }
+    .btn-outline-white {
+      background: transparent; color: rgba(255,255,255,0.85);
+      border: 1.5px solid rgba(255,255,255,0.28);
+    }
+    .btn-outline-white:hover { color: #fff; border-color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.06); }
+    .btn-outline-dark {
+      background: transparent; color: var(--near-black);
+      border: 1.5px solid var(--gray-200);
+    }
+    .btn-outline-dark:hover { border-color: var(--near-black); }
+    .btn-ghost-red {
+      background: transparent; color: var(--red);
+      border: 1.5px solid rgba(200,24,30,0.35);
+    }
+    .btn-ghost-red:hover { background: var(--red-subtle); }
+
+    /* ── SCROLL REVEALS ── */
+    .rv { opacity: 0; transform: translateY(36px); transition: opacity 0.9s var(--ease-expo), transform 0.9s var(--ease-expo); }
+    .rv.in { opacity: 1; transform: translateY(0); }
+    .rv-d1 { transition-delay: 0.1s; }
+    .rv-d2 { transition-delay: 0.2s; }
+    .rv-d3 { transition-delay: 0.3s; }
+    .rv-d4 { transition-delay: 0.4s; }
+    .rv-d5 { transition-delay: 0.5s; }
+    .rv-d6 { transition-delay: 0.6s; }
+
+    /* ══════════════════════
+       NAV
+    ══════════════════════ */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      transition: all 0.45s var(--ease-expo);
+    }
+    #nav.solid {
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(28px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 2px 40px rgba(0,0,0,0.05);
+    }
+    .nav-inner {
+      max-width: var(--container); margin: 0 auto; padding: 0 56px;
+      height: 80px; display: flex; align-items: center; justify-content: space-between;
+    }
+    @media (max-width: 768px) { .nav-inner { padding: 0 24px; height: 68px; } }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 11px; text-decoration: none; flex-shrink: 0;
+    }
+    .logo-badge {
+      width: 38px; height: 38px; background: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      clip-path: polygon(0 0, 82% 0, 100% 18%, 100% 100%, 0 100%);
+    }
+    .logo-badge svg { width: 19px; height: 19px; color: #fff; }
+    .logo-text {
+      font-size: 15px; font-weight: 900; letter-spacing: 0.07em;
+      color: var(--near-black); transition: color 0.3s;
+    }
+    #nav:not(.solid) .logo-text { color: #fff; }
+
+    .nav-menu { display: flex; align-items: center; gap: 0; list-style: none; }
+    @media (max-width: 1100px) { .nav-menu { display: none; } }
+    .nav-menu a {
+      display: block; padding: 10px 18px;
+      font-size: 13px; font-weight: 500; text-decoration: none;
+      color: var(--gray-500); transition: color 0.2s;
+    }
+    #nav:not(.solid) .nav-menu a { color: rgba(255,255,255,0.68); }
+    .nav-menu a:hover { color: var(--near-black); }
+    #nav:not(.solid) .nav-menu a:hover { color: #fff; }
+
+    .nav-cta { font-size: 12px; padding: 10px 24px; }
+    @media (max-width: 1100px) { .nav-cta { display: none; } }
+    .nav-lang {
+      display: flex; gap: 0; margin: 0 16px;
+    }
+    @media (max-width: 1100px) { .nav-lang { display: none; } }
+    .nav-lang a {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none;
+      padding: 4px 8px; color: var(--gray-400); transition: color 0.2s;
+    }
+    .nav-lang a.active { color: var(--red); }
+    #nav:not(.solid) .nav-lang a { color: rgba(255,255,255,0.4); }
+    #nav:not(.solid) .nav-lang a.active { color: var(--red); }
+
+    /* ══════════════════════
+       S1. HERO
+    ══════════════════════ */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column;
+      overflow: hidden; background: #090909;
+    }
+
+    .hero-bg-img {
+      position: absolute; inset: 0;
+      background: url('./hero-bg.png') center/cover no-repeat;
+      opacity: 0.38;
+    }
+    .hero-bg-img::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        linear-gradient(100deg, rgba(9,9,9,0.97) 0%, rgba(9,9,9,0.72) 55%, rgba(9,9,9,0.82) 100%),
+        linear-gradient(to top, rgba(9,9,9,0.9) 0%, transparent 40%);
+    }
+    .hero-grid-layer {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(200,24,30,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,24,30,0.045) 1px, transparent 1px);
+      background-size: 88px 88px;
+    }
+    .hero-energy-v {
+      position: absolute; top: 0; left: 62%; width: 1px; height: 100%;
+      background: linear-gradient(to bottom, transparent 0%, rgba(200,24,30,0.3) 40%, rgba(200,24,30,0.12) 70%, transparent 100%);
+      pointer-events: none;
+    }
+    .hero-energy-v2 {
+      position: absolute; top: 0; left: 72%; width: 1px; height: 60%;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.06));
+      pointer-events: none;
+    }
+
+    .hero-body-wrap {
+      flex: 1; display: flex; flex-direction: column; justify-content: flex-end;
+      position: relative; z-index: 10;
+    }
+    .hero-content {
+      max-width: var(--container); margin: 0 auto; padding: 0 56px;
+      padding-bottom: 80px; padding-top: 140px;
+      display: grid; grid-template-columns: 1fr 400px; gap: 72px; align-items: end;
+    }
+    @media (max-width: 1200px) { .hero-content { grid-template-columns: 1fr; gap: 56px; padding: 140px 36px 72px; } }
+    @media (max-width: 768px)  { .hero-content { padding: 120px 24px 64px; } }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 30px;
+    }
+    .hero-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--red); animation: dotpulse 2.2s ease-in-out infinite; }
+    @keyframes dotpulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.45;transform:scale(0.65)} }
+    .hero-eyebrow-text {
+      font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--red);
+    }
+
+    .hero-headline {
+      font-size: clamp(46px, 6.2vw, 84px);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 1.0;
+      color: #fff; margin-bottom: 28px;
+    }
+    .hero-headline em { font-style: normal; color: var(--red); }
+
+    .hero-sub {
+      font-size: clamp(16px, 1.5vw, 20px); font-weight: 400; line-height: 1.72;
+      color: rgba(255,255,255,0.52); margin-bottom: 14px; max-width: 560px;
+    }
+    .hero-p {
+      font-size: 14px; line-height: 1.78;
+      color: rgba(255,255,255,0.32); margin-bottom: 44px; max-width: 520px;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Hero panel */
+    .hero-panel {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      backdrop-filter: blur(18px);
+      padding: 36px 32px;
+    }
+    .hero-panel-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--red); margin-bottom: 28px;
+    }
+    .hp-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .hp-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .hp-icon {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: rgba(200,24,30,0.12); border: 1px solid rgba(200,24,30,0.2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hp-icon svg { width: 17px; height: 17px; color: var(--red); }
+    .hp-name { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.85); }
+    .hp-desc { font-size: 10.5px; color: rgba(255,255,255,0.32); margin-top: 2px; }
+
+    /* Hero metrics bar */
+    .hero-bar {
+      position: relative; z-index: 10;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(8,8,8,0.75); backdrop-filter: blur(24px);
+    }
+    .hero-bar-inner {
+      max-width: var(--container); margin: 0 auto; padding: 0 56px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    @media (max-width: 768px) { .hero-bar-inner { grid-template-columns: repeat(2,1fr); padding: 0 24px; } }
+    .hb-item {
+      padding: 26px 0 26px 36px; border-right: 1px solid rgba(255,255,255,0.05);
+    }
+    .hb-item:first-child { padding-left: 0; }
+    .hb-item:last-child  { border-right: none; }
+    @media (max-width: 768px) { .hb-item { padding: 20px 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); } }
+    .hb-num { font-size: 28px; font-weight: 900; letter-spacing: -0.03em; color: #fff; line-height: 1; }
+    .hb-num span { color: var(--red); }
+    .hb-lbl { font-size: 11px; color: rgba(255,255,255,0.38); margin-top: 5px; }
+
+    /* ══════════════════════
+       S2. TRUSTED BY
+    ══════════════════════ */
+    #trusted { background: #fff; padding: var(--sv) 0; overflow: hidden; position: relative; }
+    .trusted-header { text-align: center; margin-bottom: 72px; }
+    .trusted-header .h-section { max-width: 680px; margin: 16px auto 0; }
+    .trusted-header .body-lg { max-width: 620px; margin: 20px auto 0; }
+
+    /* Marquee */
+    .marquee-wrap { position: relative; overflow: hidden; margin: 0 -56px; padding: 12px 0; }
+    .marquee-wrap::before, .marquee-wrap::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 10; pointer-events: none;
+    }
+    .marquee-wrap::before { left: 0; background: linear-gradient(to right, #fff, transparent); }
+    .marquee-wrap::after  { right: 0; background: linear-gradient(to left, #fff, transparent); }
+    .marquee-track { display: flex; gap: 0; width: max-content; }
+    .marquee-track.row1 { animation: marquee-left 45s linear infinite; }
+    .marquee-track.row2 { animation: marquee-right 55s linear infinite; margin-top: 12px; }
+    @keyframes marquee-left  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+    .marquee-logo {
+      display: flex; align-items: center; justify-content: center;
+      padding: 18px 44px; opacity: 0.35;
+      transition: opacity 0.35s, transform 0.3s;
+      cursor: default; border-right: 1px solid var(--gray-100);
+    }
+    .marquee-logo:hover { opacity: 0.9; transform: scale(1.04); }
+    .marquee-logo span {
+      font-size: 13px; font-weight: 800; letter-spacing: 0.06em;
+      color: var(--gray-700); text-transform: uppercase; white-space: nowrap;
+    }
+    .marquee-logo.large span { font-size: 16px; }
+
+    /* Trust stats row */
+    .trust-highlights {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 72px;
+    }
+    @media (max-width: 768px) { .trust-highlights { grid-template-columns: 1fr; } }
+    .th-card {
+      background: var(--gray-10); padding: 40px 36px;
+      border: 1px solid var(--gray-100);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .th-card:hover { border-color: rgba(200,24,30,0.2); box-shadow: 0 8px 40px rgba(0,0,0,0.05); }
+    .th-num { font-size: 48px; font-weight: 900; letter-spacing: -0.04em; color: var(--near-black); line-height: 1; }
+    .th-num span { color: var(--red); }
+    .th-label { font-size: 15px; font-weight: 700; color: var(--near-black); margin-top: 12px; }
+    .th-desc { font-size: 13px; line-height: 1.65; color: var(--gray-500); margin-top: 8px; }
+
+    /* ══════════════════════
+       S3. PAIN POINT
+    ══════════════════════ */
+    #pain {
+      background: var(--near-black); padding: var(--sv) 0;
+      position: relative; overflow: hidden;
+    }
+    .pain-pattern {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 64px 64px;
+    }
+    .pain-accent {
+      position: absolute; bottom: -100px; right: -100px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,24,30,0.07), transparent 70%);
+      pointer-events: none;
+    }
+    .pain-header { margin-bottom: 72px; position: relative; z-index: 2; }
+    .pain-header .h-section { color: #fff; max-width: 700px; margin-top: 16px; }
+    .pain-header .body-lg { color: rgba(255,255,255,0.38); max-width: 620px; margin-top: 20px; }
+
+    .pain-grid {
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 2px;
+      position: relative; z-index: 2;
+    }
+    @media (max-width: 1100px) { .pain-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 600px)  { .pain-grid { grid-template-columns: 1fr; } }
+
+    .pain-card {
+      background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.05);
+      padding: 40px 32px; position: relative; overflow: hidden;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .pain-card:hover { background: rgba(255,255,255,0.045); border-color: rgba(200,24,30,0.25); }
+    .pain-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 2.5px; height: 0;
+      background: var(--red); transition: height 0.45s var(--ease-expo);
+    }
+    .pain-card:hover::before { height: 100%; }
+    .pain-card-num {
+      font-size: 52px; font-weight: 900; letter-spacing: -0.04em;
+      color: rgba(255,255,255,0.035); line-height: 1; margin-bottom: -4px;
+    }
+    .pain-icon { width: 44px; height: 44px; background: rgba(200,24,30,0.1); border: 1px solid rgba(200,24,30,0.18); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+    .pain-icon svg { width: 20px; height: 20px; color: var(--red); }
+    .pain-card h3 { font-size: 16px; font-weight: 700; color: rgba(255,255,255,0.88); margin-bottom: 10px; letter-spacing: -0.01em; }
+    .pain-card p  { font-size: 13px; line-height: 1.68; color: rgba(255,255,255,0.36); }
+
+    /* extra pain items (7) — full width row */
+    .pain-grid-2 {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 2px;
+      position: relative; z-index: 2;
+    }
+    @media (max-width: 900px)  { .pain-grid-2 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px)  { .pain-grid-2 { grid-template-columns: 1fr; } }
+
+    /* ══════════════════════
+       S4. ABOUT
+    ══════════════════════ */
+    #about { background: var(--off-white); padding: var(--sv) 0; }
+    .about-layout {
+      display: grid; grid-template-columns: 1fr 520px; gap: 96px; align-items: center;
+    }
+    @media (max-width: 1100px) { .about-layout { grid-template-columns: 1fr; gap: 56px; } }
+    .about-text .h-section { margin: 16px 0 24px; }
+    .about-text .body-lg { margin-bottom: 20px; max-width: 540px; }
+    .about-sub { font-size: 14px; line-height: 1.75; color: var(--gray-500); max-width: 520px; margin-bottom: 36px; }
+    .about-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; }
+    .about-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 6px 14px; border: 1px solid var(--gray-200); color: var(--gray-600);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .about-tag:hover { border-color: var(--red); color: var(--red); }
+
+    /* Collage */
+    .about-collage { position: relative; }
+    .ac-main {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+      filter: brightness(0.9);
+    }
+    .ac-sub {
+      position: absolute; bottom: -32px; left: -32px;
+      width: 48%; aspect-ratio: 4/3; object-fit: cover;
+      border: 4px solid var(--off-white);
+      filter: brightness(0.85);
+    }
+    .ac-quote {
+      position: absolute; top: 28px; right: -24px;
+      background: var(--near-black); color: #fff;
+      padding: 24px 28px; max-width: 220px;
+    }
+    .ac-quote-text { font-size: 14px; font-weight: 600; line-height: 1.5; margin-bottom: 10px; }
+    .ac-quote-meta { font-size: 11px; color: var(--red); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    @media (max-width: 768px) { .ac-sub { display: none; } .ac-quote { display: none; } }
+
+    /* ══════════════════════
+       S5. SOLUTION
+    ══════════════════════ */
+    #solution { background: #fff; padding: var(--sv) 0; }
+    .solution-header { margin-bottom: 72px; }
+    .solution-header .h-section { margin: 16px 0 20px; max-width: 640px; }
+    .solution-header .body-lg { max-width: 580px; }
+
+    .solution-ecosystem {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    }
+    @media (max-width: 900px) { .solution-ecosystem { grid-template-columns: 1fr; } }
+
+    .sol-step {
+      background: var(--gray-10); border: 1px solid var(--gray-100);
+      padding: 44px 40px; display: flex; gap: 28px; align-items: flex-start;
+      transition: background 0.3s, border-color 0.3s; cursor: default;
+    }
+    .sol-step:hover { background: #fff; border-color: rgba(200,24,30,0.2); box-shadow: 0 8px 48px rgba(0,0,0,0.05); }
+    .sol-step-num {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+      color: var(--red); flex-shrink: 0; width: 28px; padding-top: 2px;
+      text-transform: uppercase;
+    }
+    .sol-step-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: var(--red-subtle); border: 1px solid rgba(200,24,30,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .sol-step-icon svg { width: 22px; height: 22px; color: var(--red); }
+    .sol-step-body h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; color: var(--near-black); }
+    .sol-step-body p  { font-size: 13.5px; line-height: 1.7; color: var(--gray-500); }
+
+    /* ══════════════════════
+       S6. 5 PRODUCTS
+    ══════════════════════ */
+    #products { background: var(--gray-10); padding: var(--sv) 0; }
+    .products-header { margin-bottom: 64px; }
+    .products-header .h-section { margin: 16px 0 18px; }
+
+    .products-showcase {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 3px;
+    }
+    .pc { /* product card */
+      position: relative; overflow: hidden; background: var(--near-black);
+      cursor: pointer; text-decoration: none; display: block; min-height: 340px;
+    }
+    .pc:nth-child(1) { grid-column: span 5; grid-row: span 2; min-height: 560px; }
+    .pc:nth-child(2) { grid-column: span 7; }
+    .pc:nth-child(3) { grid-column: span 7; }
+    .pc:nth-child(4) { grid-column: span 6; }
+    .pc:nth-child(5) { grid-column: span 6; }
+    @media (max-width: 1100px) {
+      .pc:nth-child(1), .pc:nth-child(2), .pc:nth-child(3), .pc:nth-child(4), .pc:nth-child(5) {
+        grid-column: span 12; min-height: 300px;
+      }
+    }
+
+    .pc-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.42; transition: opacity 0.5s, transform 0.9s var(--ease-expo); }
+    .pc:hover .pc-img { opacity: 0.62; transform: scale(1.05); }
+    .pc-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(9,9,9,0.96) 0%, rgba(9,9,9,0.38) 60%, transparent 100%);
+      transition: background 0.4s;
+    }
+    .pc:hover .pc-overlay { background: linear-gradient(to top, rgba(9,9,9,1) 0%, rgba(9,9,9,0.55) 65%, rgba(200,24,30,0.08) 100%); }
+    .pc-body {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 36px;
+      transform: translateY(6px); transition: transform 0.4s var(--ease-expo);
+    }
+    .pc:hover .pc-body { transform: translateY(0); }
+    .pc-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--red); margin-bottom: 10px; display: block;
+    }
+    .pc-title { font-size: clamp(20px, 2vw, 26px); font-weight: 800; letter-spacing: -0.02em; color: #fff; line-height: 1.2; margin-bottom: 10px; }
+    .pc-desc { font-size: 13px; line-height: 1.65; color: rgba(255,255,255,0.45); max-width: 420px; opacity: 0; transform: translateY(8px); transition: opacity 0.4s, transform 0.4s; transition-delay: 0.06s; margin-bottom: 20px; }
+    .pc:hover .pc-desc { opacity: 1; transform: translateY(0); }
+    .pc-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 700; color: var(--red); letter-spacing: 0.05em;
+      opacity: 0; transform: translateY(5px);
+      transition: opacity 0.3s, transform 0.3s; transition-delay: 0.12s;
+    }
+    .pc:hover .pc-link { opacity: 1; transform: translateY(0); }
+    .pc-link svg { width: 12px; height: 12px; transition: transform 0.2s; }
+    .pc:hover .pc-link svg { transform: translateX(3px); }
+
+    /* ══════════════════════
+       S7. OEM/ODM
+    ══════════════════════ */
+    #oem {
+      position: relative; overflow: hidden;
+      background: var(--dark); padding: var(--sv) 0;
+    }
+    .oem-bg {
+      position: absolute; inset: 0;
+      background: url('./battery-module.png') right center/cover no-repeat;
+      opacity: 0.16;
+    }
+    .oem-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(20,20,20,1) 45%, rgba(20,20,20,0.55) 100%);
+    }
+    /* Circuit lines */
+    .oem-lines { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .oem-lines svg { width: 100%; height: 100%; opacity: 0.12; }
+
+    .oem-content { position: relative; z-index: 10; }
+    .oem-layout { display: grid; grid-template-columns: 1fr 420px; gap: 96px; align-items: center; }
+    @media (max-width: 1100px) { .oem-layout { grid-template-columns: 1fr; gap: 56px; } }
+
+    .oem-text .h-section { color: #fff; margin: 16px 0 22px; }
+    .oem-text .body-lg { color: rgba(255,255,255,0.45); max-width: 540px; }
+
+    .oem-specs { display: flex; flex-direction: column; gap: 0; margin: 40px 0; }
+    .oem-spec {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .oem-spec:last-child { border-bottom: none; }
+    .oem-spec-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex-shrink: 0; margin-top: 7px; }
+    .oem-spec p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+    .oem-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .oem-panel {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(12px); padding: 40px 36px;
+    }
+    .oem-panel-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 28px; }
+    .oem-cap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .oem-cap {
+      background: rgba(255,255,255,0.03); padding: 24px 20px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .oem-cap h4 { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+    .oem-cap p  { font-size: 11.5px; line-height: 1.6; color: rgba(255,255,255,0.3); }
+    .oem-note { font-size: 11px; color: rgba(255,255,255,0.2); margin-top: 24px; font-style: italic; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+
+    /* ══════════════════════
+       S8. INDUSTRIES
+    ══════════════════════ */
+    #industries { background: #fff; padding: var(--sv) 0; }
+    .ind-header { margin-bottom: 64px; }
+    .ind-header .h-section { margin: 16px 0 0; max-width: 620px; }
+
+    .ind-mosaic {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 3px;
+    }
+    @media (max-width: 1100px) { .ind-mosaic { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 600px)  { .ind-mosaic { grid-template-columns: 1fr; } }
+
+    .ind-card {
+      position: relative; overflow: hidden; background: var(--near-black);
+      min-height: 260px; cursor: default;
+    }
+    .ind-card.tall { grid-row: span 2; min-height: 520px; }
+    .ind-card:hover .ind-img { transform: scale(1.06); opacity: 0.6; }
+    .ind-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; opacity: 0.4;
+      transition: opacity 0.5s, transform 0.8s var(--ease-expo);
+    }
+    .ind-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(9,9,9,0.95) 0%, rgba(9,9,9,0.3) 60%, transparent);
+    }
+    .ind-body { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px; }
+    .ind-icon-wrap {
+      width: 40px; height: 40px; background: rgba(200,24,30,0.15);
+      border: 1px solid rgba(200,24,30,0.25); display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+    }
+    .ind-icon-wrap svg { width: 18px; height: 18px; color: var(--red); }
+    .ind-name { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: -0.01em; margin-bottom: 6px; }
+    .ind-tag { font-size: 10.5px; color: rgba(255,255,255,0.35); }
+
+    /* ══════════════════════
+       S9. WHY PKG
+    ══════════════════════ */
+    #why { background: var(--gray-10); padding: var(--sv) 0; }
+    .why-layout { display: grid; grid-template-columns: 440px 1fr; gap: 96px; align-items: start; }
+    @media (max-width: 1100px) { .why-layout { grid-template-columns: 1fr; gap: 56px; } }
+    .why-sticky { position: sticky; top: 108px; }
+    .why-sticky .h-section { margin: 16px 0 20px; }
+    .why-sticky .body-lg { margin-bottom: 32px; }
+    .why-cta-block {
+      padding: 32px; background: var(--near-black); border-left: 3px solid var(--red);
+    }
+    .why-cta-block p { font-size: 13.5px; line-height: 1.7; color: rgba(255,255,255,0.42); margin-bottom: 20px; }
+
+    .usp-list { display: flex; flex-direction: column; gap: 3px; }
+    .usp {
+      background: #fff; padding: 36px 40px; border: 1px solid var(--gray-100);
+      display: flex; gap: 26px; align-items: flex-start;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .usp:hover { border-color: rgba(200,24,30,0.2); box-shadow: 0 8px 48px rgba(0,0,0,0.06); transform: translateX(5px); }
+    .usp-icon {
+      width: 50px; height: 50px; flex-shrink: 0;
+      background: var(--red-subtle); border: 1px solid rgba(200,24,30,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .usp-icon svg { width: 22px; height: 22px; color: var(--red); }
+    .usp-body h3 { font-size: 17px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .usp-body p  { font-size: 14px; line-height: 1.7; color: var(--gray-500); }
+
+    /* ══════════════════════
+       S10. CAPABILITY
+    ══════════════════════ */
+    #capability { background: var(--near-black); padding: var(--sv) 0; position: relative; overflow: hidden; }
+    .cap-accent1 {
+      position: absolute; top: -150px; left: -150px; width: 600px; height: 600px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,24,30,0.06), transparent 70%); pointer-events: none;
+    }
+    .cap-accent2 {
+      position: absolute; bottom: -100px; right: -100px; width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,24,30,0.05), transparent 70%); pointer-events: none;
+    }
+    .cap-pattern {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 36px 36px;
+    }
+    .cap-content { position: relative; z-index: 10; }
+    .cap-header { margin-bottom: 80px; }
+    .cap-header .h-section { color: #fff; margin: 16px 0 20px; }
+    .cap-header .body-lg { color: rgba(255,255,255,0.36); max-width: 580px; }
+
+    /* Hero metric */
+    .cap-hero-num {
+      font-size: clamp(80px, 12vw, 160px); font-weight: 900; letter-spacing: -0.05em; line-height: 0.9;
+      color: #fff; position: relative; display: inline-block;
+    }
+    .cap-hero-num span { color: var(--red); }
+    .cap-hero-label { font-size: 20px; font-weight: 600; color: rgba(255,255,255,0.5); margin-top: 16px; letter-spacing: -0.01em; }
+    .cap-hero-note  { font-size: 11px; color: rgba(255,255,255,0.2); margin-top: 6px; font-style: italic; }
+
+    .cap-hero-block { display: grid; grid-template-columns: 320px 1fr; gap: 80px; align-items: center; margin-bottom: 72px; }
+    @media (max-width: 900px) { .cap-hero-block { grid-template-columns: 1fr; gap: 40px; } }
+
+    /* Secondary stats */
+    .cap-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-bottom: 64px; }
+    @media (max-width: 1100px) { .cap-stats { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 600px)  { .cap-stats { grid-template-columns: 1fr; } }
+    .cap-stat {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); padding: 40px 36px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .cap-stat:hover { background: rgba(255,255,255,0.05); border-color: rgba(200,24,30,0.22); }
+    .cs-num { font-size: clamp(38px,5vw,58px); font-weight: 900; letter-spacing: -0.04em; color: #fff; line-height: 1; }
+    .cs-num em { color: var(--red); font-style: normal; }
+    .cs-label { font-size: 13px; color: rgba(255,255,255,0.38); margin-top: 8px; line-height: 1.45; }
+    .cs-note  { font-size: 10px; color: rgba(255,255,255,0.18); margin-top: 4px; font-style: italic; }
+
+    /* Cert gallery */
+    .cap-cert-title { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); margin-bottom: 28px; }
+    .cert-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+    @media (max-width: 900px) { .cert-grid { grid-template-columns: 1fr 1fr; } }
+    .cert-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      padding: 32px; display: flex; align-items: center; gap: 16px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .cert-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(200,24,30,0.2); }
+    .cert-badge {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(200,24,30,0.1); border: 1px solid rgba(200,24,30,0.2);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cert-badge svg { width: 22px; height: 22px; color: var(--red); }
+    .cert-name  { font-size: 15px; font-weight: 800; color: #fff; letter-spacing: 0.02em; }
+    .cert-desc  { font-size: 11px; color: rgba(255,255,255,0.3); margin-top: 3px; }
+    .cert-note  { font-size: 10px; color: rgba(255,255,255,0.15); margin-top: 2px; font-style: italic; }
+
+    /* ══════════════════════
+       S11. PROCESS
+    ══════════════════════ */
+    #process { background: #fff; padding: var(--sv) 0; }
+    .proc-header { margin-bottom: 80px; }
+    .proc-header .h-section { margin: 16px 0 0; max-width: 600px; }
+
+    .proc-track { display: grid; grid-template-columns: repeat(5,1fr); position: relative; }
+    @media (max-width: 1000px) { .proc-track { grid-template-columns: 1fr 1fr; gap: 3px; } }
+    @media (max-width: 500px)  { .proc-track { grid-template-columns: 1fr; gap: 3px; } }
+    .proc-step {
+      padding: 48px 32px; border-right: 1px solid var(--gray-100); position: relative;
+      transition: background 0.3s; cursor: default;
+    }
+    .proc-step:last-child { border-right: none; }
+    .proc-step:hover { background: var(--gray-10); }
+    .proc-step-line {
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--gray-100); overflow: hidden;
+    }
+    .proc-step-line::after {
+      content: ''; position: absolute; top: 0; left: 0; height: 100%;
+      width: var(--progress, 0%); background: var(--red); transition: width 0.8s var(--ease-expo);
+    }
+    .proc-step-num {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
+      color: var(--red); margin-bottom: 20px; display: block; text-transform: uppercase;
+    }
+    .proc-step-icon {
+      width: 46px; height: 46px;
+      background: var(--red-subtle); border: 1px solid rgba(200,24,30,0.15);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 22px;
+    }
+    .proc-step-icon svg { width: 21px; height: 21px; color: var(--red); }
+    .proc-step h3 { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: var(--near-black); margin-bottom: 10px; line-height: 1.3; }
+    .proc-step p  { font-size: 13px; line-height: 1.65; color: var(--gray-500); }
+
+    /* ══════════════════════
+       S12. DEALER MAP
+    ══════════════════════ */
+    #dealers { background: var(--gray-10); padding: var(--sv) 0; }
+    .dealer-layout { display: grid; grid-template-columns: 1fr 360px; gap: 72px; align-items: start; }
+    @media (max-width: 1100px) { .dealer-layout { grid-template-columns: 1fr; gap: 56px; } }
+    .dealer-header { margin-bottom: 40px; }
+    .dealer-header .h-section { margin: 16px 0 18px; }
+    .dealer-header .body-md { max-width: 500px; }
+
+    /* SVG Map area */
+    .map-container { position: relative; background: #fff; border: 1px solid var(--gray-100); padding: 32px; }
+    .map-svg { width: 100%; max-width: 420px; margin: 0 auto; display: block; }
+    .map-marker {
+      cursor: pointer; transition: transform 0.2s;
+    }
+    .map-marker:hover { transform: scale(1.2); }
+    .map-marker circle { fill: var(--red); }
+    .map-marker-pulse { animation: map-pulse 2.5s ease-in-out infinite; }
+    @keyframes map-pulse { 0%,100%{opacity:0.4;transform:scale(1)} 50%{opacity:0;transform:scale(2)} }
+
+    /* Dealer list */
+    .dealer-list { display: flex; flex-direction: column; gap: 3px; }
+    .dl-card {
+      background: #fff; border: 1px solid var(--gray-100); padding: 22px 24px;
+      display: flex; align-items: flex-start; gap: 16px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .dl-card:hover { border-color: rgba(200,24,30,0.2); box-shadow: 0 4px 24px rgba(0,0,0,0.05); }
+    .dl-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex-shrink: 0; margin-top: 6px;
+    }
+    .dl-city { font-size: 14px; font-weight: 700; color: var(--near-black); }
+    .dl-name { font-size: 12px; color: var(--gray-500); margin-top: 3px; }
+    .dl-note { font-size: 10px; color: rgba(200,24,30,0.6); margin-top: 4px; font-style: italic; }
+
+    /* ══════════════════════
+       S13. NEWS
+    ══════════════════════ */
+    #news { background: #fff; padding: var(--sv) 0; }
+    .news-header { margin-bottom: 60px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+    .news-header .h-section { margin: 16px 0 0; }
+
+    .news-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; }
+    @media (max-width: 1100px) { .news-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 700px)  { .news-grid { grid-template-columns: 1fr; } }
+    .news-card:first-child { grid-column: span 3; grid-row: span 1; }
+    @media (max-width: 1100px) { .news-card:first-child { grid-column: span 2; } }
+    @media (max-width: 700px)  { .news-card:first-child { grid-column: span 1; } }
+
+    .news-card {
+      display: block; text-decoration: none; background: var(--gray-10); border: 1px solid var(--gray-100);
+      overflow: hidden; transition: box-shadow 0.3s, transform 0.3s; cursor: pointer;
+    }
+    .news-card:hover { box-shadow: 0 16px 56px rgba(0,0,0,0.09); transform: translateY(-3px); }
+    .news-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; opacity: 0.85; display: block; transition: opacity 0.3s; }
+    .news-card:hover .news-thumb { opacity: 1; }
+    .news-card:first-child .news-thumb { aspect-ratio: 21/9; }
+    .news-body { padding: 28px; }
+    .news-cat {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--red); margin-bottom: 10px; display: block;
+    }
+    .news-title { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; color: var(--near-black); line-height: 1.4; margin-bottom: 10px; }
+    .news-card:first-child .news-title { font-size: 24px; }
+    .news-excerpt { font-size: 13px; line-height: 1.65; color: var(--gray-500); }
+    .news-meta { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+    .news-date  { font-size: 11px; color: var(--gray-400); }
+    .news-read  { font-size: 11px; color: var(--gray-400); }
+
+    /* ══════════════════════
+       S14. CASE STUDIES
+    ══════════════════════ */
+    #cases { background: var(--gray-10); padding: var(--sv) 0; }
+    .cases-header { margin-bottom: 60px; }
+    .cases-header .h-section { margin: 16px 0 0; }
+    .cases-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+    @media (max-width: 1000px) { .cases-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px)  { .cases-grid { grid-template-columns: 1fr; } }
+    .case-card {
+      background: #fff; border: 1px solid var(--gray-100); overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .case-card:hover { box-shadow: 0 16px 64px rgba(0,0,0,0.08); transform: translateY(-4px); }
+    .case-header-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; transition: transform 0.5s var(--ease-expo); }
+    .case-card:hover .case-header-img { transform: scale(1.04); }
+    .case-body { padding: 28px; }
+    .case-sector {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--red); margin-bottom: 10px; display: block;
+    }
+    .case-body h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; }
+    .case-body p  { font-size: 13px; line-height: 1.7; color: var(--gray-500); }
+    .case-result {
+      display: flex; gap: 8px; align-items: center;
+      font-size: 12px; font-weight: 700; color: var(--red);
+      margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-100);
+    }
+    .case-result svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .case-note {
+      font-size: 10px; color: var(--gray-400); margin-top: 6px; font-style: italic;
+      padding: 8px 10px; background: var(--gray-50); border-left: 2px solid var(--gray-200);
+    }
+
+    /* ══════════════════════
+       S15. CTA FINAL — RED STATEMENT
+    ══════════════════════ */
+    #cta-final {
+      position: relative; overflow: hidden;
+      background: #0D0D0D; padding: var(--sv) 0;
+    }
+    .cta-red-depth {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 80% at 70% 50%, rgba(200,24,30,0.14) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 30% 80%, rgba(120,10,14,0.12) 0%, transparent 70%);
+    }
+    .cta-lines { position: absolute; inset: 0; pointer-events: none; }
+    .cta-lines svg { width: 100%; height: 100%; opacity: 0.08; }
+
+    .cta-layout { display: grid; grid-template-columns: 1fr 500px; gap: 100px; align-items: center; position: relative; z-index: 10; }
+    @media (max-width: 1200px) { .cta-layout { grid-template-columns: 1fr; gap: 56px; } }
+    .cta-left .h-section { color: #fff; margin: 16px 0 20px; }
+    .cta-left .body-lg { color: rgba(255,255,255,0.38); margin-bottom: 32px; max-width: 520px; }
+
+    .cta-benefits { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 44px; }
+    .cta-benefit {
+      display: flex; align-items: flex-start; gap: 12px; font-size: 14px; color: rgba(255,255,255,0.58);
+    }
+    .cta-check {
+      width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px;
+      background: rgba(200,24,30,0.15); border: 1px solid rgba(200,24,30,0.3);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cta-check svg { width: 10px; height: 10px; color: var(--red); }
+    .cta-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Form */
+    .cta-form-wrap {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+      backdrop-filter: blur(20px); padding: 48px 44px;
+    }
+    .cta-form-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .cta-form-sub { font-size: 13px; color: rgba(255,255,255,0.32); margin-bottom: 32px; }
+    .ff { margin-bottom: 14px; }
+    .ff label { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: rgba(255,255,255,0.48); margin-bottom: 7px; }
+    .ff input, .ff select, .ff textarea {
+      width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      color: #fff; padding: 13px 15px; font-size: 14px; font-family: var(--font);
+      outline: none; transition: border-color 0.2s, background 0.2s; appearance: none;
+    }
+    .ff input::placeholder, .ff textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .ff input:focus, .ff select:focus, .ff textarea:focus { border-color: rgba(200,24,30,0.6); background: rgba(255,255,255,0.07); }
+    .ff select option { background: #1a1a1a; color: #fff; }
+    .ff textarea { resize: vertical; min-height: 80px; }
+    .ff-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 500px) { .ff-row { grid-template-columns: 1fr; } }
+    .form-submit {
+      width: 100%; padding: 16px; background: var(--red); color: #fff;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.03em; border: none; cursor: pointer;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+      transition: background 0.25s, box-shadow 0.3s; margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--red-deep); box-shadow: 0 8px 32px rgba(200,24,30,0.45); }
+    .form-privacy { font-size: 11px; color: rgba(255,255,255,0.2); text-align: center; margin-top: 12px; }
+
+    /* ══════════════════════
+       FOOTER
+    ══════════════════════ */
+    footer {
+      background: var(--black); padding: 72px 0 40px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 260px 1fr 1fr 1fr 1fr; gap: 56px;
+      margin-bottom: 56px;
+    }
+    @media (max-width: 1100px) { .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; } }
+    @media (max-width: 600px)  { .footer-top { grid-template-columns: 1fr; gap: 32px; } }
+    .footer-brand .logo-text { color: #fff; }
+    .footer-brand p { font-size: 13px; line-height: 1.7; color: rgba(255,255,255,0.28); margin-top: 16px; }
+    .footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 18px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { font-size: 13px; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+    .footer-col ul a:hover { color: rgba(255,255,255,0.72); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.04); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.18); }
+    .footer-legal { display: flex; gap: 24px; }
+    .footer-legal a { font-size: 12px; color: rgba(255,255,255,0.18); text-decoration: none; transition: color 0.2s; }
+    .footer-legal a:hover { color: rgba(255,255,255,0.5); }
+
+    /* ── Back to top ── */
+    #btt {
+      position: fixed; bottom: 36px; right: 36px; z-index: 90;
+      width: 48px; height: 48px; background: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: none; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 0 100%);
+    }
+    #btt.show { opacity: 1; pointer-events: auto; }
+    #btt:hover { transform: translateY(-3px); }
+    #btt svg { width: 20px; height: 20px; color: #fff; }
+
+    /* Dividers */
+    .sec-divider { height: 1px; background: var(--gray-100); }
+    .sec-divider-dark { height: 1px; background: rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo" id="nav-logo">
+      <div class="logo-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+          <line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+        </svg>
+      </div>
+      <span class="logo-text">PKG BATTERY</span>
+    </a>
+
+    <ul class="nav-menu">
+      <li><a href="#solution">Giải pháp</a></li>
+      <li><a href="#products">Sản phẩm</a></li>
+      <li><a href="#industries">Ứng dụng</a></li>
+      <li><a href="#oem">OEM / ODM</a></li>
+      <li><a href="#about">Về PKG</a></li>
+      <li><a href="#news">Tin tức</a></li>
+      <li><a href="#dealers">Đại lý</a></li>
+      <li><a href="#cta-final">Liên hệ</a></li>
+    </ul>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="nav-lang">
+        <a href="#" class="active">VI</a>
+        <a href="#">EN</a>
+      </div>
+      <a href="#cta-final" class="btn btn-red nav-cta">
+        Nhận tư vấn kỹ thuật
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════ S1. HERO ═══════════════════ -->
+<section id="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-grid-layer"></div>
+  <div class="hero-energy-v"></div>
+  <div class="hero-energy-v2"></div>
+
+  <div class="hero-body-wrap">
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <span class="hero-dot"></span>
+          <span class="hero-eyebrow-text">Giải pháp pin lithium công nghiệp · Vietnam & International</span>
+        </div>
+        <h1 class="hero-headline">
+          Đối tác pin lithium<br>& sạc <em>toàn diện</em><br>cho doanh nghiệp
+        </h1>
+        <p class="hero-sub">
+          Hệ sinh thái pin – sạc – giải pháp kỹ thuật giúp doanh nghiệp vận hành ổn định, giảm downtime và tối ưu chi phí sở hữu dài hạn.
+        </p>
+        <p class="hero-p">
+          PKG Battery cung cấp giải pháp pin lithium công nghiệp cho xe nâng điện, AGV/robot, xe điện du lịch, hệ thống lưu trữ năng lượng và nhiều ứng dụng doanh nghiệp khác — với định hướng tư vấn kỹ thuật, tùy chỉnh theo nhu cầu và đồng hành triển khai thực tế.
+        </p>
+        <div class="hero-ctas">
+          <a href="#cta-final" class="btn btn-red">
+            Nhận tư vấn kỹ thuật
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#products" class="btn btn-outline-white">Xem nhóm giải pháp</a>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="hero-panel-label">Nhóm giải pháp chính</div>
+        <div class="hp-item">
+          <div class="hp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+          <div><div class="hp-name">Pin xe nâng điện</div><div class="hp-desc">Kho vận · Logistics · Nhà máy</div></div>
+        </div>
+        <div class="hp-item">
+          <div class="hp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8v13"/><path d="M9 12H3"/><path d="M21 12h-6"/></svg></div>
+          <div><div class="hp-name">Pin AGV / Robot</div><div class="hp-desc">Tự động hóa · Smart factory</div></div>
+        </div>
+        <div class="hp-item">
+          <div class="hp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div><div class="hp-name">Pin xe điện du lịch</div><div class="hp-desc">Resort · Khu du lịch · Mobility</div></div>
+        </div>
+        <div class="hp-item">
+          <div class="hp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h2"/><path d="m9 7 2 2-2 2"/><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M22 9h-4"/></svg></div>
+          <div><div class="hp-name">Bộ sạc – Trạm sạc</div><div class="hp-desc">Sạc nhanh · Tích hợp hệ thống</div></div>
+        </div>
+        <div class="hp-item">
+          <div class="hp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+          <div><div class="hp-name">ESS lưu trữ năng lượng</div><div class="hp-desc">Solar · Peak shaving · Dự phòng</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-bar">
+    <div class="hero-bar-inner">
+      <div class="hb-item"><div class="hb-num">5<span>+</span></div><div class="hb-lbl">Nhóm giải pháp công nghiệp</div></div>
+      <div class="hb-item"><div class="hb-num">IEC<span> </span>62619</div><div class="hb-lbl">Tiêu chuẩn an toàn pin Lithium</div></div>
+      <div class="hb-item"><div class="hb-num">OEM<span>/</span>ODM</div><div class="hb-lbl">Tùy chỉnh theo yêu cầu kỹ thuật</div></div>
+      <div class="hb-item"><div class="hb-num">B2B<span>+</span></div><div class="hb-lbl">Đồng hành kỹ thuật doanh nghiệp</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S2. TRUSTED BY ═══════════════════ -->
+<section id="trusted">
+  <div class="wrap">
+    <div class="trusted-header rv">
+      <span class="eyebrow">Khách hàng & Đối tác</span>
+      <h2 class="h-section">Đồng hành cùng doanh nghiệp trong nhiều môi trường vận hành trọng yếu</h2>
+      <p class="body-lg">PKG Battery hiện diện trong logistics, nhà máy, kho vận, tự động hóa, xe điện chuyên dụng và lưu trữ năng lượng — với định hướng giải pháp kỹ thuật và hợp tác dài hạn.</p>
+    </div>
+  </div>
+
+  <!-- Marquee row 1 -->
+  <div class="marquee-wrap">
+    <div class="marquee-track row1">
+      <!-- 16 logos duplicated for seamless loop -->
+      <div class="marquee-logo large"><span>VINACONEX</span></div>
+      <div class="marquee-logo"><span>VIN GROUP</span></div>
+      <div class="marquee-logo"><span>SUNHOUSE</span></div>
+      <div class="marquee-logo large"><span>THILOGI</span></div>
+      <div class="marquee-logo"><span>GEMADEPT</span></div>
+      <div class="marquee-logo"><span>SOVI LOGISTICS</span></div>
+      <div class="marquee-logo large"><span>SOTRANS</span></div>
+      <div class="marquee-logo"><span>LONG HẬU</span></div>
+      <div class="marquee-logo large"><span>VINACONEX</span></div>
+      <div class="marquee-logo"><span>VIN GROUP</span></div>
+      <div class="marquee-logo"><span>SUNHOUSE</span></div>
+      <div class="marquee-logo large"><span>THILOGI</span></div>
+      <div class="marquee-logo"><span>GEMADEPT</span></div>
+      <div class="marquee-logo"><span>SOVI LOGISTICS</span></div>
+      <div class="marquee-logo large"><span>SOTRANS</span></div>
+      <div class="marquee-logo"><span>LONG HẬU</span></div>
+    </div>
+  </div>
+  <!-- Marquee row 2 -->
+  <div class="marquee-wrap" style="margin-top:0;">
+    <div class="marquee-track row2">
+      <div class="marquee-logo"><span>POSCO VIETNAM</span></div>
+      <div class="marquee-logo large"><span>KCN VSIP</span></div>
+      <div class="marquee-logo"><span>AMATA</span></div>
+      <div class="marquee-logo"><span>BECAMEX</span></div>
+      <div class="marquee-logo large"><span>DEEP C</span></div>
+      <div class="marquee-logo"><span>SABECO</span></div>
+      <div class="marquee-logo"><span>HEINEKEN VN</span></div>
+      <div class="marquee-logo large"><span>MASAN GROUP</span></div>
+      <div class="marquee-logo"><span>POSCO VIETNAM</span></div>
+      <div class="marquee-logo large"><span>KCN VSIP</span></div>
+      <div class="marquee-logo"><span>AMATA</span></div>
+      <div class="marquee-logo"><span>BECAMEX</span></div>
+      <div class="marquee-logo large"><span>DEEP C</span></div>
+      <div class="marquee-logo"><span>SABECO</span></div>
+      <div class="marquee-logo"><span>HEINEKEN VN</span></div>
+      <div class="marquee-logo large"><span>MASAN GROUP</span></div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="trust-highlights" style="margin-top:72px;">
+      <div class="th-card rv">
+        <div class="th-num">8<span>+</span></div>
+        <div class="th-label">Đại lý toàn quốc</div>
+        <div class="th-desc">Mạng lưới phân phối và hỗ trợ kỹ thuật tại các trung tâm công nghiệp và khu kinh tế trọng điểm.</div>
+      </div>
+      <div class="th-card rv rv-d2">
+        <div class="th-num">5<span>+</span></div>
+        <div class="th-label">Nhóm ứng dụng phục vụ</div>
+        <div class="th-desc">Từ xe nâng điện, AGV, xe du lịch đến ESS và trạm sạc — giải pháp pin cho nhiều loại thiết bị và môi trường.</div>
+      </div>
+      <div class="th-card rv rv-d3">
+        <div class="th-num">OEM<span>/</span>ODM</div>
+        <div class="th-label">Năng lực tùy chỉnh</div>
+        <div class="th-desc">Hỗ trợ thiết kế và tích hợp pin theo yêu cầu kỹ thuật từ doanh nghiệp Việt Nam, FDI và đối tác quốc tế.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S3. PAIN POINT ═══════════════════ -->
+<section id="pain">
+  <div class="pain-pattern"></div>
+  <div class="pain-accent"></div>
+  <div class="wrap">
+    <div class="pain-header rv">
+      <span class="eyebrow white">Bài toán vận hành</span>
+      <h2 class="h-section">Downtime, bảo trì và chi phí ẩn đang làm vận hành kém hiệu quả hơn bạn nghĩ</h2>
+      <p class="body-lg">Khi hệ thống pin không phù hợp với cường độ vận hành, doanh nghiệp không chỉ mất điện năng — mà còn mất thời gian, năng suất và khả năng kiểm soát chi phí dài hạn.</p>
+    </div>
+
+    <div class="pain-grid">
+      <div class="pain-card rv">
+        <div class="pain-card-num">01</div>
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <h3>Vận hành gián đoạn</h3>
+        <p>Thời gian sạc dài hoặc pin xuống cấp nhanh gây đứt gãy chu kỳ vận hành, ảnh hưởng trực tiếp đến năng suất và tiến độ.</p>
+      </div>
+      <div class="pain-card rv rv-d1">
+        <div class="pain-card-num">02</div>
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3>Chi phí bảo trì leo thang</h3>
+        <p>Thay thế pin thường xuyên, nhân lực kỹ thuật và chi phí sửa chữa tích lũy vượt xa chi phí đầu tư ban đầu.</p>
+      </div>
+      <div class="pain-card rv rv-d2">
+        <div class="pain-card-num">03</div>
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <h3>Rủi ro an toàn & ổn định</h3>
+        <p>Môi trường cường độ cao đòi hỏi pin đạt chuẩn an toàn. Pin không đủ tiêu chuẩn là nguồn rủi ro tiềm tàng cho toàn hệ thống.</p>
+      </div>
+      <div class="pain-card rv rv-d3">
+        <div class="pain-card-num">04</div>
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <h3>Cấu hình không phù hợp</h3>
+        <p>Pin không được thiết kế cho đúng ứng dụng, thiết bị hoặc chu kỳ làm việc gây tổn hao năng lượng và giảm tuổi thọ nhanh.</p>
+      </div>
+    </div>
+
+    <div class="pain-grid-2" style="margin-top:2px;">
+      <div class="pain-card rv">
+        <div class="pain-card-num">05</div>
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Khó tối ưu TCO</h3>
+        <p>Chỉ nhìn vào giá đầu tư ban đầu mà bỏ qua chi phí vận hành dài hạn là sai lầm khiến tổng chi phí sở hữu vượt ngân sách.</p>
+      </div>
+      <div class="pain-card rv rv-d1">
+        <div class="pain-card-num">06</div>
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg></div>
+        <h3>Thiếu hỗ trợ kỹ thuật thực tế</h3>
+        <p>Nhiều nhà cung cấp chỉ bán sản phẩm, không đồng hành kỹ thuật sau triển khai, dẫn đến doanh nghiệp tự xử lý sự cố.</p>
+      </div>
+      <div class="pain-card rv rv-d2">
+        <div class="pain-card-num">07</div>
+        <div class="pain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <h3>Khó mở rộng khi tăng quy mô</h3>
+        <p>Hệ thống pin không có thiết kế mô-đun hoặc khả năng mở rộng gây khó khăn khi doanh nghiệp cần scale up vận hành.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S4. ABOUT ═══════════════════ -->
+<section id="about">
+  <div class="wrap">
+    <div class="about-layout">
+      <div class="about-text rv">
+        <span class="eyebrow">Về PKG Battery</span>
+        <h2 class="h-section">PKG Battery – đối tác giải pháp năng lượng lithium công nghiệp cho doanh nghiệp hiện đại</h2>
+        <p class="body-lg">PKG Battery được định hướng như một doanh nghiệp B2B chuyên pin lithium công nghiệp, bộ sạc, trạm sạc và giải pháp kỹ thuật theo ứng dụng.</p>
+        <p class="about-sub">Không chỉ cung cấp sản phẩm, PKG Battery hướng tới việc đồng hành cùng doanh nghiệp trong việc lựa chọn cấu hình phù hợp, tối ưu hiệu quả vận hành và hỗ trợ triển khai thực tế trong nhiều môi trường công nghiệp khác nhau. Chúng tôi phục vụ khách hàng doanh nghiệp trong nước, doanh nghiệp FDI và hướng tới hợp tác quốc tế.</p>
+        <div class="about-tags">
+          <span class="about-tag">Công nghiệp</span>
+          <span class="about-tag">Kỹ thuật</span>
+          <span class="about-tag">OEM / ODM</span>
+          <span class="about-tag">FDI Ready</span>
+          <span class="about-tag">Tư vấn chuyên sâu</span>
+          <span class="about-tag">Hậu mãi thực tế</span>
+        </div>
+        <a href="#capability" class="btn btn-outline-dark">
+          Xem hồ sơ năng lực
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="about-collage rv rv-d2">
+        <img src="./forklift.png" alt="Kho vận – xe nâng điện PKG Battery" class="ac-main" />
+        <img src="./agv-robot.png" alt="AGV robot tự động hóa" class="ac-sub" />
+        <div class="ac-quote">
+          <div class="ac-quote-text">"Đồng hành từ khảo sát đến triển khai — không chỉ bán pin"</div>
+          <div class="ac-quote-meta">Định hướng PKG Battery</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S5. SOLUTION ═══════════════════ -->
+<section id="solution">
+  <div class="wrap">
+    <div class="solution-header rv">
+      <span class="eyebrow">Quy trình giải pháp</span>
+      <h2 class="h-section">Từ pin đến giải pháp vận hành hoàn chỉnh</h2>
+      <p class="body-lg">PKG Battery xây dựng giải pháp pin lithium công nghiệp theo bài toán thực tế của doanh nghiệp — từ khảo sát nhu cầu, cấu hình pin và sạc phù hợp, đến triển khai, hỗ trợ kỹ thuật và đồng hành vận hành.</p>
+    </div>
+
+    <div class="solution-ecosystem">
+      <div class="sol-step rv">
+        <div class="sol-step-num">01</div>
+        <div class="sol-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+        <div class="sol-step-body"><h3>Đánh giá nhu cầu vận hành</h3><p>Khảo sát chi tiết môi trường làm việc, cường độ sử dụng, thiết bị hiện có và mục tiêu vận hành của doanh nghiệp.</p></div>
+      </div>
+      <div class="sol-step rv rv-d1">
+        <div class="sol-step-num">02</div>
+        <div class="sol-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="sol-step-body"><h3>Phân tích & đề xuất cấu hình</h3><p>Dựa trên dữ liệu thực tế, PKG Battery đề xuất cấu hình pin, bộ sạc và trạm sạc phù hợp nhất với bài toán chi phí và hiệu quả của doanh nghiệp.</p></div>
+      </div>
+      <div class="sol-step rv rv-d2">
+        <div class="sol-step-num">03</div>
+        <div class="sol-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+        <div class="sol-step-body"><h3>Tùy chỉnh theo ứng dụng & thiết bị</h3><p>Thiết kế giải pháp theo yêu cầu kỹ thuật cụ thể, bao gồm điện áp, dung lượng, form factor và giao thức BMS tích hợp.</p></div>
+      </div>
+      <div class="sol-step rv">
+        <div class="sol-step-num">04</div>
+        <div class="sol-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg></div>
+        <div class="sol-step-body"><h3>Tích hợp triển khai thực tế</h3><p>Đội ngũ kỹ thuật PKG trực tiếp phối hợp triển khai, kiểm tra vận hành và hướng dẫn đội ngũ doanh nghiệp sử dụng đúng quy trình.</p></div>
+      </div>
+      <div class="sol-step rv rv-d1">
+        <div class="sol-step-num">05</div>
+        <div class="sol-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="sol-step-body"><h3>Hỗ trợ kỹ thuật & hậu mãi</h3><p>PKG Battery duy trì hỗ trợ kỹ thuật sau bán hàng, phản hồi sự cố nhanh và đồng hành cùng doanh nghiệp trong suốt vòng đời sản phẩm.</p></div>
+      </div>
+      <div class="sol-step rv rv-d2" style="background: var(--near-black); border-color: transparent;">
+        <div style="width:100%;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:16px;">Giải pháp đồng bộ</div>
+          <div style="font-size:22px;font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1.2;margin-bottom:16px;">Pin · Sạc · Kỹ thuật · Hậu mãi</div>
+          <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.38);margin-bottom:28px;">Một đối tác, toàn bộ ecosystem năng lượng cho doanh nghiệp.</div>
+          <a href="#cta-final" class="btn btn-red">
+            Nhận tư vấn kỹ thuật
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S6. 5 PRODUCTS ═══════════════════ -->
+<section id="products">
+  <div class="wrap">
+    <div class="products-header rv">
+      <span class="eyebrow">Danh mục giải pháp</span>
+      <h2 class="h-section">5 dòng giải pháp pin & sạc công nghiệp chính</h2>
+    </div>
+  </div>
+  <div style="max-width:var(--container);margin:0 auto;padding:0 56px;">
+    <div class="products-showcase">
+      <!-- Card 1: Large — Forklift -->
+      <a href="#cta-final" class="pc">
+        <img src="./forklift.png" alt="Pin xe nâng điện" class="pc-img" />
+        <div class="pc-overlay"></div>
+        <div class="pc-body">
+          <span class="pc-tag">Giải pháp 01</span>
+          <div class="pc-title">Pin Lithium cho Xe Nâng Điện</div>
+          <p class="pc-desc">Giải pháp pin lithium tối ưu cho xe nâng điện với khả năng sạc nhanh, giảm bảo trì và hỗ trợ cường độ vận hành cao trong kho vận, logistics và nhà máy.</p>
+          <span class="pc-link">Xem chi tiết <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </div>
+      </a>
+      <!-- Card 2: Tourism EV -->
+      <a href="#cta-final" class="pc" style="background-image:url('https://images.unsplash.com/photo-1666668485330-d99cf8e72c87?w=800&q=80&auto=format&fit=crop');">
+        <img src="https://images.unsplash.com/photo-1590247813693-5541d1c1fd9d?w=900&q=80&auto=format&fit=crop" alt="Pin xe điện du lịch" class="pc-img" />
+        <div class="pc-overlay"></div>
+        <div class="pc-body">
+          <span class="pc-tag">Giải pháp 02</span>
+          <div class="pc-title">Pin Lithium cho Xe Điện Du Lịch</div>
+          <p class="pc-desc">Thiết kế cho xe điện du lịch, buggy và phương tiện chuyên dụng cần độ ổn định, tuổi thọ cao và trải nghiệm vận hành bền bỉ.</p>
+          <span class="pc-link">Xem chi tiết <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </div>
+      </a>
+      <!-- Card 3: AGV -->
+      <a href="#cta-final" class="pc">
+        <img src="./agv-robot.png" alt="Pin AGV Robot" class="pc-img" />
+        <div class="pc-overlay"></div>
+        <div class="pc-body">
+          <span class="pc-tag">Giải pháp 03</span>
+          <div class="pc-title">Pin cho Xe AGV / Robot</div>
+          <p class="pc-desc">Giải pháp năng lượng cho hệ thống tự động hóa cần độ ổn định, độ chính xác, tính tương thích và khả năng tích hợp kỹ thuật cao.</p>
+          <span class="pc-link">Xem chi tiết <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </div>
+      </a>
+      <!-- Card 4: Charger -->
+      <a href="#cta-final" class="pc">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop" alt="Bộ sạc trạm sạc" class="pc-img" />
+        <div class="pc-overlay"></div>
+        <div class="pc-body">
+          <span class="pc-tag">Giải pháp 04</span>
+          <div class="pc-title">Bộ Sạc – Trạm Sạc</div>
+          <p class="pc-desc">Giải pháp sạc đồng bộ giúp tối ưu hiệu suất pin, rút ngắn thời gian chờ và phù hợp nhiều môi trường vận hành công nghiệp.</p>
+          <span class="pc-link">Xem chi tiết <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </div>
+      </a>
+      <!-- Card 5: ESS -->
+      <a href="#cta-final" class="pc">
+        <img src="./ess-storage.png" alt="Hệ thống pin lưu trữ năng lượng ESS" class="pc-img" />
+        <div class="pc-overlay"></div>
+        <div class="pc-body">
+          <span class="pc-tag">Giải pháp 05</span>
+          <div class="pc-title">Hệ thống Pin Lưu Trữ Năng Lượng ESS</div>
+          <p class="pc-desc">Giải pháp lưu trữ năng lượng cho doanh nghiệp cần tăng tính chủ động, ổn định nguồn điện và nâng cao hiệu quả vận hành dài hạn.</p>
+          <span class="pc-link">Xem chi tiết <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="wrap" style="margin-top:40px;text-align:center;">
+    <a href="#cta-final" class="btn btn-outline-dark">
+      Xem danh mục sản phẩm đầy đủ
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════ S7. OEM/ODM ═══════════════════ -->
+<section id="oem">
+  <div class="oem-bg"></div>
+  <div class="oem-lines">
+    <svg viewBox="0 0 1400 700" preserveAspectRatio="none" fill="none" stroke="rgba(200,24,30,1)" stroke-width="1">
+      <path d="M0 350 L200 350 L250 300 L400 300 L450 350 L700 350"/>
+      <path d="M700 350 L800 350 L850 280 L1000 280 L1050 350 L1400 350"/>
+      <path d="M200 350 L200 150 L350 150"/>
+      <path d="M850 280 L850 150 L1100 150"/>
+      <circle cx="200" cy="350" r="4" fill="rgba(200,24,30,0.6)" stroke="none"/>
+      <circle cx="700" cy="350" r="4" fill="rgba(200,24,30,0.6)" stroke="none"/>
+      <circle cx="850" cy="280" r="4" fill="rgba(200,24,30,0.6)" stroke="none"/>
+      <circle cx="200" cy="150" r="3" fill="rgba(200,24,30,0.4)" stroke="none"/>
+    </svg>
+  </div>
+
+  <div class="wrap oem-content">
+    <div class="oem-layout">
+      <div class="oem-text rv">
+        <span class="eyebrow white">OEM / ODM / Tùy chỉnh</span>
+        <h2 class="h-section" style="color:#fff;">OEM / ODM và giải pháp tùy chỉnh theo yêu cầu kỹ thuật</h2>
+        <p class="body-lg">PKG Battery hướng tới khả năng hợp tác với doanh nghiệp và đối tác kỹ thuật cần cấu hình pin lithium theo yêu cầu — từ kích thước, điện áp, ứng dụng đến phương án tích hợp trong môi trường vận hành thực tế.</p>
+        <div class="oem-specs">
+          <div class="oem-spec"><div class="oem-spec-dot"></div><p>Cấu hình điện áp và dung lượng theo yêu cầu kỹ thuật cụ thể</p></div>
+          <div class="oem-spec"><div class="oem-spec-dot"></div><p>Tùy chỉnh form factor, housing và giao thức BMS tích hợp</p></div>
+          <div class="oem-spec"><div class="oem-spec-dot"></div><p>Hỗ trợ kỹ thuật trong suốt quá trình phát triển và tích hợp hệ thống</p></div>
+          <div class="oem-spec"><div class="oem-spec-dot"></div><p>Định hướng làm việc với doanh nghiệp trong nước, FDI và đối tác quốc tế</p></div>
+          <div class="oem-spec"><div class="oem-spec-dot"></div><p>Phát triển prototype và hỗ trợ validation trước khi sản xuất đại trà</p></div>
+        </div>
+        <div class="oem-ctas">
+          <a href="#cta-final" class="btn btn-red">
+            Trao đổi về OEM / ODM
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="#cta-final" class="btn btn-outline-white">Gửi yêu cầu dự án</a>
+        </div>
+        <p style="font-size:11px;color:rgba(255,255,255,0.2);margin-top:20px;font-style:italic;">* Phạm vi OEM/ODM cụ thể được xác nhận trong quá trình tư vấn kỹ thuật.</p>
+      </div>
+
+      <div class="oem-panel rv rv-d2">
+        <div class="oem-panel-title">Năng lực tùy chỉnh</div>
+        <div class="oem-cap-grid">
+          <div class="oem-cap">
+            <h4>Điện áp</h4>
+            <p>12V → 96V+ theo ứng dụng cụ thể</p>
+          </div>
+          <div class="oem-cap">
+            <h4>Dung lượng</h4>
+            <p>Theo yêu cầu chu kỳ & uptime</p>
+          </div>
+          <div class="oem-cap">
+            <h4>Form Factor</h4>
+            <p>Tùy biến kích thước & housing</p>
+          </div>
+          <div class="oem-cap">
+            <h4>BMS & Protocol</h4>
+            <p>CAN, RS485, UART, I²C</p>
+          </div>
+          <div class="oem-cap">
+            <h4>Chemistry</h4>
+            <p>LiFePO4 · NMC theo ứng dụng</p>
+          </div>
+          <div class="oem-cap">
+            <h4>IP Rating</h4>
+            <p>IP54 → IP67 theo môi trường</p>
+          </div>
+        </div>
+        <div class="oem-note">Mọi thông số kỹ thuật được xác nhận sau quá trình khảo sát nhu cầu thực tế của doanh nghiệp.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S8. INDUSTRIES ═══════════════════ -->
+<section id="industries">
+  <div class="wrap">
+    <div class="ind-header rv">
+      <span class="eyebrow">Ứng dụng</span>
+      <h2 class="h-section">Giải pháp cho nhiều bối cảnh vận hành công nghiệp</h2>
+    </div>
+  </div>
+  <div style="max-width:var(--container);margin:0 auto;padding:0 56px;">
+    <div class="ind-mosaic">
+      <div class="ind-card tall rv">
+        <img src="./forklift.png" alt="Logistics kho vận" class="ind-img" />
+        <div class="ind-overlay"></div>
+        <div class="ind-body">
+          <div class="ind-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+          <div class="ind-name">Logistics & Kho vận</div>
+          <div class="ind-tag">Xe nâng · Băng tải · Kho tự động</div>
+        </div>
+      </div>
+      <div class="ind-card rv rv-d1">
+        <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&q=80&auto=format&fit=crop" alt="Nhà máy sản xuất" class="ind-img" />
+        <div class="ind-overlay"></div>
+        <div class="ind-body">
+          <div class="ind-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M3 9h6"/><path d="M3 15h6"/></svg></div>
+          <div class="ind-name">Nhà máy & Sản xuất</div>
+          <div class="ind-tag">MES · Dây chuyền · Máy CNC</div>
+        </div>
+      </div>
+      <div class="ind-card rv rv-d2">
+        <img src="./agv-robot.png" alt="AGV tự động hóa" class="ind-img" />
+        <div class="ind-overlay"></div>
+        <div class="ind-body">
+          <div class="ind-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><path d="M12 8v13"/><path d="M9 12H3"/><path d="M21 12h-6"/></svg></div>
+          <div class="ind-name">AGV / Robot / Tự động hóa</div>
+          <div class="ind-tag">Smart factory · WMS · AMHS</div>
+        </div>
+      </div>
+      <div class="ind-card rv">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80&auto=format&fit=crop" alt="Resort du lịch" class="ind-img" />
+        <div class="ind-overlay"></div>
+        <div class="ind-body">
+          <div class="ind-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div class="ind-name">Resort / Khu du lịch</div>
+          <div class="ind-tag">Xe điện golf · Buggy · Mobility</div>
+        </div>
+      </div>
+      <div class="ind-card rv rv-d1">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80&auto=format&fit=crop" alt="Khu công nghiệp" class="ind-img" />
+        <div class="ind-overlay"></div>
+        <div class="ind-body">
+          <div class="ind-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="ind-name">Khu công nghiệp</div>
+          <div class="ind-tag">FDI · KCN · CXK</div>
+        </div>
+      </div>
+      <div class="ind-card rv rv-d2">
+        <img src="./ess-storage.png" alt="ESS lưu trữ năng lượng" class="ind-img" />
+        <div class="ind-overlay"></div>
+        <div class="ind-body">
+          <div class="ind-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg></div>
+          <div class="ind-name">Lưu trữ năng lượng ESS</div>
+          <div class="ind-tag">Solar · Peak shaving · Backup power</div>
+        </div>
+      </div>
+      <div class="ind-card rv">
+        <img src="https://images.unsplash.com/photo-1625603741640-1a7f7ed2855b?w=600&q=80&auto=format&fit=crop" alt="Xe điện công nghiệp" class="ind-img" />
+        <div class="ind-overlay"></div>
+        <div class="ind-body">
+          <div class="ind-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+          <div class="ind-name">Xe điện công nghiệp</div>
+          <div class="ind-tag">Tow tractor · Floor washer · Special vehicles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  @media (max-width: 1100px) { .ind-mosaic { padding: 0 36px; } }
+</section>
+
+<!-- ═══════════════════ S9. WHY PKG ═══════════════════ -->
+<section id="why">
+  <div class="wrap">
+    <div class="why-layout">
+      <div class="why-sticky rv">
+        <span class="eyebrow">Tại sao chọn PKG</span>
+        <h2 class="h-section">Lý do doanh nghiệp chọn PKG Battery cho bài toán năng lượng công nghiệp</h2>
+        <p class="body-lg">Không phải vì giá rẻ nhất — mà vì PKG Battery hiểu bài toán vận hành thực tế và xây dựng giải pháp bền vững cho doanh nghiệp.</p>
+        <div class="why-cta-block">
+          <p>Mỗi doanh nghiệp có bài toán năng lượng riêng. Trao đổi với đội ngũ kỹ thuật PKG Battery để nhận đánh giá phù hợp và đề xuất giải pháp tối ưu.</p>
+          <a href="#cta-final" class="btn btn-red">
+            Nhận tư vấn ngay
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="usp-list rv rv-d2">
+        <div class="usp">
+          <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+          <div class="usp-body"><h3>Giải pháp thiết kế theo nhu cầu vận hành</h3><p>Mỗi dự án PKG Battery đều bắt đầu từ bài toán thực tế của doanh nghiệp, không áp đặt sản phẩm có sẵn.</p></div>
+        </div>
+        <div class="usp">
+          <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="usp-body"><h3>Tư duy kỹ thuật & đồng hành triển khai thực tế</h3><p>Đội ngũ kỹ thuật PKG Battery tham gia trực tiếp từ khảo sát đến vận hành, không chỉ tư vấn từ xa.</p></div>
+        </div>
+        <div class="usp">
+          <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div class="usp-body"><h3>Tối ưu uptime, hiệu quả và TCO dài hạn</h3><p>Giải pháp PKG Battery giúp giảm downtime, kéo dài tuổi thọ thiết bị và tối ưu tổng chi phí sở hữu trong toàn vòng đời.</p></div>
+        </div>
+        <div class="usp">
+          <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+          <div class="usp-body"><h3>Phục vụ đa ứng dụng & khả năng tùy chỉnh cao</h3><p>Từ xe nâng điện, AGV đến ESS — PKG Battery có năng lực cấu hình theo từng loại thiết bị và môi trường cụ thể.</p></div>
+        </div>
+        <div class="usp">
+          <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="usp-body"><h3>Phục vụ doanh nghiệp Việt Nam, FDI & đối tác quốc tế</h3><p>PKG Battery sẵn sàng làm việc với đối tác trong nước lẫn quốc tế, với định hướng và quy trình làm việc chuyên nghiệp.</p></div>
+        </div>
+        <div class="usp">
+          <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div class="usp-body"><h3>Hệ thống hỗ trợ kỹ thuật & hậu mãi bài bản</h3><p>Phản hồi nhanh, xử lý sự cố thực tế và duy trì hỗ trợ trong suốt vòng đời sản phẩm tại doanh nghiệp.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S10. CAPABILITY ═══════════════════ -->
+<section id="capability">
+  <div class="cap-accent1"></div>
+  <div class="cap-accent2"></div>
+  <div class="cap-pattern"></div>
+  <div class="wrap cap-content">
+    <div class="cap-header rv">
+      <span class="eyebrow white">Năng lực & Chứng chỉ</span>
+      <h2 class="h-section" style="color:#fff;">Bằng chứng năng lực – không chỉ là lời cam kết</h2>
+      <p class="body-lg">Con số, chứng chỉ, mạng lưới và hình ảnh thực tế — tất cả phản ánh năng lực thật của PKG Battery.</p>
+    </div>
+
+    <div class="cap-hero-block rv">
+      <div>
+        <div class="cap-hero-num">8<span>+</span></div>
+        <div class="cap-hero-label">Điểm đại lý toàn quốc</div>
+        <div class="cap-hero-note">* Đang trong quá trình mở rộng. Số liệu sẽ được cập nhật chính thức.</div>
+      </div>
+      <div class="cap-stats">
+        <div class="cap-stat">
+          <div class="cs-num">5<em>+</em></div>
+          <div class="cs-label">Nhóm ứng dụng công nghiệp được phục vụ</div>
+          <div class="cs-note">Xe nâng · AGV · Du lịch · ESS · Sạc</div>
+        </div>
+        <div class="cap-stat">
+          <div class="cs-num">IEC<em> </em>62619</div>
+          <div class="cs-label">Tiêu chuẩn an toàn pin lithium áp dụng</div>
+          <div class="cs-note">Chuẩn quốc tế cho pin lithium công nghiệp</div>
+        </div>
+        <div class="cap-stat">
+          <div class="cs-num">OEM<em>/</em>ODM</div>
+          <div class="cs-label">Năng lực tùy chỉnh theo yêu cầu kỹ thuật</div>
+          <div class="cs-note">Phạm vi cụ thể xác nhận qua khảo sát</div>
+        </div>
+        <div class="cap-stat">
+          <div class="cs-num">B2B<em>+</em></div>
+          <div class="cs-label">Phục vụ doanh nghiệp trong nước & FDI</div>
+          <div class="cs-note">Vietnam · FDI · International Partners</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:72px;" class="rv">
+      <div class="cap-cert-title">Tiêu chuẩn & Chứng nhận</div>
+      <div class="cert-grid">
+        <div class="cert-card">
+          <div class="cert-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div><div class="cert-name">IEC 62619</div><div class="cert-desc">Safety for lithium cells</div><div class="cert-note">* Cần xác nhận với PKG Battery</div></div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg></div>
+          <div><div class="cert-name">UN 38.3</div><div class="cert-desc">Transport testing for lithium batteries</div><div class="cert-note">* Cần xác nhận với PKG Battery</div></div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+          <div><div class="cert-name">ISO 9001</div><div class="cert-desc">Quality management system</div><div class="cert-note">* Cần xác nhận với PKG Battery</div></div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div><div class="cert-name">CE / RoHS</div><div class="cert-desc">EU compliance certification</div><div class="cert-note">* Cần xác nhận với PKG Battery</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Company gallery strip -->
+    <div style="margin-top:72px;" class="rv">
+      <div class="cap-cert-title">Hình ảnh doanh nghiệp & Năng lực</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;">
+        <img src="./forklift.png" alt="Xe nâng điện" style="width:100%;aspect-ratio:4/3;object-fit:cover;filter:brightness(0.85);" />
+        <img src="./agv-robot.png" alt="AGV robot" style="width:100%;aspect-ratio:4/3;object-fit:cover;filter:brightness(0.85);" />
+        <img src="./ess-storage.png" alt="ESS system" style="width:100%;aspect-ratio:4/3;object-fit:cover;filter:brightness(0.85);" />
+        <img src="./battery-module.png" alt="Battery module" style="width:100%;aspect-ratio:4/3;object-fit:cover;filter:brightness(0.85);" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S11. PROCESS ═══════════════════ -->
+<section id="process">
+  <div class="wrap">
+    <div class="proc-header rv">
+      <span class="eyebrow">Quy trình làm việc</span>
+      <h2 class="h-section">Quy trình tư vấn rõ ràng, triển khai có kiểm soát</h2>
+    </div>
+
+    <div class="proc-track">
+      <div class="proc-step" style="--progress:100%;">
+        <div class="proc-step-line"></div>
+        <span class="proc-step-num">Bước 01</span>
+        <div class="proc-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
+        <h3>Tiếp nhận & đánh giá nhu cầu</h3>
+        <p>Trao đổi trực tiếp để nắm rõ môi trường vận hành, loại thiết bị, chu kỳ sử dụng và mục tiêu kỹ thuật của doanh nghiệp.</p>
+      </div>
+      <div class="proc-step">
+        <div class="proc-step-line"></div>
+        <span class="proc-step-num">Bước 02</span>
+        <div class="proc-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h3>Phân tích & đề xuất cấu hình</h3>
+        <p>Dựa trên dữ liệu thu thập, PKG Battery xây dựng phương án cấu hình pin, bộ sạc và trạm sạc tối ưu.</p>
+      </div>
+      <div class="proc-step">
+        <div class="proc-step-line"></div>
+        <span class="proc-step-num">Bước 03</span>
+        <div class="proc-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></div>
+        <h3>Thiết kế & tùy chỉnh giải pháp</h3>
+        <p>Thiết kế giải pháp theo yêu cầu và điều kiện kỹ thuật thực tế — bao gồm cả OEM/ODM nếu cần.</p>
+      </div>
+      <div class="proc-step">
+        <div class="proc-step-line"></div>
+        <span class="proc-step-num">Bước 04</span>
+        <div class="proc-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg></div>
+        <h3>Triển khai & hướng dẫn vận hành</h3>
+        <p>Đội ngũ kỹ thuật trực tiếp lắp đặt, commissioning và đào tạo vận hành cho đội ngũ doanh nghiệp.</p>
+      </div>
+      <div class="proc-step" style="border-right:none;">
+        <div class="proc-step-line"></div>
+        <span class="proc-step-num">Bước 05</span>
+        <div class="proc-step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3>Hỗ trợ kỹ thuật & hậu mãi</h3>
+        <p>PKG Battery duy trì hỗ trợ kỹ thuật, bảo trì định kỳ và phản hồi sự cố nhanh trong suốt vòng đời sản phẩm.</p>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:56px;" class="rv">
+      <a href="#cta-final" class="btn btn-red">
+        Bắt đầu quy trình tư vấn
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S12. DEALERS ═══════════════════ -->
+<section id="dealers">
+  <div class="wrap">
+    <div class="dealer-layout">
+      <div>
+        <div class="dealer-header rv">
+          <span class="eyebrow">Mạng lưới phân phối</span>
+          <h2 class="h-section">Đại lý và hệ thống phân phối trên toàn Việt Nam</h2>
+          <p class="body-md" style="margin-top:16px;">PKG Battery duy trì mạng lưới đại lý và điểm hỗ trợ kỹ thuật tại các trung tâm công nghiệp và khu kinh tế trọng điểm, đảm bảo khả năng phục vụ nhanh và hiệu quả.</p>
+        </div>
+
+        <!-- Stylized Vietnam map using SVG -->
+        <div class="map-container rv rv-d1">
+          <svg class="map-svg" viewBox="0 0 280 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Simplified Vietnam silhouette path -->
+            <path d="M155 20 C165 18 175 22 178 35 C185 50 180 65 172 75 C165 85 155 90 148 100 C142 110 148 115 145 125 C140 138 130 145 128 158 C125 172 132 182 130 195 C128 208 118 215 115 228 C112 242 120 252 118 265 C115 280 105 288 102 302 C99 318 108 328 106 342 C103 358 92 366 90 380 C87 394 95 402 94 416 C92 432 80 440 79 454 C77 468 85 476 85 490 C85 504 78 512 76 525 C75 532 78 540 82 545 C86 550 92 548 96 545 C104 540 112 525 118 510 C125 495 128 480 132 465 C136 450 140 435 145 420 C150 405 158 392 162 377 C166 362 164 345 168 330 C172 315 180 302 182 287 C184 272 180 258 182 243 C184 228 190 216 190 200 C190 184 185 170 182 155 C179 140 180 125 178 110 C175 95 168 82 165 68 C162 52 158 38 155 20Z" fill="#E8E8E8" stroke="#D0D0D0" stroke-width="1.5"/>
+            <!-- Decorative grid lines -->
+            <path d="M80 100 H200 M80 200 H200 M80 300 H200 M80 400 H200 M80 500 H200" stroke="rgba(200,24,30,0.06)" stroke-width="0.5" stroke-dasharray="4 4"/>
+            <path d="M100 20 V540 M140 20 V540 M180 20 V540" stroke="rgba(200,24,30,0.06)" stroke-width="0.5" stroke-dasharray="4 4"/>
+            <!-- Dealer markers with pulse rings -->
+            <!-- Hanoi -->
+            <g class="map-marker" id="marker-hn" transform="translate(148,110)">
+              <circle cx="0" cy="0" r="12" fill="rgba(200,24,30,0.08)" class="map-marker-pulse"/>
+              <circle cx="0" cy="0" r="6" fill="var(--red)" stroke="white" stroke-width="1.5"/>
+              <title>Hà Nội</title>
+            </g>
+            <!-- Hai Phong -->
+            <g class="map-marker" id="marker-hp" transform="translate(168,125)">
+              <circle cx="0" cy="0" r="5" fill="var(--red)" stroke="white" stroke-width="1.5"/>
+              <title>Hải Phòng</title>
+            </g>
+            <!-- Da Nang -->
+            <g class="map-marker" id="marker-dn" transform="translate(152,310)">
+              <circle cx="0" cy="0" r="5" fill="var(--red)" stroke="white" stroke-width="1.5"/>
+              <title>Đà Nẵng</title>
+            </g>
+            <!-- HCMC -->
+            <g class="map-marker" id="marker-hcm" transform="translate(115,460)">
+              <circle cx="0" cy="0" r="12" fill="rgba(200,24,30,0.08)" class="map-marker-pulse"/>
+              <circle cx="0" cy="0" r="6" fill="var(--red)" stroke="white" stroke-width="1.5"/>
+              <title>TP. Hồ Chí Minh</title>
+            </g>
+            <!-- Binh Duong -->
+            <g class="map-marker" id="marker-bd" transform="translate(107,440)">
+              <circle cx="0" cy="0" r="5" fill="var(--red)" stroke="white" stroke-width="1.5"/>
+              <title>Bình Dương</title>
+            </g>
+            <!-- Long An -->
+            <g class="map-marker" id="marker-la" transform="translate(100,475)">
+              <circle cx="0" cy="0" r="4" fill="var(--red)" stroke="white" stroke-width="1.5"/>
+              <title>Long An</title>
+            </g>
+            <!-- Can Tho -->
+            <g class="map-marker" id="marker-ct" transform="translate(98,500)">
+              <circle cx="0" cy="0" r="4" fill="var(--red)" stroke="white" stroke-width="1.5"/>
+              <title>Cần Thơ</title>
+            </g>
+            <!-- Dong Nai -->
+            <g class="map-marker" id="marker-dn2" transform="translate(125,450)">
+              <circle cx="0" cy="0" r="4" fill="var(--red)" stroke="white" stroke-width="1.5"/>
+              <title>Đồng Nai</title>
+            </g>
+          </svg>
+          <p style="text-align:center;font-size:11px;color:var(--gray-400);margin-top:12px;font-style:italic;">* Bản đồ mạng lưới đại lý — đang mở rộng</p>
+        </div>
+      </div>
+
+      <div class="rv rv-d2">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--red);margin-bottom:20px;">Danh sách đại lý</div>
+        <div class="dealer-list">
+          <div class="dl-card">
+            <div class="dl-dot"></div>
+            <div><div class="dl-city">Hà Nội</div><div class="dl-name">Đại lý khu vực Hà Nội & miền Bắc</div><div class="dl-note">* Thông tin đang xác nhận với PKG Battery</div></div>
+          </div>
+          <div class="dl-card">
+            <div class="dl-dot"></div>
+            <div><div class="dl-city">Hải Phòng</div><div class="dl-name">Đại lý Hải Phòng & KCN phía Bắc</div><div class="dl-note">* Thông tin đang xác nhận với PKG Battery</div></div>
+          </div>
+          <div class="dl-card">
+            <div class="dl-dot"></div>
+            <div><div class="dl-city">Đà Nẵng</div><div class="dl-name">Đại lý miền Trung</div><div class="dl-note">* Thông tin đang xác nhận với PKG Battery</div></div>
+          </div>
+          <div class="dl-card">
+            <div class="dl-dot"></div>
+            <div><div class="dl-city">TP. Hồ Chí Minh</div><div class="dl-name">Đại lý khu vực TP.HCM & miền Nam</div><div class="dl-note">* Thông tin đang xác nhận với PKG Battery</div></div>
+          </div>
+          <div class="dl-card">
+            <div class="dl-dot"></div>
+            <div><div class="dl-city">Bình Dương</div><div class="dl-name">Đại lý KCN Bình Dương</div><div class="dl-note">* Thông tin đang xác nhận với PKG Battery</div></div>
+          </div>
+          <div class="dl-card">
+            <div class="dl-dot"></div>
+            <div><div class="dl-city">Đồng Nai</div><div class="dl-name">Đại lý KCN Đồng Nai</div><div class="dl-note">* Thông tin đang xác nhận với PKG Battery</div></div>
+          </div>
+          <div class="dl-card">
+            <div class="dl-dot"></div>
+            <div><div class="dl-city">Long An</div><div class="dl-name">Đại lý Long An & ĐBSCL</div><div class="dl-note">* Thông tin đang xác nhận với PKG Battery</div></div>
+          </div>
+          <div class="dl-card">
+            <div class="dl-dot"></div>
+            <div><div class="dl-city">Cần Thơ</div><div class="dl-name">Đại lý Cần Thơ & ĐBSCL</div><div class="dl-note">* Thông tin đang xác nhận với PKG Battery</div></div>
+          </div>
+        </div>
+        <div style="margin-top:24px;">
+          <a href="#cta-final" class="btn btn-outline-dark">
+            Xem hệ thống đại lý đầy đủ
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S13. NEWS ═══════════════════ -->
+<section id="news">
+  <div class="wrap">
+    <div class="news-header rv">
+      <div>
+        <span class="eyebrow">Tin tức & Kiến thức</span>
+        <h2 class="h-section">Cập nhật từ PKG Battery & kiến thức kỹ thuật ngành</h2>
+      </div>
+      <a href="#news" class="btn btn-outline-dark" style="flex-shrink:0;">
+        Xem tất cả bài viết
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="news-grid rv rv-d1">
+      <!-- Featured -->
+      <div class="news-card">
+        <img src="./forklift.png" alt="Pin lithium vs ắc quy chì" class="news-thumb" />
+        <div class="news-body">
+          <span class="news-cat">Kiến thức kỹ thuật</span>
+          <div class="news-title">Pin lithium vs ắc quy chì cho xe nâng điện: So sánh chi phí vận hành thực tế và TCO dài hạn</div>
+          <div class="news-excerpt">Nhiều doanh nghiệp vẫn còn phân vân giữa pin lithium và ắc quy chì vì giá đầu tư ban đầu. Bài viết này phân tích toàn diện chi phí vận hành, bảo trì, tuổi thọ và tổng chi phí sở hữu thực tế...</div>
+          <div class="news-meta">
+            <span class="news-date">Tháng 4, 2026</span>
+            <span class="news-read">· 8 phút đọc</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="news-card">
+        <img src="./agv-robot.png" alt="AGV automation" class="news-thumb" />
+        <div class="news-body">
+          <span class="news-cat">Xu hướng tự động hóa</span>
+          <div class="news-title">AGV và AMR trong nhà máy thông minh: Vai trò của hệ thống pin lithium trong tự động hóa công nghiệp</div>
+          <div class="news-excerpt">Tự động hóa đang thay đổi cách nhà máy vận hành. Pin lithium chất lượng cao là nền tảng để AGV và robot hoạt động ổn định...</div>
+          <div class="news-meta">
+            <span class="news-date">Tháng 3, 2026</span>
+            <span class="news-read">· 6 phút đọc</span>
+          </div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="news-card">
+        <img src="./ess-storage.png" alt="ESS energy storage" class="news-thumb" />
+        <div class="news-body">
+          <span class="news-cat">Lưu trữ năng lượng</span>
+          <div class="news-title">ESS cho doanh nghiệp sản xuất: Giải pháp giảm chi phí điện và tăng tính chủ động nguồn điện</div>
+          <div class="news-excerpt">Với điện năng ngày càng trở thành yếu tố chi phí lớn, ESS pin lithium là giải pháp hiệu quả để doanh nghiệp kiểm soát chi phí...</div>
+          <div class="news-meta">
+            <span class="news-date">Tháng 3, 2026</span>
+            <span class="news-read">· 5 phút đọc</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S14. CASES ═══════════════════ -->
+<section id="cases">
+  <div class="wrap">
+    <div class="cases-header rv">
+      <span class="eyebrow">Ứng dụng thực tế</span>
+      <h2 class="h-section">Giải pháp được xây dựng cho các bối cảnh vận hành thực tế</h2>
+    </div>
+
+    <div class="cases-grid rv rv-d1">
+      <div class="case-card">
+        <img src="./forklift.png" alt="Xe nâng kho logistics" class="case-header-img" />
+        <div class="case-body">
+          <span class="case-sector">Kho vận & Logistics</span>
+          <h3>Chuyển đổi đội xe nâng điện sang pin lithium tại kho hàng logistics</h3>
+          <p>Doanh nghiệp logistics với 20+ xe nâng hoạt động 2 ca. Bài toán: giảm thời gian dừng sạc, giảm bảo trì và nâng hiệu suất năng lượng tổng thể.</p>
+          <div class="case-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>Tăng uptime, giảm 35% chi phí bảo trì</div>
+          <div class="case-note">* Mô hình ứng dụng tiêu biểu. Case study thực tế cần xác nhận với PKG Battery.</div>
+        </div>
+      </div>
+      <div class="case-card">
+        <img src="./agv-robot.png" alt="AGV nhà máy" class="case-header-img" />
+        <div class="case-body">
+          <span class="case-sector">Tự động hóa & Smart Factory</span>
+          <h3>Tích hợp pin lithium cho đội AGV trong nhà máy điện tử FDI</h3>
+          <p>Nhà máy FDI cần pin lithium tích hợp vào 15 AGV với yêu cầu kỹ thuật nghiêm ngặt về protocol BMS, charging cycle và nhiệt độ vận hành.</p>
+          <div class="case-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>Zero downtime sau 6 tháng vận hành</div>
+          <div class="case-note">* Mô hình ứng dụng tiêu biểu. Case study thực tế cần xác nhận với PKG Battery.</div>
+        </div>
+      </div>
+      <div class="case-card">
+        <img src="./ess-storage.png" alt="ESS khu công nghiệp" class="case-header-img" />
+        <div class="case-body">
+          <span class="case-sector">Lưu trữ năng lượng ESS</span>
+          <h3>Hệ thống ESS pin lithium cho nhà máy sản xuất khu công nghiệp</h3>
+          <p>Nhà máy sản xuất gặp vấn đề với biến động điện lưới và chi phí tiêu thụ điện cao trong giờ cao điểm. Giải pháp ESS giúp kiểm soát chi phí và ổn định nguồn điện.</p>
+          <div class="case-result"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>Giảm 28% chi phí điện trong 12 tháng</div>
+          <div class="case-note">* Mô hình ứng dụng tiêu biểu. Case study thực tế cần xác nhận với PKG Battery.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ S15. CTA FINAL ═══════════════════ -->
+<section id="cta-final">
+  <div class="cta-red-depth"></div>
+  <div class="cta-lines">
+    <svg viewBox="0 0 1400 700" preserveAspectRatio="none" fill="none" stroke="rgba(200,24,30,1)" stroke-width="0.8">
+      <path d="M0 200 L300 200 L350 150 L600 150 L650 200 L900 200 L950 120 L1200 120"/>
+      <path d="M0 500 L200 500 L250 450 L500 450 L550 500 L800 500"/>
+      <path d="M350 150 L350 50 L500 50"/>
+      <path d="M950 120 L950 30 L1100 30"/>
+      <circle cx="350" cy="150" r="3" fill="rgba(200,24,30,0.5)" stroke="none"/>
+      <circle cx="650" cy="200" r="3" fill="rgba(200,24,30,0.5)" stroke="none"/>
+      <circle cx="950" cy="120" r="3" fill="rgba(200,24,30,0.5)" stroke="none"/>
+    </svg>
+  </div>
+
+  <div class="wrap">
+    <div class="cta-layout">
+      <div class="cta-left rv">
+        <span class="eyebrow white">Bắt đầu ngay hôm nay</span>
+        <h2 class="h-section">Nhận tư vấn kỹ thuật cho bài toán pin lithium của doanh nghiệp</h2>
+        <p class="body-lg">Trao đổi với đội ngũ PKG Battery để được đánh giá nhu cầu vận hành thực tế, đề xuất cấu hình phù hợp và định hướng giải pháp tối ưu hơn cho chi phí dài hạn.</p>
+        <ul class="cta-benefits">
+          <li class="cta-benefit"><div class="cta-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Đánh giá nhu cầu vận hành miễn phí</li>
+          <li class="cta-benefit"><div class="cta-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Phân tích cấu hình pin & sạc phù hợp</li>
+          <li class="cta-benefit"><div class="cta-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Định hướng giải pháp tối ưu TCO dài hạn</li>
+          <li class="cta-benefit"><div class="cta-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>Trao đổi về OEM / ODM nếu cần</li>
+        </ul>
+        <div class="cta-ctas">
+          <a href="tel:+84000000000" class="btn btn-red">
+            Gọi ngay cho chuyên gia
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1H6.59a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </a>
+          <a href="#cta-final" class="btn btn-outline-white">Gửi yêu cầu dự án</a>
+        </div>
+      </div>
+
+      <div class="cta-form-wrap rv rv-d2">
+        <div class="cta-form-title">Gửi yêu cầu tư vấn kỹ thuật</div>
+        <div class="cta-form-sub">Đội ngũ PKG Battery sẽ phản hồi trong vòng 24 giờ làm việc.</div>
+        <form id="consult-form" onsubmit="handleForm(event)">
+          <div class="ff-row">
+            <div class="ff">
+              <label for="cf-name">Họ và tên</label>
+              <input id="cf-name" type="text" placeholder="Nguyễn Văn A" required />
+            </div>
+            <div class="ff">
+              <label for="cf-company">Công ty</label>
+              <input id="cf-company" type="text" placeholder="Công ty TNHH ABC" required />
+            </div>
+          </div>
+          <div class="ff-row">
+            <div class="ff">
+              <label for="cf-phone">Số điện thoại</label>
+              <input id="cf-phone" type="tel" placeholder="0901 234 567" required />
+            </div>
+            <div class="ff">
+              <label for="cf-email">Email</label>
+              <input id="cf-email" type="email" placeholder="contact@company.com" />
+            </div>
+          </div>
+          <div class="ff">
+            <label for="cf-need">Nhu cầu / Ứng dụng</label>
+            <select id="cf-need">
+              <option value="">Chọn ứng dụng...</option>
+              <option>Pin xe nâng điện</option>
+              <option>Pin AGV / Robot</option>
+              <option>Pin xe điện du lịch</option>
+              <option>Bộ sạc / Trạm sạc</option>
+              <option>ESS lưu trữ năng lượng</option>
+              <option>OEM / ODM</option>
+              <option>Khác</option>
+            </select>
+          </div>
+          <div class="ff">
+            <label for="cf-msg">Mô tả nhu cầu (tuỳ chọn)</label>
+            <textarea id="cf-msg" placeholder="Mô tả sơ bộ về quy mô, số lượng thiết bị, môi trường vận hành..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            Gửi yêu cầu tư vấn →
+          </button>
+          <div class="form-privacy">Thông tin của bạn được bảo mật và chỉ dùng để liên hệ tư vấn.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#hero" class="nav-logo" style="display:inline-flex;">
+          <div class="logo-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg></div>
+          <span class="logo-text">PKG BATTERY</span>
+        </a>
+        <p>Đối tác pin lithium & sạc công nghiệp toàn diện cho doanh nghiệp Việt Nam, FDI và đối tác quốc tế.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Giải pháp</h4>
+        <ul>
+          <li><a href="#products">Pin xe nâng điện</a></li>
+          <li><a href="#products">Pin AGV / Robot</a></li>
+          <li><a href="#products">Pin xe điện du lịch</a></li>
+          <li><a href="#products">Bộ sạc – Trạm sạc</a></li>
+          <li><a href="#products">ESS lưu trữ năng lượng</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Doanh nghiệp</h4>
+        <ul>
+          <li><a href="#about">Về PKG Battery</a></li>
+          <li><a href="#oem">OEM / ODM</a></li>
+          <li><a href="#capability">Năng lực & Chứng chỉ</a></li>
+          <li><a href="#process">Quy trình làm việc</a></li>
+          <li><a href="#dealers">Hệ thống đại lý</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Tài nguyên</h4>
+        <ul>
+          <li><a href="#news">Tin tức & Kiến thức</a></li>
+          <li><a href="#cases">Dự án tiêu biểu</a></li>
+          <li><a href="#industries">Ứng dụng theo ngành</a></li>
+          <li><a href="#cta-final">Liên hệ tư vấn</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Liên hệ</h4>
+        <ul>
+          <li><a href="tel:+84000000000">Hotline kỹ thuật</a></li>
+          <li><a href="mailto:info@pkgbattery.com">Email doanh nghiệp</a></li>
+          <li><a href="#cta-final">Gửi yêu cầu dự án</a></li>
+          <li><a href="#oem">Trao đổi OEM / ODM</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 PKG Battery. All rights reserved.</div>
+      <div class="footer-legal">
+        <a href="#">Chính sách bảo mật</a>
+        <a href="#">Điều khoản sử dụng</a>
+        <a href="#">Chính sách bảo hành</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Về đầu trang">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<script>
+  // ── Nav scroll behaviour
+  const nav  = document.getElementById('nav');
+  const btt  = document.getElementById('btt');
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    nav.classList.toggle('solid', y > 60);
+    btt.classList.toggle('show',  y > 500);
+  }, { passive: true });
+
+  // ── Scroll reveal
+  const revealEls = document.querySelectorAll('.rv');
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => ro.observe(el));
+
+  // ── Counter animation
+  function animateCounter(el, target, suffix = '') {
+    let start = 0;
+    const dur = 1600;
+    const step = (timestamp) => {
+      if (!el._start) el._start = timestamp;
+      const progress = Math.min((timestamp - el._start) / dur, 1);
+      const eased = 1 - Math.pow(1 - progress, 4);
+      el.textContent = Math.floor(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // ── Marquee pause on hover
+  document.querySelectorAll('.marquee-track').forEach(track => {
+    track.addEventListener('mouseenter', () => { track.style.animationPlayState = 'paused'; });
+    track.addEventListener('mouseleave', () => { track.style.animationPlayState = 'running'; });
+  });
+
+  // ── Form handler
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Đã gửi — PKG Battery sẽ liên hệ trong 24h';
+    btn.style.background = '#1a6b1a';
+    btn.disabled = true;
+  }
+
+  // ── Product showcase image fallback
+  document.querySelectorAll('.pc-img, .ind-img, .ac-main, .ac-sub').forEach(img => {
+    img.addEventListener('error', function() {
+      this.style.display = 'none';
+    });
+  });
+</script>
+</body>
+</html>
