@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ellipse Physics</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #06060f; display: flex; align-items: center; justify-content: center; height: 100vh; }
+    canvas { display: block; }
+    .label {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.25); font: 11px/1 'Inter', sans-serif;
+      letter-spacing: 2px; text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="label">Gravitational Ellipse Physics</div>
+<script>
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+const W = 520, H = 520;
+canvas.width = W; canvas.height = H;
+
+// ── Ellipse params (tilted ~12° like the SVG) ──────────────────────────────
+const cx  = W / 2, cy = H / 2 + 10;
+const A   = 200;          // semi-major (tall axis)
+const B   = 130;          // semi-minor
+const PHI = -12 * Math.PI / 180; // rotation of major axis from vertical → tilt right
+
+function pos(t) {
+  return {
+    x: cx + A * Math.cos(t) * Math.cos(PHI) - B * Math.sin(t) * Math.sin(PHI),
+    y: cy + A * Math.cos(t) * Math.sin(PHI) + B * Math.sin(t) * Math.cos(PHI)
+  };
+}
+
+// Tangent vector (normalized) + arc-speed ds/dt at parameter t
+function tangent(t) {
+  const dx = -A * Math.sin(t) * Math.cos(PHI) - B * Math.cos(t) * Math.sin(PHI);
+  const dy = -A * Math.sin(t) * Math.sin(PHI) + B * Math.cos(t) * Math.cos(PHI);
+  const len = Math.hypot(dx, dy);
+  return { tx: dx / len, ty: dy / len, len };
+}
+
+// ── Physics state ──────────────────────────────────────────────────────────
+const G       = 320;    // gravity px/s²
+const DAMP    = 0.9999; // almost frictionless
+const MIN_SPD = 25;
+
+// Start just past the topmost point
+let topT = 0, minY = Infinity;
+for (let i = 0; i < 1000; i++) {
+  const a = (i / 1000) * 2 * Math.PI;
+  const p = pos(a);
+  if (p.y < minY) { minY = p.y; topT = a; }
+}
+let t     = topT + 0.15;
+let speed = 55;  // px / s
+
+// ── Trail ─────────────────────────────────────────────────────────────────
+const TRAIL = 70;
+const trail  = [];
+
+// ── Height range for colour mapping ───────────────────────────────────────
+let loY = -Infinity;
+for (let i = 0; i < 360; i++) { const p = pos(i * Math.PI / 180); if (p.y > loY) loY = p.y; }
+const hRange = loY - minY;
+
+// ── Render loop ───────────────────────────────────────────────────────────
+let last = null;
+
+function frame(ts) {
+  if (!last) last = ts;
+  const dt = Math.min((ts - last) / 1000, 0.04);
+  last = ts;
+
+  // Sub-step integration (4 steps per frame for accuracy)
+  const sub = 4;
+  for (let s = 0; s < sub; s++) {
+    const { ty, len } = tangent(t);
+    // Tangential gravity: ty > 0 → tangent points down → ball accelerates
+    speed += G * ty * (dt / sub);
+    speed  = Math.max(speed, MIN_SPD) * DAMP;
+    t     += (speed / len) * (dt / sub);
+  }
+  t = ((t % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+
+  const p = pos(t);
+  trail.push({ x: p.x, y: p.y });
+  if (trail.length > TRAIL) trail.shift();
+
+  // speedRatio: 0 = at top (slow), 1 = at bottom (fast)
+  const sr = Math.min((p.y - minY) / hRange, 1);
+
+  // ── Clear ─────────────────────────────────────────────────────────────
+  ctx.clearRect(0, 0, W, H);
+
+  // ── Ellipse track ─────────────────────────────────────────────────────
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(PHI);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, A, B, 0, 0, 2 * Math.PI);
+  ctx.strokeStyle = 'rgba(200,210,255,0.10)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.restore();
+
+  // ── Trail ─────────────────────────────────────────────────────────────
+  for (let i = 1; i < trail.length; i++) {
+    const f = i / trail.length;          // 0 → 1 (old → new)
+    const a = f * 0.9;
+    const r = 1 + f * 6;
+    // Colour: cool blue (top/slow) → hot orange-red (bottom/fast)
+    const R = Math.round(80  + 175 * f);
+    const G2= Math.round(120 * (1 - f * 0.8));
+    const B2= Math.round(220 * (1 - f));
+    ctx.beginPath();
+    ctx.arc(trail[i].x, trail[i].y, r, 0, 2 * Math.PI);
+    ctx.fillStyle = `rgba(${R},${G2},${B2},${a})`;
+    ctx.fill();
+  }
+
+  // ── Dot glow ──────────────────────────────────────────────────────────
+  const glowR = 20 + sr * 16;
+  const rC = Math.round(255);
+  const gC = Math.round(80 + 100 * (1 - sr));
+  const bC = Math.round(20 + 180 * (1 - sr));
+  const grd = ctx.createRadialGradient(p.x, p.y, 1, p.x, p.y, glowR);
+  grd.addColorStop(0, `rgba(${rC},${gC},${bC},${0.55 + sr * 0.3})`);
+  grd.addColorStop(1, `rgba(${rC},${gC},${bC},0)`);
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, glowR, 0, 2 * Math.PI);
+  ctx.fillStyle = grd;
+  ctx.fill();
+
+  // ── Dot core ──────────────────────────────────────────────────────────
+  const dotR = 5.5 + sr * 2;
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, dotR, 0, 2 * Math.PI);
+  ctx.fillStyle = `rgb(${rC},${gC},${bC})`;
+  ctx.fill();
+  // White specular highlight
+  ctx.beginPath();
+  ctx.arc(p.x - dotR * 0.3, p.y - dotR * 0.3, dotR * 0.35, 0, 2 * Math.PI);
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.fill();
+
+  requestAnimationFrame(frame);
+}
+
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

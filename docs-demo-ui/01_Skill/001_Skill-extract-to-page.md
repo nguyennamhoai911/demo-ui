@@ -104,6 +104,11 @@ npm run dev
 
 Mở trình duyệt tại `http://localhost:<PORT>/` để xem trang Hub. Card mới sẽ xuất hiện với live preview iframe bên trong.
 
+> **Lưu ý quan trọng về thời gian build:**
+> - Quá trình build dự án (chạy `npm install` và `npm run build`) có thể mất vài phút cho mỗi template.
+> - Nếu bạn đã thêm project vào `hub.tsx` hoặc `projects.json` nhưng dự án **chưa build xong**, khi click vào card bạn sẽ thấy trang bị redirect về chính trang Hub. 
+> - **Cách xử lý:** Chờ script build thông báo `✔ Done` cho thư mục đó rồi mới kiểm tra lại.
+
 ---
 
 ## Xử lý 2 loại source code khác nhau

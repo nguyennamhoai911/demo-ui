@@ -1,0 +1,89 @@
+<svg width="525" height="584" viewBox="0 0 525 584" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Original ellipse path, exact stroke style -->
+  <path
+    id="orbit-path"
+    d="M399.103 82.2705C433.499 104.739 449.463 148.471 447.345 201.154C445.226 253.825 425.028 315.348 387.228 373.216C349.428 431.084 301.208 474.301 253.828 497.407C206.437 520.518 159.976 523.473 125.58 501.005C91.1832 478.536 75.2185 434.804 77.3374 382.121C79.4557 329.449 99.6533 267.928 137.454 210.06C175.254 152.191 223.474 108.973 270.854 85.8678C318.245 62.757 364.707 59.8022 399.103 82.2705Z"
+    stroke="url(#paint0_linear_40000031_6224)"
+    stroke-opacity="0.1"
+  />
+
+  <!-- Dot — will be moved by script -->
+  <circle id="dot" r="6.5" fill="#EE2629"/>
+
+  <defs>
+    <linearGradient id="paint0_linear_40000031_6224" x1="399.376" y1="81.8517" x2="125.306" y2="501.423" gradientUnits="userSpaceOnUse">
+      <stop stop-opacity="0.4"/>
+      <stop offset="1"/>
+    </linearGradient>
+  </defs>
+
+  <script type="text/javascript"><![CDATA[
+    // Sample N points from the SVG path element for physics simulation
+    const pathEl = document.getElementById('orbit-path');
+    const dot    = document.getElementById('dot');
+    const TOTAL  = pathEl.getTotalLength();
+    const N      = 800; // sample resolution
+
+    // Pre-sample all points along the path
+    const pts = [];
+    for (let i = 0; i < N; i++) {
+      const p = pathEl.getPointAtLength((i / N) * TOTAL);
+      pts.push({ x: p.x, y: p.y });
+    }
+
+    // Get position & tangent at fractional index f ∈ [0, 1)
+    function getState(f) {
+      const raw = ((f % 1) + 1) % 1;
+      const s   = raw * TOTAL;
+      const p0  = pathEl.getPointAtLength(s);
+      const eps = 0.5;
+      const p1  = pathEl.getPointAtLength((s + eps) % TOTAL);
+      const dx  = p1.x - p0.x;
+      const dy  = p1.y - p0.y;
+      const len = Math.hypot(dx, dy) || 1;
+      return {
+        x:  p0.x, y: p0.y,
+        ty: dy / len,          // y-component of normalised tangent
+        dsdf: TOTAL            // ds/df  (constant: s = f * TOTAL)
+      };
+    }
+
+    // Physics
+    const G      = 260;  // gravity px/s²
+    const MIN    = 18;   // minimum speed px/s
+
+    // Start at the original dot position (top-right of the path)
+    // That corresponds roughly to f=0 (path starts at M point)
+    let f     = 0;       // parametric position [0, 1)
+    let speed = 40;      // px/s along path
+    let last  = null;
+
+    function frame(ts) {
+      if (!last) last = ts;
+      const dt = Math.min((ts - last) / 1000, 0.04);
+      last = ts;
+
+      // Sub-step integration (4 steps per frame)
+      for (let s = 0; s < 4; s++) {
+        const st  = getState(f);
+        // Tangential acceleration: gravity component along tangent
+        // ty > 0 → tangent points down → ball accelerates
+        speed += G * st.ty * (dt / 4);
+        if (speed < MIN) speed = MIN;
+        // Advance fraction: df = (speed px/s) / (TOTAL px/cycle) * dt
+        f += (speed / TOTAL) * (dt / 4);
+      }
+      f = ((f % 1) + 1) % 1;
+
+      const st = getState(f);
+      dot.setAttribute('cx', st.x.toFixed(3));
+      dot.setAttribute('cy', st.y.toFixed(3));
+
+      requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  ]]></script>
+
+</svg>

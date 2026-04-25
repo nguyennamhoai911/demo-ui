@@ -1,0 +1,2679 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PKG Battery – Giải Pháp Pin Lithium Công Nghiệp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #D42020;
+  --red-dim: #A01818;
+  --black: #0A0A0A;
+  --dark: #111111;
+  --dark2: #1A1A1A;
+  --dark3: #242424;
+  --mid: #444444;
+  --muted: #666666;
+  --light: #AAAAAA;
+  --silver: #CCCCCC;
+  --off-white: #F4F4F2;
+  --white: #FFFFFF;
+  --grid: rgba(255,255,255,0.04);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+/* TYPOGRAPHY */
+.display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em; line-height: 0.92; }
+.mono { font-family: 'DM Mono', monospace; }
+.eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-weight: 400;
+}
+.eyebrow-white { color: rgba(255,255,255,0.5); }
+.section-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  color: var(--muted);
+}
+
+/* LAYOUT */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+.container-wide { max-width: 1440px; margin: 0 auto; padding: 0 40px; }
+
+/* TECHNICAL GRID BG */
+.tech-grid {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 2px; }
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+#nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  transition: background 0.4s ease, border-color 0.4s ease;
+  border-bottom: 1px solid transparent;
+}
+#nav.scrolled {
+  background: rgba(10,10,10,0.96);
+  border-color: rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+}
+.nav-inner {
+  max-width: 1440px; margin: 0 auto; padding: 0 40px;
+  height: 68px; display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+}
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+.nav-logo-mark::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; right: -3px;
+  width: 10px; height: 10px;
+  border: 1px solid var(--red);
+  background: transparent;
+}
+.nav-logo-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.1em;
+  color: var(--white);
+}
+.nav-logo-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  display: block;
+  margin-top: -4px;
+}
+.nav-links {
+  display: flex; align-items: center; gap: 6px; list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: rgba(255,255,255,0.65);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  padding: 6px 12px;
+  transition: color 0.2s;
+  font-weight: 400;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-links .lang {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.68rem;
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 4px 10px;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  letter-spacing: 0.1em;
+  transition: all 0.2s;
+}
+.nav-links .lang:hover { border-color: var(--red); color: var(--white); }
+.btn-nav {
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  padding: 10px 22px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background 0.2s;
+}
+.btn-nav:hover { background: var(--red-dim); }
+.btn-nav svg { width: 14px; height: 14px; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  overflow: hidden;
+  background: var(--black);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 70% 50%, rgba(212,32,32,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 60% at 20% 80%, rgba(212,32,32,0.04) 0%, transparent 60%);
+}
+.hero-grid { position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-diagonal {
+  position: absolute;
+  top: 0; right: 0;
+  width: 55%;
+  height: 100%;
+  background: var(--dark2);
+  clip-path: polygon(12% 0%, 100% 0%, 100% 100%, 0% 100%);
+  overflow: hidden;
+}
+.hero-visual-composite {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(120deg, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.2) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'%3E%3Crect width='800' height='600' fill='%23141414'/%3E%3Crect x='50' y='80' width='700' height='440' fill='%231a1a1a' rx='2'/%3E%3Crect x='80' y='120' width='280' height='360' fill='%23222' rx='1'/%3E%3Crect x='90' y='130' width='260' height='340' fill='%231e1e1e' rx='1'/%3E%3Crect x='100' y='145' width='240' height='50' fill='%23D42020' rx='1' opacity='0.9'/%3E%3Crect x='100' y='205' width='240' height='50' fill='%23333' rx='1'/%3E%3Crect x='100' y='265' width='240' height='50' fill='%23333' rx='1'/%3E%3Crect x='100' y='325' width='240' height='50' fill='%23333' rx='1'/%3E%3Crect x='100' y='385' width='100' height='20' fill='%23444' rx='1'/%3E%3Crect x='380' y='120' width='370' height='170' fill='%23222' rx='1'/%3E%3Crect x='390' y='130' width='350' height='150' fill='%231e1e1e' rx='1'/%3E%3Crect x='400' y='145' width='60' height='60' fill='%23333' rx='30'/%3E%3Crect x='475' y='145' width='255' height='12' fill='%23444' rx='6'/%3E%3Crect x='475' y='165' width='200' height='8' fill='%23333' rx='4'/%3E%3Crect x='475' y='183' width='150' height='8' fill='%23333' rx='4'/%3E%3Crect x='400' y='220' width='330' height='2' fill='%23333'/%3E%3Crect x='400' y='235' width='80' height='30' fill='%23D42020' rx='1'/%3E%3Crect x='380' y='310' width='175' height='170' fill='%23222' rx='1'/%3E%3Crect x='575' y='310' width='175' height='170' fill='%23222' rx='1'/%3E%3Crect x='390' y='320' width='155' height='150' fill='%231e1e1e' rx='1'/%3E%3Crect x='585' y='320' width='155' height='150' fill='%231e1e1e' rx='1'/%3E%3Crect x='400' y='335' width='135' height='80' fill='%23D42020' rx='1' opacity='0.15'/%3E%3Crect x='595' y='335' width='135' height='80' fill='%23444' rx='1'/%3E%3Ctext x='130' y='178' font-family='Arial' font-size='11' fill='white' font-weight='bold'%3EPKG BATTERY%3C/text%3E%3Ctext x='130' y='235' font-family='Arial' font-size='9' fill='%23999'%3EIndustrial Series%3C/text%3E%3C/svg%3E") center/cover;
+}
+.hero-energy-line {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  animation: energyFlow 3s linear infinite;
+}
+@keyframes energyFlow {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0; }
+}
+.hero-content {
+  position: relative; z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  width: 100%;
+  min-height: 100vh;
+  align-items: center;
+}
+.hero-left {
+  padding: 120px 60px 100px 40px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.hero-right {
+  position: relative;
+  padding: 120px 40px 100px 60px;
+  display: flex; flex-direction: column; justify-content: center; align-items: flex-end;
+}
+.hero-eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 28px;
+}
+.hero-eyebrow-line {
+  width: 32px; height: 1px; background: var(--red);
+}
+.hero-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 7vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  margin-bottom: 8px;
+  animation: fadeUp 0.8s ease forwards;
+}
+.hero-headline .accent { color: var(--red); }
+.hero-subline {
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+  max-width: 520px;
+  margin-bottom: 20px;
+  font-weight: 300;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-body {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.8;
+  max-width: 460px;
+  margin-bottom: 40px;
+  font-weight: 300;
+  animation: fadeUp 0.8s 0.35s ease both;
+}
+.hero-ctas {
+  display: flex; gap: 14px; align-items: center;
+  animation: fadeUp 0.8s 0.5s ease both;
+}
+.btn-primary {
+  background: var(--red);
+  color: var(--white);
+  border: none; cursor: pointer;
+  padding: 14px 28px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 10px;
+  transition: all 0.25s; position: relative; overflow: hidden;
+}
+.btn-primary::after {
+  content: ''; position: absolute; left: 0; bottom: 0;
+  width: 100%; height: 2px; background: rgba(255,255,255,0.3);
+  transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+}
+.btn-primary:hover { background: #E02828; }
+.btn-primary:hover::after { transform: scaleX(1); }
+.btn-secondary {
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer; padding: 14px 24px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.8rem; font-weight: 400;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+  transition: all 0.25s;
+}
+.btn-secondary:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+.hero-panels {
+  display: flex; flex-direction: column; gap: 12px;
+  width: 100%;
+  animation: fadeUp 0.8s 0.6s ease both;
+}
+.hero-panel {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 16px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: border-color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.hero-panel:hover { border-color: rgba(212,32,32,0.4); background: rgba(212,32,32,0.05); }
+.hero-panel:first-child { border-left: 2px solid var(--red); }
+.hero-panel-name {
+  font-size: 0.82rem; font-weight: 500; color: rgba(255,255,255,0.85);
+}
+.hero-panel-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+}
+.hero-panel-arrow {
+  color: var(--red); font-size: 0.9rem; opacity: 0.6;
+}
+.hero-oem-tag {
+  margin-top: 16px;
+  background: rgba(212,32,32,0.12);
+  border: 1px solid rgba(212,32,32,0.3);
+  padding: 10px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.hero-oem-tag .tag-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.15em;
+  color: var(--red); text-transform: uppercase;
+}
+.hero-oem-tag .tag-val {
+  font-size: 0.75rem; color: rgba(255,255,255,0.6);
+}
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  z-index: 10;
+  animation: fadeUp 1s 1s ease both;
+}
+.hero-scroll span {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.2em;
+  color: var(--muted); text-transform: uppercase;
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(var(--red), transparent);
+  animation: scrollPulse 2s ease infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   TRUST STRIP
+   ============================================================ */
+#trust-strip {
+  background: var(--dark2);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 32px 0;
+  overflow: hidden;
+}
+.trust-strip-inner {
+  max-width: 1440px; margin: 0 auto; padding: 0 40px;
+  display: flex; align-items: center; gap: 40px;
+}
+.trust-strip-label {
+  white-space: nowrap;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em;
+  color: var(--muted); text-transform: uppercase;
+  padding-right: 40px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  flex-shrink: 0;
+}
+.trust-industries {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.trust-tag {
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 6px 14px;
+  font-size: 0.72rem; color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em; white-space: nowrap;
+  transition: all 0.2s; cursor: default;
+}
+.trust-tag:hover { border-color: var(--red); color: rgba(255,255,255,0.8); }
+.trust-tag.active { border-color: rgba(212,32,32,0.4); color: rgba(255,255,255,0.7); }
+
+/* ============================================================
+   PAIN POINT
+   ============================================================ */
+#pain {
+  padding: 120px 0;
+  background: var(--black);
+  position: relative; overflow: hidden;
+}
+.pain-bg-text {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 28vw; color: rgba(255,255,255,0.015);
+  white-space: nowrap; pointer-events: none; line-height: 1;
+  letter-spacing: -0.02em;
+}
+.pain-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+}
+.pain-left .eyebrow { margin-bottom: 20px; }
+.pain-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  margin-bottom: 24px;
+  color: var(--white);
+}
+.pain-headline em { font-style: normal; color: var(--red); }
+.pain-body {
+  font-size: 0.9rem; color: rgba(255,255,255,0.5);
+  line-height: 1.8; max-width: 440px; font-weight: 300;
+}
+.pain-items {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  margin-top: 10px;
+}
+.pain-item {
+  background: var(--dark2);
+  padding: 22px 24px;
+  border-left: 2px solid transparent;
+  transition: border-color 0.25s, background 0.25s;
+}
+.pain-item:hover { border-color: var(--red); background: var(--dark3); }
+.pain-item-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; color: rgba(212,32,32,0.3);
+  line-height: 1; margin-bottom: 8px;
+}
+.pain-item-title {
+  font-size: 0.82rem; font-weight: 600; color: var(--white);
+  margin-bottom: 4px;
+}
+.pain-item-desc {
+  font-size: 0.75rem; color: var(--muted); line-height: 1.6;
+}
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+#about {
+  padding: 120px 0;
+  background: var(--off-white);
+  color: var(--black);
+  position: relative; overflow: hidden;
+}
+.about-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.about-left .eyebrow { color: var(--red); margin-bottom: 20px; }
+.about-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 4vw, 4.5rem);
+  line-height: 0.95; letter-spacing: 0.01em;
+  color: var(--black); margin-bottom: 24px;
+}
+.about-headline span { color: var(--red); }
+.about-body {
+  font-size: 0.92rem; color: #555; line-height: 1.9;
+  margin-bottom: 28px; font-weight: 300;
+}
+.about-tags {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;
+}
+.about-tag {
+  background: var(--black); color: var(--white);
+  padding: 6px 14px; font-size: 0.72rem;
+  letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500;
+}
+.about-tag.red { background: var(--red); }
+.about-quote {
+  border-left: 3px solid var(--red);
+  padding: 16px 20px;
+  font-size: 1rem; color: var(--black);
+  font-style: italic; line-height: 1.7;
+  background: rgba(0,0,0,0.04);
+}
+.about-right {
+  display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 8px;
+}
+.about-img {
+  background: var(--dark3);
+  overflow: hidden; position: relative;
+}
+.about-img.tall { grid-row: span 2; }
+.about-img-inner {
+  width: 100%; height: 100%; min-height: 200px;
+  background: var(--dark2); position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.about-img.tall .about-img-inner { min-height: 420px; }
+/* Industrial photo simulations using CSS art */
+.photo-sim {
+  width: 100%; height: 100%;
+  position: absolute; inset: 0;
+}
+.photo-sim.factory {
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 40%, #222 60%, #111 100%);
+}
+.photo-sim.factory::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,255,255,0.015) 40px,rgba(255,255,255,0.015) 41px);
+}
+.photo-sim.battery {
+  background: linear-gradient(160deg, #1a1a1a 0%, #D42020 20%, #111 60%, #0a0a0a 100%);
+}
+.photo-sim.battery::after {
+  content: ''; position: absolute; inset: 20%;
+  background: rgba(212,32,32,0.2); border-radius: 2px;
+  box-shadow: 0 0 30px rgba(212,32,32,0.3);
+}
+.photo-sim.team {
+  background: linear-gradient(160deg, #111 0%, #1e1e1e 50%, #333 100%);
+}
+.photo-sim.forklift {
+  background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 50%, #252525 100%);
+}
+.photo-label {
+  position: absolute; bottom: 12px; left: 12px;
+  font-family: 'DM Mono', monospace; font-size: 0.58rem;
+  letter-spacing: 0.15em; color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+.photo-overlay-red {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(212,32,32,0.2) 0%, transparent 40%);
+}
+
+/* Industrial SVG placeholders */
+.ind-visual {
+  width: 100%; height: 100%; position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ============================================================
+   SOLUTIONS OVERVIEW
+   ============================================================ */
+#solutions {
+  padding: 120px 0;
+  background: var(--dark);
+  position: relative;
+}
+.solutions-header {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+  margin-bottom: 70px; align-items: end;
+}
+.solutions-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  line-height: 0.92; letter-spacing: 0.01em;
+  color: var(--white);
+}
+.solutions-headline span { color: var(--red); display: block; }
+.solutions-desc {
+  font-size: 0.9rem; color: rgba(255,255,255,0.5);
+  line-height: 1.9; font-weight: 300;
+  padding-top: 16px;
+}
+.solutions-flow {
+  display: flex; gap: 2px;
+  position: relative;
+}
+.solution-step {
+  flex: 1; background: var(--dark2);
+  padding: 28px 24px 32px;
+  position: relative; overflow: hidden;
+  transition: background 0.25s;
+  cursor: default;
+}
+.solution-step::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: transparent; transition: background 0.25s;
+}
+.solution-step:hover { background: var(--dark3); }
+.solution-step:hover::before { background: var(--red); }
+.solution-step-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.2em;
+  color: rgba(212,32,32,0.5); margin-bottom: 16px;
+}
+.solution-step-icon {
+  width: 40px; height: 40px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
+}
+.solution-step-icon svg { width: 20px; height: 20px; stroke: var(--red); fill: none; stroke-width: 1.5; }
+.solution-step-title {
+  font-size: 0.85rem; font-weight: 600; color: var(--white);
+  margin-bottom: 8px; line-height: 1.4;
+}
+.solution-step-desc {
+  font-size: 0.76rem; color: var(--muted); line-height: 1.7;
+}
+.connector-arrow {
+  position: absolute; right: -1px; top: 50%; transform: translateY(-50%);
+  z-index: 2; color: var(--red); font-size: 0.7rem;
+}
+
+/* ============================================================
+   5 PRODUCTS
+   ============================================================ */
+#products {
+  padding: 120px 0;
+  background: var(--black);
+  position: relative;
+}
+.products-header { margin-bottom: 60px; }
+.products-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 3px;
+}
+.product-card {
+  background: var(--dark2);
+  position: relative; overflow: hidden;
+  cursor: pointer; display: flex; flex-direction: column;
+  min-height: 320px;
+  transition: all 0.3s;
+}
+.product-card.featured {
+  grid-column: span 2; grid-row: span 2;
+  min-height: 580px;
+}
+.product-card.mid { min-height: 280px; }
+.product-card-bg {
+  position: absolute; inset: 0;
+  transition: transform 0.5s ease;
+}
+.product-card:hover .product-card-bg { transform: scale(1.04); }
+.product-card-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+}
+.product-card-overlay-red {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(212,32,32,0.1) 0%, transparent 50%);
+  opacity: 0; transition: opacity 0.3s;
+}
+.product-card:hover .product-card-overlay-red { opacity: 1; }
+.product-card-content {
+  position: relative; z-index: 2;
+  padding: 28px; margin-top: auto;
+  display: flex; flex-direction: column;
+}
+.product-card.featured .product-card-content { padding: 40px; }
+.product-card-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.18em;
+  color: var(--red); text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.product-card-title {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.02em;
+  color: var(--white); line-height: 1;
+  margin-bottom: 10px;
+}
+.product-card.featured .product-card-title { font-size: 2.6rem; }
+.product-card-title { font-size: 1.4rem; }
+.product-card-desc {
+  font-size: 0.78rem; color: rgba(255,255,255,0.55);
+  line-height: 1.7; margin-bottom: 18px; font-weight: 300;
+}
+.product-card.featured .product-card-desc { font-size: 0.88rem; max-width: 380px; }
+.btn-card {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--white); text-decoration: none; font-weight: 500;
+  border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 2px;
+  width: fit-content; transition: border-color 0.2s, color 0.2s;
+}
+.btn-card:hover { border-color: var(--red); color: var(--red); }
+
+/* Product card backgrounds */
+.bg-forklift {
+  background: linear-gradient(135deg, #1a1208 0%, #2a2010 30%, #1a1a1a 70%, #111 100%);
+}
+.bg-forklift::after {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='500'%3E%3Crect width='400' height='500' fill='%231a1a1a'/%3E%3Crect x='80' y='200' width='240' height='160' fill='%23222' rx='2'/%3E%3Crect x='100' y='180' width='200' height='30' fill='%23333' rx='1'/%3E%3Crect x='120' y='360' width='160' height='40' fill='%23222' rx='20'/%3E%3Crect x='280' y='120' width='40' height='200' fill='%23333' rx='1'/%3E%3Crect x='270' y='110' width='60' height='20' fill='%23444' rx='1'/%3E%3Crect x='100' y='220' width='80' height='80' fill='%23D42020' rx='1' opacity='0.8'/%3E%3Crect x='200' y='220' width='80' height='80' fill='%23D42020' rx='1' opacity='0.6'/%3E%3C/svg%3E") center/cover;
+  opacity: 0.5;
+}
+.bg-tourism {
+  background: linear-gradient(160deg, #0a1520 0%, #0d2035 40%, #162030 70%, #111 100%);
+}
+.bg-agv {
+  background: linear-gradient(160deg, #0a0a15 0%, #101025 40%, #1a1a2a 70%, #111 100%);
+}
+.bg-charger {
+  background: linear-gradient(160deg, #101a10 0%, #1a2a15 40%, #1a1a18 70%, #111 100%);
+}
+.bg-ess {
+  background: linear-gradient(160deg, #150a0a 0%, #250f10 40%, #1a1212 70%, #111 100%);
+}
+
+/* Product visual layers */
+.prod-visual-layer {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center; opacity: 0.4;
+}
+
+/* ============================================================
+   OEM / ODM
+   ============================================================ */
+#oem {
+  padding: 120px 0;
+  background: var(--dark2);
+  position: relative; overflow: hidden;
+}
+.oem-bg-pattern {
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(212,32,32,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212,32,32,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.oem-bg-diag {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: 45%; background: var(--dark3);
+  clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+.oem-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  position: relative; z-index: 2;
+}
+.oem-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 4.5vw, 5rem);
+  line-height: 0.92; letter-spacing: 0.01em;
+  color: var(--white); margin-bottom: 20px;
+}
+.oem-headline span { color: var(--red); }
+.oem-desc {
+  font-size: 0.9rem; color: rgba(255,255,255,0.5);
+  line-height: 1.9; font-weight: 300; margin-bottom: 36px;
+}
+.oem-bullets {
+  list-style: none; display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 36px;
+}
+.oem-bullets li {
+  display: flex; align-items: flex-start; gap: 12px;
+  font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.5;
+}
+.oem-bullets li::before {
+  content: ''; width: 16px; height: 1px; background: var(--red);
+  margin-top: 10px; flex-shrink: 0;
+}
+.oem-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.oem-right {
+  position: relative;
+}
+.oem-tech-frame {
+  border: 1px solid rgba(212,32,32,0.25);
+  padding: 40px; position: relative;
+  background: rgba(212,32,32,0.03);
+}
+.oem-tech-frame::before {
+  content: ''; position: absolute;
+  top: -1px; left: 40px; width: 60px; height: 2px; background: var(--red);
+}
+.oem-tech-frame::after {
+  content: ''; position: absolute;
+  bottom: -1px; right: 40px; width: 60px; height: 2px; background: var(--red);
+}
+.oem-spec-row {
+  display: flex; justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.82rem;
+}
+.oem-spec-row:last-child { border-bottom: none; }
+.oem-spec-label { color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; }
+.oem-spec-val { color: var(--white); font-weight: 500; text-align: right; }
+.oem-spec-val.red { color: var(--red); }
+.oem-corner {
+  position: absolute;
+  width: 14px; height: 14px;
+  border-color: var(--red);
+  border-style: solid;
+}
+.oem-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.oem-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+.oem-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+.oem-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+/* ============================================================
+   INDUSTRIES
+   ============================================================ */
+#industries {
+  padding: 120px 0;
+  background: var(--black);
+}
+.industries-header { margin-bottom: 60px; }
+.industries-mosaic {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 200px 200px;
+  gap: 3px;
+}
+.industry-tile {
+  background: var(--dark2); position: relative;
+  overflow: hidden; cursor: pointer;
+  display: flex; align-items: flex-end;
+}
+.industry-tile:nth-child(1) { grid-column: span 2; }
+.industry-tile:nth-child(4) { grid-column: span 2; }
+.industry-tile-bg {
+  position: absolute; inset: 0;
+  background: var(--dark3); transition: transform 0.5s;
+}
+.industry-tile:hover .industry-tile-bg { transform: scale(1.05); }
+.industry-tile-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+  transition: background 0.3s;
+}
+.industry-tile:hover .industry-tile-overlay {
+  background: linear-gradient(to top, rgba(212,32,32,0.6) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+}
+.industry-tile-content {
+  position: relative; z-index: 2; padding: 20px;
+}
+.industry-tile-icon {
+  font-size: 1.5rem; margin-bottom: 6px; display: block;
+}
+.industry-tile-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem; letter-spacing: 0.03em;
+  color: var(--white); display: block;
+}
+.industry-tile-sub {
+  font-size: 0.7rem; color: rgba(255,255,255,0.5);
+  font-family: 'DM Mono', monospace; letter-spacing: 0.1em;
+}
+
+/* Industry tile backgrounds */
+.ind-bg-1 { background: linear-gradient(160deg, #121418 0%, #1c2028 50%, #131520 100%); }
+.ind-bg-2 { background: linear-gradient(160deg, #121218 0%, #1a1c22 50%, #111315 100%); }
+.ind-bg-3 { background: linear-gradient(160deg, #141818 0%, #1c2520 50%, #121518 100%); }
+.ind-bg-4 { background: linear-gradient(160deg, #181012 0%, #221620 50%, #181018 100%); }
+.ind-bg-5 { background: linear-gradient(160deg, #101418 0%, #141c22 50%, #0f1318 100%); }
+.ind-bg-6 { background: linear-gradient(160deg, #141010 0%, #221410 50%, #181010 100%); }
+
+/* ============================================================
+   WHY CHOOSE
+   ============================================================ */
+#why {
+  padding: 120px 0;
+  background: var(--dark);
+}
+.why-layout {
+  display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start;
+}
+.why-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 4vw, 4.5rem);
+  line-height: 0.92; letter-spacing: 0.01em; color: var(--white);
+}
+.why-headline span { color: var(--red); display: block; }
+.why-items {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.why-item {
+  display: flex; gap: 24px; padding: 24px 28px;
+  background: var(--dark2); border-left: 2px solid transparent;
+  transition: border-color 0.25s, background 0.25s;
+  align-items: flex-start; cursor: default;
+}
+.why-item:hover { border-color: var(--red); background: var(--dark3); }
+.why-item-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem; color: rgba(212,32,32,0.2);
+  line-height: 1; flex-shrink: 0; width: 40px;
+}
+.why-item-title {
+  font-size: 0.9rem; font-weight: 600; color: var(--white);
+  margin-bottom: 6px;
+}
+.why-item-desc {
+  font-size: 0.78rem; color: var(--muted); line-height: 1.7;
+}
+
+/* ============================================================
+   TRUST / STATS
+   ============================================================ */
+#trust {
+  padding: 0;
+  background: var(--red);
+}
+.stats-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.stat-item {
+  padding: 52px 40px;
+  border-right: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem; line-height: 1;
+  color: var(--white); letter-spacing: 0.02em;
+  display: flex; align-items: baseline; justify-content: center; gap: 4px;
+}
+.stat-num sub {
+  font-size: 2rem; font-family: 'DM Sans', sans-serif;
+  font-weight: 300; color: rgba(255,255,255,0.7); vertical-align: baseline;
+}
+.stat-label {
+  font-size: 0.72rem; color: rgba(255,255,255,0.7);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  font-family: 'DM Mono', monospace; margin-top: 6px;
+}
+.certs-section {
+  background: var(--dark2); padding: 80px 0;
+}
+.certs-header { margin-bottom: 48px; }
+.certs-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px;
+}
+.cert-card {
+  background: var(--dark3);
+  padding: 28px 20px; text-align: center;
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: border-color 0.25s, transform 0.25s;
+  cursor: pointer;
+}
+.cert-card:hover {
+  border-color: rgba(212,32,32,0.4);
+  transform: translateY(-2px);
+}
+.cert-icon {
+  width: 52px; height: 52px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem; color: var(--red); letter-spacing: 0.1em;
+}
+.cert-name {
+  font-size: 0.8rem; font-weight: 600; color: var(--white); margin-bottom: 4px;
+}
+.cert-desc {
+  font-size: 0.68rem; color: var(--muted); font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   PROCESS
+   ============================================================ */
+#process {
+  padding: 120px 0;
+  background: var(--black);
+  position: relative;
+}
+.process-header { text-align: center; margin-bottom: 80px; }
+.process-steps {
+  display: flex; gap: 0; position: relative;
+}
+.process-steps::before {
+  content: ''; position: absolute;
+  top: 36px; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,32,32,0.4), rgba(212,32,32,0.4), transparent);
+}
+.process-step {
+  flex: 1; text-align: center; padding: 0 20px; position: relative;
+}
+.process-step-circle {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--dark2); border: 1px solid rgba(212,32,32,0.3);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 24px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem; color: var(--red);
+  position: relative; z-index: 2;
+  transition: background 0.3s, border-color 0.3s;
+}
+.process-step:hover .process-step-circle {
+  background: rgba(212,32,32,0.15); border-color: var(--red);
+}
+.process-step-title {
+  font-size: 0.85rem; font-weight: 600; color: var(--white);
+  margin-bottom: 8px; line-height: 1.4;
+}
+.process-step-desc {
+  font-size: 0.74rem; color: var(--muted); line-height: 1.7;
+}
+
+/* ============================================================
+   DEALER MAP
+   ============================================================ */
+#dealers {
+  padding: 120px 0;
+  background: var(--dark);
+}
+.dealers-layout {
+  display: grid; grid-template-columns: 2fr 1fr; gap: 60px; align-items: start;
+}
+.vn-map {
+  position: relative; background: var(--dark2);
+  padding: 40px; min-height: 500px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.vn-map svg { max-width: 320px; }
+.dealer-list { display: flex; flex-direction: column; gap: 3px; }
+.dealer-item {
+  background: var(--dark2); padding: 16px 20px;
+  border-left: 2px solid transparent; cursor: pointer;
+  transition: all 0.2s; display: flex; justify-content: space-between; align-items: center;
+}
+.dealer-item:hover { border-color: var(--red); background: var(--dark3); }
+.dealer-item.active { border-color: var(--red); background: rgba(212,32,32,0.08); }
+.dealer-city {
+  font-size: 0.85rem; font-weight: 600; color: var(--white); margin-bottom: 3px;
+}
+.dealer-name {
+  font-size: 0.72rem; color: var(--muted); font-family: 'DM Mono', monospace;
+  letter-spacing: 0.08em;
+}
+.dealer-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(212,32,32,0.4); flex-shrink: 0;
+  transition: background 0.2s;
+}
+.dealer-item:hover .dealer-dot,
+.dealer-item.active .dealer-dot { background: var(--red); }
+
+/* ============================================================
+   NEWS
+   ============================================================ */
+#news {
+  padding: 120px 0;
+  background: var(--black);
+}
+.news-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  margin-bottom: 48px;
+}
+.news-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 3px;
+}
+.news-card {
+  background: var(--dark2); position: relative; overflow: hidden;
+  cursor: pointer; display: flex; flex-direction: column;
+  transition: background 0.25s;
+}
+.news-card:hover { background: var(--dark3); }
+.news-card.featured { grid-row: span 2; }
+.news-img {
+  height: 200px; background: var(--dark3); position: relative; overflow: hidden;
+}
+.news-card.featured .news-img { height: 280px; }
+.news-img-bg { position: absolute; inset: 0; }
+.news-img-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+}
+.news-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.news-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 0.18em;
+  color: var(--red); text-transform: uppercase; margin-bottom: 10px;
+}
+.news-title {
+  font-size: 0.95rem; font-weight: 600; color: var(--white);
+  line-height: 1.5; margin-bottom: 8px; flex: 1;
+}
+.news-card.featured .news-title { font-size: 1.1rem; }
+.news-meta {
+  display: flex; gap: 12px; align-items: center;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem; color: var(--muted); letter-spacing: 0.08em;
+}
+.news-meta span { display: flex; align-items: center; gap: 4px; }
+
+/* ============================================================
+   CASE STUDIES
+   ============================================================ */
+#cases {
+  padding: 120px 0;
+  background: var(--dark2);
+}
+.cases-header { margin-bottom: 60px; }
+.cases-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px;
+}
+.case-card {
+  background: var(--dark3); overflow: hidden; cursor: pointer;
+  position: relative; min-height: 380px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  transition: all 0.3s;
+}
+.case-card-bg {
+  position: absolute; inset: 0;
+  transition: transform 0.5s;
+}
+.case-card:hover .case-card-bg { transform: scale(1.04); }
+.case-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+  transition: background 0.3s;
+}
+.case-card:hover .case-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.96) 0%, rgba(212,32,32,0.15) 60%, transparent 100%);
+}
+.case-content {
+  position: relative; z-index: 2; padding: 32px;
+}
+.case-industry {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 0.18em;
+  color: var(--red); text-transform: uppercase; margin-bottom: 10px;
+}
+.case-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: 0.02em;
+  color: var(--white); margin-bottom: 10px; line-height: 1;
+}
+.case-result {
+  font-size: 0.8rem; color: rgba(255,255,255,0.5);
+  line-height: 1.6; margin-bottom: 16px;
+}
+.case-kpi {
+  display: flex; gap: 20px; flex-wrap: wrap;
+}
+.case-kpi-item .kpi-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; color: var(--red); letter-spacing: 0.02em;
+}
+.case-kpi-item .kpi-label {
+  font-size: 0.68rem; color: var(--muted); font-family: 'DM Mono', monospace;
+  letter-spacing: 0.1em; display: block;
+}
+
+/* ============================================================
+   FINAL CTA
+   ============================================================ */
+#cta-final {
+  padding: 120px 0;
+  background: var(--black);
+  position: relative; overflow: hidden;
+}
+.cta-final-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 70% at 50% 100%, rgba(212,32,32,0.12) 0%, transparent 70%);
+}
+.cta-final-inner {
+  position: relative; z-index: 2;
+  max-width: 960px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.cta-final-left .cta-headline {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  line-height: 0.92; letter-spacing: 0.01em; color: var(--white);
+  margin-bottom: 20px;
+}
+.cta-final-left .cta-headline span { color: var(--red); display: block; }
+.cta-final-left .cta-desc {
+  font-size: 0.88rem; color: rgba(255,255,255,0.5);
+  line-height: 1.8; font-weight: 300;
+}
+.contact-form {
+  background: var(--dark2); padding: 40px;
+  border: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+}
+.contact-form::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 60px; height: 2px; background: var(--red);
+}
+.form-row {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block; font-family: 'DM Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.15em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 6px;
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white); padding: 12px 16px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+  outline: none; transition: border-color 0.2s;
+  appearance: none;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--red); }
+.form-group textarea { height: 80px; resize: none; }
+.form-group select option { background: var(--dark2); }
+.btn-submit {
+  width: 100%; background: var(--red); color: var(--white);
+  border: none; padding: 16px; font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; cursor: pointer;
+  transition: background 0.2s; display: flex; align-items: center;
+  justify-content: center; gap: 10px;
+}
+.btn-submit:hover { background: var(--red-dim); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background: var(--dark2);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 80px 0 0;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 60px;
+}
+.footer-brand .footer-logo {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+}
+.footer-brand-desc {
+  font-size: 0.8rem; color: var(--muted); line-height: 1.8;
+  margin-bottom: 20px; max-width: 280px;
+}
+.footer-social {
+  display: flex; gap: 8px;
+}
+.footer-social a {
+  width: 32px; height: 32px; border: 1px solid rgba(255,255,255,0.1);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); text-decoration: none; font-size: 0.7rem;
+  transition: all 0.2s;
+}
+.footer-social a:hover { border-color: var(--red); color: var(--white); }
+.footer-col h4 {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--white); margin-bottom: 20px;
+  font-family: 'DM Mono', monospace;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-col ul a {
+  text-decoration: none; color: var(--muted); font-size: 0.8rem;
+  transition: color 0.2s;
+}
+.footer-col ul a:hover { color: var(--white); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 24px 0;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy {
+  font-size: 0.72rem; color: var(--muted);
+  font-family: 'DM Mono', monospace; letter-spacing: 0.06em;
+}
+.footer-contact {
+  display: flex; gap: 24px;
+}
+.footer-contact a {
+  font-size: 0.75rem; color: var(--muted); text-decoration: none;
+  font-family: 'DM Mono', monospace; transition: color 0.2s;
+}
+.footer-contact a:hover { color: var(--white); }
+
+/* ============================================================
+   SECTION COMMON STYLES
+   ============================================================ */
+.section-header { margin-bottom: 60px; }
+.section-header .eyebrow { margin-bottom: 14px; }
+.section-h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.6rem, 4vw, 4.2rem);
+  line-height: 0.92; letter-spacing: 0.01em; color: var(--white);
+}
+.section-h2 span { color: var(--red); }
+.section-h2-dark { color: var(--black); }
+.section-h2-dark span { color: var(--red); }
+.section-sub {
+  font-size: 0.9rem; color: rgba(255,255,255,0.5);
+  max-width: 560px; line-height: 1.8; font-weight: 300;
+  margin-top: 16px;
+}
+.section-sub-dark { color: rgba(0,0,0,0.55); }
+.divider {
+  width: 32px; height: 2px; background: var(--red); margin-bottom: 20px;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+.reveal {
+  opacity: 0; transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* Counter animation */
+.counter { font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   ABOUT SECTION PHOTO COLLAGE
+   ============================================================ */
+.about-collage {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 6px;
+  height: 480px;
+}
+.collage-main { grid-row: span 2; background: var(--dark2); overflow: hidden; position: relative; }
+.collage-sm { background: var(--dark2); overflow: hidden; position: relative; }
+.collage-img-fill { position: absolute; inset: 0; }
+/* Cinematic SVG industrial compositions */
+
+/* ============================================================
+   MOBILE RESPONSIVE (basic)
+   ============================================================ */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .hero-content { grid-template-columns: 1fr; }
+  .hero-diagonal { display: none; }
+  .hero-right { display: none; }
+  .hero-left { padding: 120px 24px 80px; }
+  .pain-layout, .about-layout, .oem-layout, .why-layout,
+  .dealers-layout, .cta-final-inner, .footer-grid { grid-template-columns: 1fr; }
+  .products-grid { grid-template-columns: 1fr; }
+  .product-card.featured { grid-column: span 1; grid-row: span 1; }
+  .stats-bar { grid-template-columns: 1fr 1fr; }
+  .industries-mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+  .industry-tile:nth-child(1), .industry-tile:nth-child(4) { grid-column: span 1; }
+  .cases-grid, .news-grid { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: 1fr 1fr; }
+  .container, .container-wide { padding: 0 20px; }
+  .pain-items { grid-template-columns: 1fr; }
+  .solutions-flow { flex-direction: column; }
+  .process-steps { flex-direction: column; gap: 32px; }
+  .process-steps::before { display: none; }
+  .news-card.featured { grid-row: span 1; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ NAVIGATION ============================================================ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="white" stroke-width="2">
+          <rect x="2" y="5" width="14" height="9" rx="1"/>
+          <line x1="16" y1="7.5" x2="17" y2="7.5"/>
+          <line x1="16" y1="10.5" x2="17" y2="10.5"/>
+          <line x1="6" y1="5" x2="6" y2="14"/>
+          <line x1="10" y1="5" x2="10" y2="14"/>
+        </svg>
+      </div>
+      <div>
+        <span class="nav-logo-text">PKG Battery</span>
+        <span class="nav-logo-sub">Industrial Energy Solutions</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#solutions">Giải pháp</a></li>
+      <li><a href="#products">Sản phẩm</a></li>
+      <li><a href="#industries">Ứng dụng</a></li>
+      <li><a href="#oem">OEM / ODM</a></li>
+      <li><a href="#about">Về PKG</a></li>
+      <li><a href="#news">Tin tức</a></li>
+      <li><a href="#dealers">Đại lý</a></li>
+      <li><a href="#cta-final">Liên hệ</a></li>
+      <li><span class="lang">VI / EN</span></li>
+    </ul>
+    <a href="#cta-final" class="btn-nav">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 1v14M1 8l7 7 7-7"/></svg>
+      Nhận tư vấn kỹ thuật
+    </a>
+  </div>
+</nav>
+
+<!-- ============================================================ HERO ============================================================ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-diagonal">
+    <div class="hero-visual-composite"></div>
+  </div>
+  <div class="hero-energy-line"></div>
+  <div class="container-wide hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="eyebrow">Giải pháp pin lithium công nghiệp</span>
+      </div>
+      <h1 class="hero-headline">
+        Đối tác<br>
+        pin lithium &amp; sạc<br>
+        <span class="accent">toàn diện</span>
+      </h1>
+      <p class="hero-subline">Hệ sinh thái pin – sạc – giải pháp kỹ thuật giúp doanh nghiệp vận hành ổn định, giảm downtime và tối ưu chi phí sở hữu dài hạn.</p>
+      <p class="hero-body">PKG Battery cung cấp giải pháp pin lithium công nghiệp cho xe nâng điện, AGV/robot, xe điện du lịch, hệ thống lưu trữ năng lượng và nhiều ứng dụng doanh nghiệp khác, với định hướng tư vấn kỹ thuật, tùy chỉnh theo nhu cầu và đồng hành triển khai thực tế.</p>
+      <div class="hero-ctas">
+        <a href="#cta-final" class="btn-primary">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M8 2l6 6-6 6"/></svg>
+          Nhận tư vấn kỹ thuật
+        </a>
+        <a href="#solutions" class="btn-secondary">
+          Xem nhóm giải pháp
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h8M8 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-panels">
+        <div class="eyebrow eyebrow-white" style="margin-bottom:16px">— Nhóm giải pháp chính</div>
+        <div class="hero-panel">
+          <div>
+            <div class="hero-panel-name">Pin Lithium cho Xe Nâng Điện</div>
+            <div class="hero-panel-meta">Logistics & Kho vận</div>
+          </div>
+          <span class="hero-panel-arrow">→</span>
+        </div>
+        <div class="hero-panel">
+          <div>
+            <div class="hero-panel-name">Pin Lithium cho Xe Điện Du Lịch</div>
+            <div class="hero-panel-meta">Resort & Mobility</div>
+          </div>
+          <span class="hero-panel-arrow">→</span>
+        </div>
+        <div class="hero-panel">
+          <div>
+            <div class="hero-panel-name">Pin cho Xe AGV / Robot</div>
+            <div class="hero-panel-meta">Tự động hóa & Nhà máy</div>
+          </div>
+          <span class="hero-panel-arrow">→</span>
+        </div>
+        <div class="hero-panel">
+          <div>
+            <div class="hero-panel-name">Bộ Sạc – Trạm Sạc</div>
+            <div class="hero-panel-meta">Công nghiệp đa ứng dụng</div>
+          </div>
+          <span class="hero-panel-arrow">→</span>
+        </div>
+        <div class="hero-panel">
+          <div>
+            <div class="hero-panel-name">Hệ thống Pin Lưu Trữ ESS</div>
+            <div class="hero-panel-meta">Lưu trữ năng lượng</div>
+          </div>
+          <span class="hero-panel-arrow">→</span>
+        </div>
+        <div class="hero-oem-tag">
+          <span class="tag-label">OEM / ODM Available</span>
+          <span class="tag-val">Tùy chỉnh theo yêu cầu kỹ thuật →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Cuộn xuống</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ============================================================ TRUST STRIP ============================================================ -->
+<div id="trust-strip">
+  <div class="trust-strip-inner">
+    <div class="trust-strip-label">Đồng hành cùng doanh nghiệp trong</div>
+    <div class="trust-industries">
+      <span class="trust-tag active">Logistics &amp; Kho vận</span>
+      <span class="trust-tag">Nhà máy &amp; Sản xuất</span>
+      <span class="trust-tag">AGV / Robot / Tự động hóa</span>
+      <span class="trust-tag">Resort / Mobility</span>
+      <span class="trust-tag">Khu công nghiệp</span>
+      <span class="trust-tag">Lưu trữ năng lượng ESS</span>
+      <span class="trust-tag">Xe điện công nghiệp</span>
+      <span class="trust-tag">FDI / OEM / ODM</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ PAIN POINT ============================================================ -->
+<section id="pain">
+  <div class="pain-bg-text">DOWNTIME</div>
+  <div class="container">
+    <div class="pain-layout">
+      <div class="pain-left reveal">
+        <div class="eyebrow" style="margin-bottom:20px">— Bài toán vận hành</div>
+        <h2 class="pain-headline">Downtime, bảo trì &amp; <em>chi phí ẩn</em> đang làm vận hành kém hiệu quả</h2>
+        <p class="pain-body" style="margin-top:20px">Khi hệ thống pin không phù hợp với cường độ vận hành, doanh nghiệp không chỉ mất điện năng mà còn mất thời gian, năng suất và khả năng kiểm soát chi phí dài hạn.</p>
+      </div>
+      <div class="pain-items reveal reveal-delay-2">
+        <div class="pain-item">
+          <div class="pain-item-num">01</div>
+          <div class="pain-item-title">Thời gian sạc dài</div>
+          <div class="pain-item-desc">Gián đoạn ca làm, giảm năng suất và tăng chi phí vận hành theo ca.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-item-num">02</div>
+          <div class="pain-item-title">Downtime không kiểm soát</div>
+          <div class="pain-item-desc">Pin xuống cấp đột ngột ảnh hưởng trực tiếp đến tiến độ giao hàng, sản xuất.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-item-num">03</div>
+          <div class="pain-item-title">Chi phí bảo trì tăng cao</div>
+          <div class="pain-item-desc">Pin truyền thống cần bảo dưỡng thường xuyên, tiêu tốn nhân lực và chi phí ngầm.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-item-num">04</div>
+          <div class="pain-item-title">Cấu hình không phù hợp</div>
+          <div class="pain-item-desc">Pin mua sai thông số gây hao mòn nhanh, hỏng thiết bị và rủi ro an toàn.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-item-num">05</div>
+          <div class="pain-item-title">Khó đảm bảo an toàn</div>
+          <div class="pain-item-desc">Không có BMS kiểm soát, nguy cơ quá nhiệt, rò rỉ và tai nạn lao động.</div>
+        </div>
+        <div class="pain-item">
+          <div class="pain-item-num">06</div>
+          <div class="pain-item-title">TCO không tối ưu</div>
+          <div class="pain-item-desc">Nhìn giá đầu tư ban đầu thấp nhưng tổng chi phí sở hữu thực tế rất cao.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ ABOUT ============================================================ -->
+<section id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-left reveal">
+        <div class="eyebrow">— PKG Battery</div>
+        <h2 class="about-headline">
+          Đối tác giải pháp<br>năng lượng lithium<br><span>công nghiệp</span>
+        </h2>
+        <p class="about-body">PKG Battery được định hướng như một doanh nghiệp B2B chuyên pin lithium công nghiệp, bộ sạc, trạm sạc và giải pháp kỹ thuật theo ứng dụng. Không chỉ cung cấp sản phẩm, PKG Battery hướng tới việc đồng hành cùng doanh nghiệp trong việc lựa chọn cấu hình phù hợp, tối ưu hiệu quả vận hành và hỗ trợ triển khai thực tế.</p>
+        <div class="about-tags">
+          <span class="about-tag red">B2B Industrial</span>
+          <span class="about-tag">Kỹ thuật tư vấn</span>
+          <span class="about-tag">OEM / ODM</span>
+          <span class="about-tag">FDI Ready</span>
+          <span class="about-tag">Hỗ trợ đa ngành</span>
+        </div>
+        <div class="about-quote">
+          "Chúng tôi không chỉ cung cấp pin — chúng tôi xây dựng giải pháp năng lượng cho bài toán vận hành thực tế của doanh nghiệp bạn."
+        </div>
+      </div>
+      <div class="about-collage reveal reveal-delay-2">
+        <div class="collage-main">
+          <div class="collage-img-fill">
+            <svg width="100%" height="100%" viewBox="0 0 400 480" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#111"/>
+                  <stop offset="50%" stop-color="#1a1a1a"/>
+                  <stop offset="100%" stop-color="#0a0a0a"/>
+                </linearGradient>
+              </defs>
+              <rect width="400" height="480" fill="url(#g1)"/>
+              <!-- Industrial shelving / warehouse -->
+              <rect x="20" y="60" width="360" height="360" fill="#141414" rx="1"/>
+              <!-- Rack system -->
+              <rect x="40" y="80" width="8" height="320" fill="#222"/>
+              <rect x="352" y="80" width="8" height="320" fill="#222"/>
+              <rect x="40" y="80" width="320" height="4" fill="#2a2a2a"/>
+              <rect x="40" y="160" width="320" height="4" fill="#2a2a2a"/>
+              <rect x="40" y="240" width="320" height="4" fill="#2a2a2a"/>
+              <rect x="40" y="320" width="320" height="4" fill="#2a2a2a"/>
+              <!-- Battery packs on shelves -->
+              <rect x="60" y="90" width="70" height="65" fill="#D42020" rx="1" opacity="0.9"/>
+              <rect x="140" y="90" width="70" height="65" fill="#D42020" rx="1" opacity="0.7"/>
+              <rect x="220" y="90" width="70" height="65" fill="#222" rx="1"/>
+              <rect x="300" y="90" width="50" height="65" fill="#222" rx="1"/>
+              <rect x="60" y="168" width="55" height="65" fill="#1e1e1e" rx="1"/>
+              <rect x="125" y="168" width="85" height="65" fill="#D42020" rx="1" opacity="0.5"/>
+              <rect x="220" y="168" width="70" height="65" fill="#1e1e1e" rx="1"/>
+              <rect x="300" y="168" width="50" height="65" fill="#D42020" rx="1" opacity="0.8"/>
+              <rect x="60" y="248" width="260" height="65" fill="#1a1a1a" rx="1"/>
+              <!-- LED indicator lights on batteries -->
+              <circle cx="85" cy="108" r="3" fill="#00ff00" opacity="0.8"/>
+              <circle cx="165" cy="108" r="3" fill="#00ff00" opacity="0.6"/>
+              <circle cx="325" cy="108" r="3" fill="#ff6600" opacity="0.7"/>
+              <!-- Floor line -->
+              <rect x="20" y="400" width="360" height="2" fill="#222"/>
+              <!-- Overlay gradient -->
+              <rect width="400" height="480" fill="url(#ovlay)"/>
+              <defs>
+                <linearGradient id="ovlay" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#0a0a0a" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#D42020" stop-opacity="0.08"/>
+                </linearGradient>
+              </defs>
+              <!-- Red accent line -->
+              <rect x="0" y="0" width="4" height="480" fill="#D42020" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="photo-label">Kho pin PKG / Industrial Storage</div>
+          <div class="photo-overlay-red"></div>
+        </div>
+        <div class="collage-sm">
+          <div class="collage-img-fill">
+            <svg width="100%" height="100%" viewBox="0 0 240 220" preserveAspectRatio="xMidYMid slice">
+              <rect width="240" height="220" fill="#111"/>
+              <!-- Tech engineer desk scene -->
+              <rect x="20" y="80" width="200" height="100" fill="#1a1a1a" rx="1"/>
+              <rect x="30" y="50" width="140" height="90" fill="#222" rx="1"/>
+              <!-- Screen glow -->
+              <rect x="35" y="55" width="130" height="80" fill="#0a1a0a" rx="1"/>
+              <rect x="40" y="60" width="50" height="6" fill="#D42020" rx="3" opacity="0.8"/>
+              <rect x="40" y="72" width="110" height="4" fill="#333" rx="2"/>
+              <rect x="40" y="82" width="90" height="4" fill="#333" rx="2"/>
+              <rect x="40" y="92" width="70" height="4" fill="#333" rx="2"/>
+              <!-- BMS chart lines -->
+              <polyline points="40,110 60,105 80,115 100,100 120,108 140,95 160,102" fill="none" stroke="#D42020" stroke-width="1.5" opacity="0.8"/>
+              <!-- Label -->
+              <text x="12" y="200" font-family="monospace" font-size="7" fill="#555">BMS DIAGNOSTIC / REAL-TIME</text>
+            </svg>
+          </div>
+          <div class="photo-label">Kỹ sư BMS / Diagnostics</div>
+        </div>
+        <div class="collage-sm">
+          <div class="collage-img-fill">
+            <svg width="100%" height="100%" viewBox="0 0 240 220" preserveAspectRatio="xMidYMid slice">
+              <rect width="240" height="220" fill="#0f0f0f"/>
+              <!-- Close up battery cell -->
+              <circle cx="120" cy="110" r="70" fill="#1a1a1a" stroke="#D42020" stroke-width="1" opacity="0.6"/>
+              <circle cx="120" cy="110" r="55" fill="#222"/>
+              <circle cx="120" cy="110" r="40" fill="#1e1e1e"/>
+              <circle cx="120" cy="110" r="12" fill="#D42020" opacity="0.9"/>
+              <circle cx="120" cy="110" r="8" fill="#ff4444"/>
+              <!-- Ring detail -->
+              <circle cx="120" cy="110" r="30" fill="none" stroke="#D42020" stroke-width="0.5" stroke-dasharray="4 8" opacity="0.4"/>
+              <circle cx="120" cy="110" r="48" fill="none" stroke="#333" stroke-width="1"/>
+              <!-- Spec text -->
+              <text x="12" y="210" font-family="monospace" font-size="7" fill="#555">LiFePO4 CELL / HIGH-CYCLE</text>
+            </svg>
+          </div>
+          <div class="photo-label">LiFePO4 Cell / Cận cảnh</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ SOLUTIONS OVERVIEW ============================================================ -->
+<section id="solutions">
+  <div class="container">
+    <div class="solutions-header">
+      <div>
+        <div class="eyebrow" style="margin-bottom:16px">— Hệ sinh thái giải pháp</div>
+        <h2 class="solutions-headline">
+          Từ pin đến<br>
+          <span>giải pháp vận hành</span><br>
+          hoàn chỉnh
+        </h2>
+      </div>
+      <div class="solutions-desc reveal">
+        PKG Battery xây dựng giải pháp pin lithium công nghiệp theo bài toán thực tế của doanh nghiệp — từ khảo sát nhu cầu, cấu hình pin và sạc phù hợp, đến triển khai, hỗ trợ kỹ thuật và đồng hành vận hành.
+      </div>
+    </div>
+    <div class="solutions-flow reveal">
+      <div class="solution-step">
+        <div class="solution-step-num">01</div>
+        <div class="solution-step-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+        <div class="solution-step-title">Đánh giá nhu cầu vận hành</div>
+        <div class="solution-step-desc">Phân tích ứng dụng, cường độ, môi trường và yêu cầu kỹ thuật thực tế.</div>
+      </div>
+      <div class="solution-step">
+        <div class="solution-step-num">02</div>
+        <div class="solution-step-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        </div>
+        <div class="solution-step-title">Cấu hình pin &amp; sạc phù hợp</div>
+        <div class="solution-step-desc">Đề xuất dòng pin, điện áp, dung lượng và hệ thống sạc tối ưu.</div>
+      </div>
+      <div class="solution-step">
+        <div class="solution-step-num">03</div>
+        <div class="solution-step-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="solution-step-title">Tùy chỉnh theo ứng dụng</div>
+        <div class="solution-step-desc">Thiết kế giải pháp theo thiết bị và bối cảnh vận hành riêng.</div>
+      </div>
+      <div class="solution-step">
+        <div class="solution-step-num">04</div>
+        <div class="solution-step-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="solution-step-title">Tích hợp &amp; triển khai</div>
+        <div class="solution-step-desc">Đồng hành lắp đặt, vận hành thử và bàn giao kỹ thuật thực tế.</div>
+      </div>
+      <div class="solution-step">
+        <div class="solution-step-num">05</div>
+        <div class="solution-step-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="solution-step-title">Hỗ trợ &amp; hậu mãi</div>
+        <div class="solution-step-desc">Đồng hành kỹ thuật dài hạn, hỗ trợ bảo trì và nâng cấp hệ thống.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ 5 PRODUCTS ============================================================ -->
+<section id="products">
+  <div class="container">
+    <div class="products-header">
+      <div class="eyebrow" style="margin-bottom:14px">— Danh mục giải pháp</div>
+      <h2 class="section-h2 reveal">Giải pháp theo <span>5 nhóm sản phẩm</span> chính</h2>
+    </div>
+    <div class="products-grid">
+      <!-- FEATURED: Forklift -->
+      <div class="product-card featured reveal">
+        <div class="product-card-bg bg-forklift">
+          <svg width="100%" height="100%" viewBox="0 0 600 580" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+            <defs>
+              <linearGradient id="fgr" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#1a1208"/>
+                <stop offset="60%" stop-color="#1a1a1a"/>
+                <stop offset="100%" stop-color="#0a0a0a"/>
+              </linearGradient>
+            </defs>
+            <rect width="600" height="580" fill="url(#fgr)"/>
+            <!-- Forklift body stylized -->
+            <rect x="100" y="260" width="280" height="180" fill="#222" rx="2"/>
+            <rect x="360" y="200" width="50" height="260" fill="#1e1e1e" rx="1"/>
+            <rect x="350" y="195" width="70" height="15" fill="#D42020" rx="1"/>
+            <rect x="120" y="440" width="70" height="40" fill="#333" rx="20"/>
+            <rect x="270" y="440" width="70" height="40" fill="#333" rx="20"/>
+            <!-- Battery pack visible -->
+            <rect x="130" y="280" width="100" height="120" fill="#D42020" rx="1" opacity="0.85"/>
+            <rect x="250" y="280" width="100" height="120" fill="#D42020" rx="1" opacity="0.6"/>
+            <!-- Forks -->
+            <rect x="355" y="370" width="160" height="12" fill="#444" rx="2"/>
+            <rect x="355" y="395" width="160" height="12" fill="#444" rx="2"/>
+            <!-- Ambient glow -->
+            <ellipse cx="180" cy="460" rx="80" ry="15" fill="#D42020" opacity="0.15"/>
+          </svg>
+        </div>
+        <div class="product-card-overlay"></div>
+        <div class="product-card-overlay-red"></div>
+        <div class="product-card-content">
+          <div class="product-card-tag">Logistics · Kho vận · Nhà máy</div>
+          <div class="product-card-title">Pin Lithium cho<br>Xe Nâng Điện</div>
+          <p class="product-card-desc">Giải pháp pin lithium tối ưu cho xe nâng điện với khả năng sạc nhanh, giảm bảo trì và hỗ trợ cường độ vận hành cao trong kho vận, logistics và nhà máy.</p>
+          <a href="#" class="btn-card">Xem chi tiết <span>→</span></a>
+        </div>
+      </div>
+      <!-- Tourism EV -->
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-bg bg-tourism">
+          <svg width="100%" height="100%" viewBox="0 0 300 320" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+            <rect width="300" height="320" fill="#0a1520"/>
+            <ellipse cx="150" cy="200" rx="100" ry="20" fill="#0d2035" opacity="0.8"/>
+            <rect x="50" y="150" width="200" height="80" fill="#1a2a3a" rx="4"/>
+            <rect x="60" y="115" width="180" height="50" fill="#162030" rx="3"/>
+            <rect x="70" y="125" width="70" height="35" fill="#1e3a50" rx="2"/>
+            <rect x="155" y="125" width="70" height="35" fill="#1e3a50" rx="2"/>
+            <rect x="70" y="230" width="50" height="50" fill="#222" rx="25"/>
+            <rect x="180" y="230" width="50" height="50" fill="#222" rx="25"/>
+            <rect x="60" y="160" width="180" height="8" fill="#D42020" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="product-card-overlay"></div>
+        <div class="product-card-overlay-red"></div>
+        <div class="product-card-content">
+          <div class="product-card-tag">Resort · Du lịch · Mobility</div>
+          <div class="product-card-title">Pin Xe Điện Du Lịch</div>
+          <p class="product-card-desc">Độ ổn định, tuổi thọ cao và trải nghiệm vận hành bền bỉ cho xe điện du lịch, buggy và phương tiện chuyên dụng.</p>
+          <a href="#" class="btn-card">Xem chi tiết <span>→</span></a>
+        </div>
+      </div>
+      <!-- AGV -->
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-bg bg-agv">
+          <svg width="100%" height="100%" viewBox="0 0 300 320" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+            <rect width="300" height="320" fill="#0a0a15"/>
+            <circle cx="150" cy="160" r="70" fill="#101025" stroke="#D42020" stroke-width="0.5" opacity="0.5"/>
+            <circle cx="150" cy="160" r="50" fill="#141430"/>
+            <circle cx="150" cy="160" r="20" fill="#D42020" opacity="0.3"/>
+            <rect x="120" y="130" width="60" height="60" fill="#1a1a35" rx="2"/>
+            <circle cx="150" cy="240" r="20" fill="#1a1a2a" stroke="#333" stroke-width="1"/>
+            <circle cx="90" cy="240" r="20" fill="#1a1a2a" stroke="#333" stroke-width="1"/>
+            <circle cx="210" cy="240" r="20" fill="#1a1a2a" stroke="#333" stroke-width="1"/>
+            <line x1="80" y1="160" x2="50" y2="160" stroke="#D42020" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+            <line x1="220" y1="160" x2="250" y2="160" stroke="#D42020" stroke-width="1" stroke-dasharray="3 3" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="product-card-overlay"></div>
+        <div class="product-card-overlay-red"></div>
+        <div class="product-card-content">
+          <div class="product-card-tag">Tự động hóa · Robot · AGV</div>
+          <div class="product-card-title">Pin AGV / Robot</div>
+          <p class="product-card-desc">Năng lượng ổn định, chính xác và khả năng tích hợp kỹ thuật cao cho hệ thống tự động hóa.</p>
+          <a href="#" class="btn-card">Xem chi tiết <span>→</span></a>
+        </div>
+      </div>
+      <!-- Charger -->
+      <div class="product-card mid reveal reveal-delay-1">
+        <div class="product-card-bg bg-charger">
+          <svg width="100%" height="100%" viewBox="0 0 300 280" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+            <rect width="300" height="280" fill="#101a10"/>
+            <rect x="80" y="40" width="140" height="200" fill="#1a2a15" rx="2"/>
+            <rect x="90" y="50" width="120" height="30" fill="#222" rx="1"/>
+            <rect x="95" y="55" width="80" height="20" fill="#111" rx="1"/>
+            <circle cx="185" cy="65" r="8" fill="#D42020" opacity="0.8"/>
+            <rect x="90" y="95" width="120" height="120" fill="#161e14" rx="1"/>
+            <polyline points="95,155 120,140 145,160 170,130 195,145 205,130" fill="none" stroke="#D42020" stroke-width="2" opacity="0.7"/>
+            <rect x="110" y="240" width="30" height="20" fill="#333" rx="1"/>
+            <rect x="160" y="240" width="30" height="20" fill="#333" rx="1"/>
+          </svg>
+        </div>
+        <div class="product-card-overlay"></div>
+        <div class="product-card-overlay-red"></div>
+        <div class="product-card-content">
+          <div class="product-card-tag">Sạc thông minh · Đa ứng dụng</div>
+          <div class="product-card-title">Bộ Sạc – Trạm Sạc</div>
+          <p class="product-card-desc">Tối ưu hiệu suất pin, rút ngắn thời gian chờ, phù hợp nhiều môi trường công nghiệp.</p>
+          <a href="#" class="btn-card">Xem chi tiết <span>→</span></a>
+        </div>
+      </div>
+      <!-- ESS -->
+      <div class="product-card mid reveal reveal-delay-2">
+        <div class="product-card-bg bg-ess">
+          <svg width="100%" height="100%" viewBox="0 0 300 280" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+            <rect width="300" height="280" fill="#150a0a"/>
+            <rect x="20" y="50" width="260" height="180" fill="#1e1010" rx="1"/>
+            <rect x="30" y="60" width="50" height="160" fill="#D42020" rx="1" opacity="0.15"/>
+            <rect x="90" y="60" width="50" height="160" fill="#D42020" rx="1" opacity="0.35"/>
+            <rect x="150" y="60" width="50" height="160" fill="#D42020" rx="1" opacity="0.55"/>
+            <rect x="210" y="60" width="50" height="160" fill="#D42020" rx="1" opacity="0.75"/>
+            <rect x="20" y="245" width="260" height="3" fill="#D42020" opacity="0.3"/>
+            <line x1="150" y1="40" x2="150" y2="20" stroke="#D42020" stroke-width="1.5" opacity="0.6"/>
+            <line x1="130" y1="25" x2="170" y2="25" stroke="#D42020" stroke-width="1" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="product-card-overlay"></div>
+        <div class="product-card-overlay-red"></div>
+        <div class="product-card-content">
+          <div class="product-card-tag">Lưu trữ năng lượng · ESS</div>
+          <div class="product-card-title">Hệ thống Pin ESS</div>
+          <p class="product-card-desc">Tăng tính chủ động, ổn định nguồn điện và nâng cao hiệu quả vận hành dài hạn.</p>
+          <a href="#" class="btn-card">Xem chi tiết <span>→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ OEM / ODM ============================================================ -->
+<section id="oem">
+  <div class="oem-bg-pattern"></div>
+  <div class="oem-bg-diag"></div>
+  <div class="container">
+    <div class="oem-layout">
+      <div class="oem-left reveal">
+        <div class="eyebrow eyebrow-white" style="margin-bottom:20px">— OEM / ODM / Custom Solutions</div>
+        <h2 class="oem-headline">
+          Giải pháp tùy chỉnh<br>
+          theo <span>yêu cầu</span><br>
+          kỹ thuật
+        </h2>
+        <p class="oem-desc">PKG Battery hướng tới khả năng hợp tác với doanh nghiệp và đối tác kỹ thuật cần cấu hình pin lithium theo yêu cầu, từ kích thước, điện áp, ứng dụng đến phương án tích hợp trong môi trường vận hành thực tế.</p>
+        <ul class="oem-bullets">
+          <li>Cấu hình theo ứng dụng và thiết bị cụ thể</li>
+          <li>Tùy chỉnh điện áp, dung lượng và form factor</li>
+          <li>Hỗ trợ tích hợp vào hệ thống hiện có</li>
+          <li>Định hướng làm việc với OEM / ODM / FDI</li>
+          <li>Đồng hành kỹ thuật trong suốt quá trình phát triển giải pháp</li>
+        </ul>
+        <div class="oem-ctas">
+          <a href="#cta-final" class="btn-primary">
+            Trao đổi về OEM / ODM
+            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M8 2l6 6-6 6"/></svg>
+          </a>
+          <a href="#cta-final" class="btn-secondary">Gửi yêu cầu dự án</a>
+        </div>
+      </div>
+      <div class="oem-right reveal reveal-delay-2">
+        <div class="oem-tech-frame">
+          <div class="oem-corner tl"></div>
+          <div class="oem-corner tr"></div>
+          <div class="oem-corner bl"></div>
+          <div class="oem-corner br"></div>
+          <div class="eyebrow eyebrow-white" style="margin-bottom:24px">Thông số kỹ thuật có thể tùy chỉnh</div>
+          <div class="oem-spec-row"><span class="oem-spec-label">Điện áp hệ thống</span><span class="oem-spec-val red">24V / 36V / 48V / 72V / 80V+</span></div>
+          <div class="oem-spec-row"><span class="oem-spec-label">Dung lượng</span><span class="oem-spec-val">Theo nhu cầu vận hành</span></div>
+          <div class="oem-spec-row"><span class="oem-spec-label">Cell chemistry</span><span class="oem-spec-val">LiFePO4 / NMC / Custom</span></div>
+          <div class="oem-spec-row"><span class="oem-spec-label">Form factor</span><span class="oem-spec-val">Prismatic / Cylindrical</span></div>
+          <div class="oem-spec-row"><span class="oem-spec-label">BMS tích hợp</span><span class="oem-spec-val red">Có – smart BMS</span></div>
+          <div class="oem-spec-row"><span class="oem-spec-label">Giao thức kết nối</span><span class="oem-spec-val">CAN / RS485 / Custom</span></div>
+          <div class="oem-spec-row"><span class="oem-spec-label">Tiêu chuẩn</span><span class="oem-spec-val">IEC / CE / Theo yêu cầu</span></div>
+          <div class="oem-spec-row"><span class="oem-spec-label">Phục vụ</span><span class="oem-spec-val red">VN / FDI / Quốc tế</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ INDUSTRIES ============================================================ -->
+<section id="industries">
+  <div class="container">
+    <div class="industries-header reveal">
+      <div class="eyebrow" style="margin-bottom:14px">— Ứng dụng công nghiệp</div>
+      <h2 class="section-h2">Giải pháp cho nhiều <span>bối cảnh vận hành</span></h2>
+    </div>
+    <div class="industries-mosaic reveal">
+      <div class="industry-tile">
+        <div class="industry-tile-bg ind-bg-1">
+          <svg width="100%" height="100%" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0">
+            <rect width="400" height="200" fill="#121418"/>
+            <rect x="20" y="40" width="360" height="120" fill="#1a1e24" rx="1"/>
+            <rect x="40" y="60" width="80" height="80" fill="#222" rx="1"/>
+            <rect x="140" y="60" width="80" height="80" fill="#1e1e1e" rx="1"/>
+            <rect x="240" y="60" width="80" height="80" fill="#222" rx="1"/>
+            <rect x="60" y="75" width="40" height="50" fill="#D42020" opacity="0.6" rx="1"/>
+            <rect x="160" y="75" width="40" height="50" fill="#D42020" opacity="0.4" rx="1"/>
+            <rect x="260" y="75" width="40" height="50" fill="#D42020" opacity="0.3" rx="1"/>
+          </svg>
+        </div>
+        <div class="industry-tile-overlay"></div>
+        <div class="industry-tile-content">
+          <span class="industry-tile-icon">📦</span>
+          <span class="industry-tile-name">Logistics &amp; Kho vận</span>
+          <span class="industry-tile-sub">Xe nâng · Pallet mover · WMS</span>
+        </div>
+      </div>
+      <div class="industry-tile">
+        <div class="industry-tile-bg ind-bg-2"></div>
+        <div class="industry-tile-overlay"></div>
+        <div class="industry-tile-content">
+          <span class="industry-tile-icon">🏭</span>
+          <span class="industry-tile-name">Nhà máy &amp; Sản xuất</span>
+          <span class="industry-tile-sub">Manufacturing · Assembly · QC</span>
+        </div>
+      </div>
+      <div class="industry-tile">
+        <div class="industry-tile-bg ind-bg-3"></div>
+        <div class="industry-tile-overlay"></div>
+        <div class="industry-tile-content">
+          <span class="industry-tile-icon">🤖</span>
+          <span class="industry-tile-name">AGV / Robot</span>
+          <span class="industry-tile-sub">Automation · Smart factory</span>
+        </div>
+      </div>
+      <div class="industry-tile">
+        <div class="industry-tile-bg ind-bg-4"></div>
+        <div class="industry-tile-overlay"></div>
+        <div class="industry-tile-content">
+          <span class="industry-tile-icon">🌿</span>
+          <span class="industry-tile-name">Resort &amp; Du lịch</span>
+          <span class="industry-tile-sub">Golf buggy · Mobility · EV tour</span>
+        </div>
+      </div>
+      <div class="industry-tile">
+        <div class="industry-tile-bg ind-bg-5"></div>
+        <div class="industry-tile-overlay"></div>
+        <div class="industry-tile-content">
+          <span class="industry-tile-icon">⚡</span>
+          <span class="industry-tile-name">Lưu trữ năng lượng</span>
+          <span class="industry-tile-sub">ESS · Microgrid · Peak shaving</span>
+        </div>
+      </div>
+      <div class="industry-tile">
+        <div class="industry-tile-bg ind-bg-6"></div>
+        <div class="industry-tile-overlay"></div>
+        <div class="industry-tile-content">
+          <span class="industry-tile-icon">🏗️</span>
+          <span class="industry-tile-name">Khu công nghiệp</span>
+          <span class="industry-tile-sub">Industrial park · FDI · OEM</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ WHY CHOOSE ============================================================ -->
+<section id="why">
+  <div class="container">
+    <div class="why-layout">
+      <div class="reveal">
+        <div class="eyebrow" style="margin-bottom:16px">— Lý do lựa chọn</div>
+        <h2 class="why-headline">
+          Vì sao chọn<br>
+          <span>PKG Battery</span><br>
+          cho bài toán<brnăng lượng<br>công nghiệp?
+        </h2>
+        <div style="margin-top:32px">
+          <a href="#cta-final" class="btn-primary">Nhận tư vấn kỹ thuật →</a>
+        </div>
+      </div>
+      <div class="why-items reveal reveal-delay-2">
+        <div class="why-item">
+          <div class="why-item-num">01</div>
+          <div>
+            <div class="why-item-title">Giải pháp thiết kế theo nhu cầu vận hành</div>
+            <div class="why-item-desc">Không bán sản phẩm theo catalogue. PKG phân tích bài toán vận hành thực tế và đề xuất cấu hình phù hợp nhất.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-item-num">02</div>
+          <div>
+            <div class="why-item-title">Tư duy kỹ thuật và khả năng đồng hành triển khai</div>
+            <div class="why-item-desc">Đội ngũ kỹ thuật đồng hành từ thiết kế đến lắp đặt, vận hành và hậu mãi.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-item-num">03</div>
+          <div>
+            <div class="why-item-title">Tối ưu uptime, hiệu quả và chi phí dài hạn</div>
+            <div class="why-item-desc">Công nghệ LiFePO4 giúp giảm downtime, tăng tuổi thọ và tối ưu TCO so với giải pháp truyền thống.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-item-num">04</div>
+          <div>
+            <div class="why-item-title">Phục vụ nhiều ứng dụng &amp; ngành công nghiệp</div>
+            <div class="why-item-desc">Từ logistics, nhà máy, AGV đến resort, khu công nghiệp và hệ thống lưu trữ năng lượng.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-item-num">05</div>
+          <div>
+            <div class="why-item-title">Phục vụ doanh nghiệp Việt Nam, FDI và quốc tế</div>
+            <div class="why-item-desc">Năng lực OEM/ODM và tư vấn song ngữ cho doanh nghiệp FDI và đối tác kỹ thuật quốc tế.</div>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-item-num">06</div>
+          <div>
+            <div class="why-item-title">Khả năng tùy chỉnh và linh hoạt cao</div>
+            <div class="why-item-desc">Cấu hình pin, điện áp, BMS và giao thức kết nối theo yêu cầu kỹ thuật riêng của từng dự án.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ TRUST / STATS ============================================================ -->
+<section id="trust">
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="5">5</span><sub>+ năm</sub></div>
+      <div class="stat-label">Kinh nghiệm chuyên sâu</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="500">500</span><sub>+</sub></div>
+      <div class="stat-label">Hệ thống triển khai</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="8">8</span><sub> đại lý</sub></div>
+      <div class="stat-label">Mạng lưới toàn quốc</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num"><span class="counter" data-target="7">7</span><sub>+ ngành</sub></div>
+      <div class="stat-label">Ứng dụng công nghiệp</div>
+    </div>
+  </div>
+  <div class="certs-section">
+    <div class="container">
+      <div class="certs-header">
+        <div class="eyebrow" style="color:var(--red);margin-bottom:14px">— Năng lực & chứng chỉ</div>
+        <h2 class="section-h2 reveal">Tiêu chuẩn &amp; <span>chứng nhận</span></h2>
+      </div>
+      <div class="certs-grid reveal">
+        <div class="cert-card">
+          <div class="cert-icon">IEC</div>
+          <div class="cert-name">IEC 62619</div>
+          <div class="cert-desc">Battery Safety</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">CE</div>
+          <div class="cert-name">CE Marking</div>
+          <div class="cert-desc">EU Compliance</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">ISO</div>
+          <div class="cert-name">ISO 9001</div>
+          <div class="cert-desc">Quality System</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">UN</div>
+          <div class="cert-name">UN 38.3</div>
+          <div class="cert-desc">Transport Safety</div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon">BMS</div>
+          <div class="cert-name">Smart BMS</div>
+          <div class="cert-desc">Proprietary System</div>
+        </div>
+      </div>
+      <p class="section-label" style="margin-top:20px;text-align:center">* Chứng chỉ chi tiết sẽ được xác nhận và cập nhật. <a href="#cta-final" style="color:var(--red);text-decoration:none">Xem hồ sơ năng lực →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ PROCESS ============================================================ -->
+<section id="process">
+  <div class="container">
+    <div class="process-header reveal">
+      <div class="eyebrow" style="margin-bottom:14px;display:block;text-align:center">— Quy trình làm việc</div>
+      <h2 class="section-h2" style="text-align:center">Tư vấn rõ ràng, <span>triển khai có kiểm soát</span></h2>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="process-step-circle">01</div>
+        <div class="process-step-title">Tiếp nhận nhu cầu &amp; đánh giá ứng dụng</div>
+        <div class="process-step-desc">Lắng nghe bài toán vận hành và phân tích yêu cầu kỹ thuật thực tế.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-circle">02</div>
+        <div class="process-step-title">Phân tích &amp; đề xuất cấu hình</div>
+        <div class="process-step-desc">Đề xuất dòng pin, điện áp, dung lượng và hệ thống sạc phù hợp nhất.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-circle">03</div>
+        <div class="process-step-title">Thiết kế giải pháp tùy chỉnh</div>
+        <div class="process-step-desc">Thiết kế hệ thống pin / sạc / tích hợp theo thiết bị và môi trường thực tế.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-circle">04</div>
+        <div class="process-step-title">Triển khai &amp; hướng dẫn vận hành</div>
+        <div class="process-step-desc">Lắp đặt, test và bàn giao hệ thống với hướng dẫn vận hành đầy đủ.</div>
+      </div>
+      <div class="process-step">
+        <div class="process-step-circle">05</div>
+        <div class="process-step-title">Đồng hành kỹ thuật &amp; hậu mãi</div>
+        <div class="process-step-desc">Hỗ trợ kỹ thuật dài hạn, bảo trì định kỳ và nâng cấp theo nhu cầu.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ DEALER MAP ============================================================ -->
+<section id="dealers">
+  <div class="container">
+    <div class="dealers-layout">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px">— Mạng lưới phân phối</div>
+        <h2 class="section-h2 reveal">Đại lý &amp; phân phối <span>toàn Việt Nam</span></h2>
+        <p class="section-sub reveal" style="margin-bottom:40px">Hệ thống 8 đại lý được triển khai tại các tỉnh thành chiến lược, với định hướng mở rộng đến 20+ điểm trong thời gian tới.</p>
+        <div class="vn-map reveal">
+          <!-- Stylized Vietnam map SVG -->
+          <svg viewBox="0 0 200 500" width="200" height="500">
+            <defs>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <!-- Vietnam silhouette approximate -->
+            <path d="M110,20 L120,25 L125,35 L120,50 L115,55 L118,65 L122,75 L125,85 L120,95 L115,100 L110,110 L108,125 L105,135 L100,145 L95,155 L90,160 L85,170 L80,180 L75,195 L70,210 L68,225 L70,240 L72,255 L75,265 L78,275 L80,285 L82,295 L85,310 L88,325 L90,340 L92,355 L90,370 L88,380 L85,390 L83,400 L80,410 L78,418 L75,425 L70,430 L72,440 L75,448 L80,455 L82,460 L78,465 L75,462 L70,455 L65,448 L62,440 L60,430 L58,420 L60,410 L62,400 L65,390 L68,380 L70,370 L72,360 L70,350 L68,340 L65,325 L62,310 L60,295 L62,280 L65,265 L68,250 L70,240 L68,228 L65,218 L62,208 L60,195 L58,182 L60,170 L62,158 L65,148 L68,138 L70,128 L72,118 L75,108 L78,98 L80,88 L82,78 L85,68 L88,58 L90,48 L92,38 L95,28 L100,22 L105,18 Z" fill="#1e1e1e" stroke="#333" stroke-width="1"/>
+            <!-- Dealer pins -->
+            <g filter="url(#glow)">
+              <!-- Hanoi -->
+              <circle cx="95" cy="72" r="5" fill="#D42020" opacity="0.9"/>
+              <circle cx="95" cy="72" r="9" fill="none" stroke="#D42020" stroke-width="1" opacity="0.4"/>
+              <text x="105" y="76" font-family="monospace" font-size="7" fill="#999">Hà Nội</text>
+              <!-- Da Nang -->
+              <circle cx="90" cy="235" r="4" fill="#D42020" opacity="0.85"/>
+              <circle cx="90" cy="235" r="8" fill="none" stroke="#D42020" stroke-width="1" opacity="0.4"/>
+              <text x="100" y="239" font-family="monospace" font-size="7" fill="#999">Đà Nẵng</text>
+              <!-- HCM -->
+              <circle cx="80" cy="390" r="6" fill="#D42020"/>
+              <circle cx="80" cy="390" r="11" fill="none" stroke="#D42020" stroke-width="1" opacity="0.5"/>
+              <text x="90" y="394" font-family="monospace" font-size="7" fill="#ccc" font-weight="bold">TP.HCM</text>
+              <!-- Hai Phong -->
+              <circle cx="105" cy="90" r="4" fill="#D42020" opacity="0.7"/>
+              <text x="112" y="94" font-family="monospace" font-size="6" fill="#888">Hải Phòng</text>
+              <!-- Can Tho -->
+              <circle cx="72" cy="415" r="3.5" fill="#D42020" opacity="0.7"/>
+              <text x="62" y="430" font-family="monospace" font-size="6" fill="#888">Cần Thơ</text>
+              <!-- Binh Duong -->
+              <circle cx="84" cy="375" r="3.5" fill="#D42020" opacity="0.65"/>
+              <!-- Dong Nai -->
+              <circle cx="90" cy="378" r="3.5" fill="#D42020" opacity="0.65"/>
+              <!-- Binh Dinh -->
+              <circle cx="87" cy="268" r="3.5" fill="#D42020" opacity="0.7"/>
+              <text x="93" y="272" font-family="monospace" font-size="6" fill="#888">Bình Định</text>
+            </g>
+            <!-- Legend -->
+            <circle cx="20" cy="485" r="4" fill="#D42020"/>
+            <text x="28" y="489" font-family="monospace" font-size="7" fill="#666">Đại lý PKG Battery</text>
+          </svg>
+        </div>
+      </div>
+      <div class="dealer-list reveal reveal-delay-2">
+        <div class="eyebrow eyebrow-white" style="margin-bottom:20px">8 đại lý hiện tại</div>
+        <div class="dealer-item active">
+          <div>
+            <div class="dealer-city">TP. Hồ Chí Minh</div>
+            <div class="dealer-name">PKG Battery HQ / Showroom</div>
+          </div>
+          <div class="dealer-dot"></div>
+        </div>
+        <div class="dealer-item">
+          <div>
+            <div class="dealer-city">Hà Nội</div>
+            <div class="dealer-name">Đại lý miền Bắc</div>
+          </div>
+          <div class="dealer-dot"></div>
+        </div>
+        <div class="dealer-item">
+          <div>
+            <div class="dealer-city">Hải Phòng</div>
+            <div class="dealer-name">Khu kinh tế & Cảng</div>
+          </div>
+          <div class="dealer-dot"></div>
+        </div>
+        <div class="dealer-item">
+          <div>
+            <div class="dealer-city">Đà Nẵng</div>
+            <div class="dealer-name">Đại lý miền Trung</div>
+          </div>
+          <div class="dealer-dot"></div>
+        </div>
+        <div class="dealer-item">
+          <div>
+            <div class="dealer-city">Bình Định</div>
+            <div class="dealer-name">Khu công nghiệp Nhơn Hòa</div>
+          </div>
+          <div class="dealer-dot"></div>
+        </div>
+        <div class="dealer-item">
+          <div>
+            <div class="dealer-city">Bình Dương</div>
+            <div class="dealer-name">Khu công nghiệp VSIP</div>
+          </div>
+          <div class="dealer-dot"></div>
+        </div>
+        <div class="dealer-item">
+          <div>
+            <div class="dealer-city">Đồng Nai</div>
+            <div class="dealer-name">KCN Long Thành – Amata</div>
+          </div>
+          <div class="dealer-dot"></div>
+        </div>
+        <div class="dealer-item">
+          <div>
+            <div class="dealer-city">Cần Thơ</div>
+            <div class="dealer-name">Đại lý ĐBSCL</div>
+          </div>
+          <div class="dealer-dot"></div>
+        </div>
+        <div style="margin-top:20px">
+          <p class="section-label" style="margin-bottom:12px">Đang mở rộng thêm đại lý</p>
+          <a href="#cta-final" class="btn-secondary" style="font-size:0.72rem">Đăng ký làm đại lý →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ NEWS ============================================================ -->
+<section id="news">
+  <div class="container">
+    <div class="news-header">
+      <div>
+        <div class="eyebrow" style="margin-bottom:12px">— Kiến thức & Tin tức</div>
+        <h2 class="section-h2 reveal">Cập nhật từ <span>PKG Battery</span></h2>
+      </div>
+      <a href="#" class="btn-secondary reveal">Xem tất cả bài viết →</a>
+    </div>
+    <div class="news-grid reveal">
+      <div class="news-card featured">
+        <div class="news-img">
+          <div class="news-img-bg" style="background:linear-gradient(135deg,#1a1a1a,#222)">
+            <svg width="100%" height="100%" viewBox="0 0 400 280" preserveAspectRatio="xMidYMid slice">
+              <rect width="400" height="280" fill="#111"/>
+              <rect x="30" y="40" width="340" height="200" fill="#1a1a1a" rx="1"/>
+              <rect x="50" y="60" width="140" height="90" fill="#D42020" opacity="0.15" rx="1"/>
+              <rect x="50" y="60" width="140" height="90" fill="none" stroke="#D42020" stroke-width="1" rx="1" opacity="0.4"/>
+              <text x="80" y="115" font-family="Arial" font-size="22" fill="#D42020" font-weight="bold" opacity="0.8">LiFePO4</text>
+              <text x="60" y="130" font-family="monospace" font-size="8" fill="#555">vs Lead-Acid</text>
+              <polyline points="210,180 240,150 270,165 300,130 330,145 360,120" fill="none" stroke="#D42020" stroke-width="2" opacity="0.7"/>
+              <polyline points="210,200 240,195 270,205 300,198 330,208 360,200" fill="none" stroke="#444" stroke-width="1.5" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="news-img-overlay"></div>
+        </div>
+        <div class="news-content">
+          <div class="news-tag">Kiến thức kỹ thuật</div>
+          <div class="news-title">So sánh pin LiFePO4 và Lead-Acid: Tại sao doanh nghiệp đang chuyển đổi và chi phí thực sự là bao nhiêu?</div>
+          <div class="news-meta">
+            <span>📅 Tháng 4, 2025</span>
+            <span>⏱ 8 phút đọc</span>
+          </div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-img" style="height:140px">
+          <div class="news-img-bg" style="background:linear-gradient(135deg,#0a1520,#1a2030)"></div>
+        </div>
+        <div class="news-content">
+          <div class="news-tag">Ứng dụng</div>
+          <div class="news-title">Pin lithium cho xe nâng điện: Giảm downtime 40% trong kho vận hiện đại</div>
+          <div class="news-meta"><span>📅 Tháng 3, 2025</span></div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-img" style="height:140px">
+          <div class="news-img-bg" style="background:linear-gradient(135deg,#151008,#1e1a10)"></div>
+        </div>
+        <div class="news-content">
+          <div class="news-tag">Xu hướng</div>
+          <div class="news-title">AGV và robot tự động hóa: Bài toán nguồn điện và tại sao cần pin chuyên dụng</div>
+          <div class="news-meta"><span>📅 Tháng 3, 2025</span></div>
+        </div>
+      </div>
+      <div class="news-card">
+        <div class="news-img" style="height:140px">
+          <div class="news-img-bg" style="background:linear-gradient(135deg,#100a10,#1a1220)"></div>
+        </div>
+        <div class="news-content">
+          <div class="news-tag">ESS</div>
+          <div class="news-title">Hệ thống lưu trữ năng lượng ESS: Giải pháp cho doanh nghiệp muốn tối ưu hóa đơn điện</div>
+          <div class="news-meta"><span>📅 Tháng 2, 2025</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ CASE STUDIES ============================================================ -->
+<section id="cases">
+  <div class="container">
+    <div class="cases-header reveal">
+      <div class="eyebrow" style="margin-bottom:14px">— Dự án tiêu biểu</div>
+      <h2 class="section-h2">Giải pháp được xây dựng cho <span>bối cảnh vận hành thực tế</span></h2>
+    </div>
+    <div class="cases-grid reveal">
+      <div class="case-card">
+        <div class="case-card-bg" style="background:linear-gradient(160deg,#101418,#1a2030)">
+          <svg width="100%" height="100%" viewBox="0 0 300 380" preserveAspectRatio="xMidYMid slice" style="position:absolute;inset:0;opacity:0.5">
+            <rect width="300" height="380" fill="#141820"/>
+            <rect x="50" y="100" width="200" height="180" fill="#1e2430" rx="1"/>
+            <rect x="70" y="120" width="70" height="140" fill="#D42020" opacity="0.3" rx="1"/>
+            <rect x="160" y="120" width="70" height="140" fill="#D42020" opacity="0.2" rx="1"/>
+            <rect x="50" y="100" width="200" height="4" fill="#D42020" opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="case-overlay"></div>
+        <div class="case-content">
+          <div class="case-industry">Logistics &amp; Kho vận</div>
+          <div class="case-title">Chuyển đổi xe nâng điện lithium cho nhà máy FMCG</div>
+          <div class="case-result">Thay thế hệ thống pin axit truyền thống bằng pin LiFePO4 cho đội xe nâng 24/7.</div>
+          <div class="case-kpi">
+            <div class="case-kpi-item">
+              <span class="kpi-num">↓40%</span>
+              <span class="kpi-label">Downtime</span>
+            </div>
+            <div class="case-kpi-item">
+              <span class="kpi-num">↓30%</span>
+              <span class="kpi-label">Chi phí bảo trì</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-card-bg" style="background:linear-gradient(160deg,#0a1015,#101820)">
+        </div>
+        <div class="case-overlay"></div>
+        <div class="case-content">
+          <div class="case-industry">Tự động hóa &amp; AGV</div>
+          <div class="case-title">Giải pháp pin AGV cho nhà máy điện tử FDI</div>
+          <div class="case-result">Thiết kế pin tùy chỉnh cho AGV vận hành 3 ca liên tục trong môi trường phòng sạch.</div>
+          <div class="case-kpi">
+            <div class="case-kpi-item">
+              <span class="kpi-num">99.8%</span>
+              <span class="kpi-label">Uptime hệ thống</span>
+            </div>
+            <div class="case-kpi-item">
+              <span class="kpi-num">5 năm+</span>
+              <span class="kpi-label">Cam kết tuổi thọ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-card-bg" style="background:linear-gradient(160deg,#0a1208,#101a10)">
+        </div>
+        <div class="case-overlay"></div>
+        <div class="case-content">
+          <div class="case-industry">Resort &amp; Mobility</div>
+          <div class="case-title">Hệ thống xe điện du lịch cho khu nghỉ dưỡng 5 sao</div>
+          <div class="case-result">Trang bị đội xe điện golf buggy và shuttle với pin lithium hiệu suất cao, vận hành êm và bền bỉ.</div>
+          <div class="case-kpi">
+            <div class="case-kpi-item">
+              <span class="kpi-num">50+</span>
+              <span class="kpi-label">Xe được trang bị</span>
+            </div>
+            <div class="case-kpi-item">
+              <span class="kpi-num">3×</span>
+              <span class="kpi-label">Tuổi thọ so với axit</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="section-label" style="margin-top:20px;text-align:center">* Số liệu mang tính tham khảo – case study chi tiết đang được xác nhận. <a href="#cta-final" style="color:var(--red);text-decoration:none">Xem hồ sơ năng lực →</a></p>
+  </div>
+</section>
+
+<!-- ============================================================ FINAL CTA ============================================================ -->
+<section id="cta-final">
+  <div class="cta-final-bg"></div>
+  <div class="container">
+    <div class="cta-final-inner">
+      <div class="cta-final-left reveal">
+        <div class="eyebrow" style="margin-bottom:16px">— Bắt đầu tư vấn</div>
+        <h2 class="cta-headline">
+          Nhận tư vấn<br>
+          kỹ thuật<br>
+          <span>miễn phí</span>
+        </h2>
+        <p class="cta-desc">Trao đổi với đội ngũ PKG Battery để được đánh giá nhu cầu vận hành, đề xuất cấu hình phù hợp và định hướng giải pháp tối ưu cho chi phí dài hạn của doanh nghiệp bạn.</p>
+        <div style="margin-top:32px;display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:12px;font-size:0.82rem;color:rgba(255,255,255,0.55)">
+            <span style="color:var(--red);font-size:1rem">📞</span>
+            <span class="mono" style="font-size:0.8rem">[Số điện thoại PKG Battery]</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;font-size:0.82rem;color:rgba(255,255,255,0.55)">
+            <span style="color:var(--red);font-size:1rem">✉️</span>
+            <span class="mono" style="font-size:0.8rem">info@pkgbattery.vn</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;font-size:0.82rem;color:rgba(255,255,255,0.55)">
+            <span style="color:var(--red);font-size:1rem">📍</span>
+            <span class="mono" style="font-size:0.8rem">[Địa chỉ PKG Battery]</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="contact-form">
+          <div class="eyebrow" style="margin-bottom:20px">Gửi yêu cầu tư vấn</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Họ tên</label>
+              <input type="text" placeholder="Nguyễn Văn A">
+            </div>
+            <div class="form-group">
+              <label>Công ty</label>
+              <input type="text" placeholder="Tên doanh nghiệp">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Số điện thoại</label>
+              <input type="tel" placeholder="0901 xxx xxx">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="email@company.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Nhu cầu / Ứng dụng</label>
+            <select>
+              <option value="">-- Chọn ứng dụng --</option>
+              <option>Pin cho xe nâng điện</option>
+              <option>Pin cho xe điện du lịch</option>
+              <option>Pin cho AGV / Robot</option>
+              <option>Bộ sạc / Trạm sạc</option>
+              <option>Hệ thống ESS lưu trữ năng lượng</option>
+              <option>OEM / ODM / Tùy chỉnh giải pháp</option>
+              <option>Khác / Chưa xác định</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mô tả nhu cầu (tuỳ chọn)</label>
+            <textarea placeholder="Mô tả ngắn về bài toán vận hành, quy mô dự án..."></textarea>
+          </div>
+          <button class="btn-submit">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M8 2l6 6-6 6"/></svg>
+            Gửi yêu cầu tư vấn
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ FOOTER ============================================================ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <div class="nav-logo-mark">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="white" stroke-width="2">
+              <rect x="2" y="5" width="14" height="9" rx="1"/>
+              <line x1="16" y1="7.5" x2="17" y2="7.5"/>
+              <line x1="16" y1="10.5" x2="17" y2="10.5"/>
+              <line x1="6" y1="5" x2="6" y2="14"/>
+              <line x1="10" y1="5" x2="10" y2="14"/>
+            </svg>
+          </div>
+          <div>
+            <span class="nav-logo-text">PKG Battery</span>
+            <span class="nav-logo-sub">Industrial Energy Solutions</span>
+          </div>
+        </div>
+        <p class="footer-brand-desc">Đối tác giải pháp pin lithium công nghiệp cho doanh nghiệp hiện đại. Tư vấn kỹ thuật, OEM/ODM và đồng hành triển khai thực tế.</p>
+        <div class="footer-social">
+          <a href="#">f</a>
+          <a href="#">in</a>
+          <a href="#">yt</a>
+          <a href="#">zl</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Giải pháp</h4>
+        <ul>
+          <li><a href="#">Pin Xe Nâng Điện</a></li>
+          <li><a href="#">Pin Xe Điện Du Lịch</a></li>
+          <li><a href="#">Pin AGV / Robot</a></li>
+          <li><a href="#">Bộ Sạc – Trạm Sạc</a></li>
+          <li><a href="#">Hệ thống ESS</a></li>
+          <li><a href="#">OEM / ODM</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ứng dụng</h4>
+        <ul>
+          <li><a href="#">Logistics & Kho vận</a></li>
+          <li><a href="#">Nhà máy & Sản xuất</a></li>
+          <li><a href="#">AGV / Tự động hóa</a></li>
+          <li><a href="#">Resort & Du lịch</a></li>
+          <li><a href="#">Khu công nghiệp</a></li>
+          <li><a href="#">ESS & Năng lượng</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Công ty</h4>
+        <ul>
+          <li><a href="#">Về PKG Battery</a></li>
+          <li><a href="#">Năng lực & Chứng chỉ</a></li>
+          <li><a href="#">Tin tức & Kiến thức</a></li>
+          <li><a href="#">Hệ thống đại lý</a></li>
+          <li><a href="#">Hồ sơ năng lực</a></li>
+          <li><a href="#">Liên hệ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Liên hệ</h4>
+        <ul>
+          <li><a href="#">📍 Địa chỉ văn phòng</a></li>
+          <li><a href="#">📞 Hotline tư vấn</a></li>
+          <li><a href="#">✉️ info@pkgbattery.vn</a></li>
+          <li><a href="#">🕐 T2–T7: 8:00–17:30</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 PKG Battery. All rights reserved. | Giải pháp pin lithium công nghiệp</div>
+      <div class="footer-contact">
+        <a href="#">Chính sách bảo mật</a>
+        <a href="#">Điều khoản sử dụng</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// REVEAL ANIMATION
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+reveals.forEach(el => observer.observe(el));
+
+// DEALER MAP INTERACTION
+const dealerItems = document.querySelectorAll('.dealer-item');
+dealerItems.forEach(item => {
+  item.addEventListener('click', () => {
+    dealerItems.forEach(d => d.classList.remove('active'));
+    item.classList.add('active');
+  });
+});
+
+// TRUST TAG ROTATION
+const tags = document.querySelectorAll('.trust-tag');
+let tagIdx = 0;
+setInterval(() => {
+  tags.forEach(t => t.classList.remove('active'));
+  tags[tagIdx % tags.length].classList.add('active');
+  tagIdx++;
+}, 1800);
+
+// COUNTER ANIMATION
+const counters = document.querySelectorAll('.counter');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      const target = parseInt(el.getAttribute('data-target'));
+      let current = 0;
+      const step = target / 40;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        el.textContent = Math.floor(current);
+        if (current >= target) clearInterval(timer);
+      }, 30);
+      counterObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(el => counterObserver.observe(el));
+
+// HERO PANEL CLICK
+document.querySelectorAll('.hero-panel').forEach((panel, i) => {
+  panel.addEventListener('click', () => {
+    const targets = ['#products', '#products', '#products', '#products', '#products', '#oem'];
+    document.querySelector(targets[i] || '#products')?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// FORM SUBMIT
+document.querySelector('.btn-submit')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  const btn = e.currentTarget;
+  btn.innerHTML = '✓ Đã gửi – Chúng tôi sẽ liên hệ sớm!';
+  btn.style.background = '#1a6a2a';
+  setTimeout(() => {
+    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8h12M8 2l6 6-6 6"/></svg> Gửi yêu cầu tư vấn';
+    btn.style.background = '';
+  }, 4000);
+});
+
+// SMOOTH SCROLL FOR ALL ANCHOR LINKS
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>

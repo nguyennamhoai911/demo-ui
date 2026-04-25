@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PKG Battery — Bình ắc quy pin lithium 24V 230Ah</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,900;1,300&family=Barlow+Condensed:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #D62B2B;
+  --red-light: #E84040;
+  --red-dim: rgba(214,43,43,0.12);
+  --black: #0D0D0F;
+  --graphite: #1A1C1F;
+  --graphite-2: #252830;
+  --graphite-3: #2E3138;
+  --white: #FFFFFF;
+  --off-white: #F5F5F7;
+  --gray-1: #E8E8EC;
+  --gray-2: #C4C4CC;
+  --gray-3: #8A8A96;
+  --gray-4: #5C5C6A;
+  --border: rgba(255,255,255,0.08);
+  --border-dark: rgba(0,0,0,0.1);
+  --radius: 4px;
+  --radius-lg: 8px;
+  --mono: 'JetBrains Mono', monospace;
+  --condensed: 'Barlow Condensed', sans-serif;
+  --body: 'Barlow', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--body); background: var(--white); color: var(--black); overflow-x: hidden; line-height: 1.6; }
+
+/* ═══════════════════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════════════════ */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+.container-sm { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--red);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: var(--red);
+}
+.red-accent { color: var(--red); }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--red); color: var(--white);
+  font-family: var(--condensed); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 14px 28px; border: none; cursor: pointer;
+  transition: all 0.2s; text-decoration: none;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+.btn-primary:hover { background: var(--red-light); transform: translateY(-1px); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; color: var(--black);
+  font-family: var(--condensed); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 13px 24px; border: 1.5px solid rgba(0,0,0,0.2); cursor: pointer;
+  transition: all 0.2s; text-decoration: none;
+}
+.btn-secondary:hover { border-color: var(--red); color: var(--red); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; color: var(--gray-3);
+  font-family: var(--condensed); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 10px 20px; border: 1px solid var(--gray-1); cursor: pointer;
+  transition: all 0.2s; text-decoration: none;
+}
+.btn-ghost:hover { border-color: var(--gray-2); color: var(--black); }
+
+/* ═══════════════════════════════════════════════════════
+   HEADER / NAV
+═══════════════════════════════════════════════════════ */
+.site-header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--gray-1);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 64px;
+}
+.logo {
+  display: flex; align-items: center; gap: 12px;
+  text-decoration: none;
+}
+.logo-mark {
+  width: 36px; height: 36px;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+}
+.logo-mark span {
+  font-family: var(--condensed); font-weight: 800; font-size: 16px;
+  color: var(--white); letter-spacing: -0.02em;
+}
+.logo-text { font-family: var(--condensed); font-weight: 700; font-size: 18px; color: var(--black); letter-spacing: 0.05em; }
+.logo-text small { display: block; font-size: 9px; font-weight: 400; letter-spacing: 0.2em; color: var(--gray-3); margin-top: -2px; }
+.nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+.nav-links a { text-decoration: none; font-family: var(--condensed); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: var(--gray-4); text-transform: uppercase; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--black); }
+.nav-cta { display: flex; align-items: center; gap: 12px; }
+.hotline-chip {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  color: var(--red); border: 1px solid var(--red-dim);
+  padding: 6px 14px; background: var(--red-dim);
+}
+
+/* ═══════════════════════════════════════════════════════
+   BREADCRUMB
+═══════════════════════════════════════════════════════ */
+.breadcrumb-bar {
+  background: var(--off-white);
+  border-bottom: 1px solid var(--gray-1);
+  padding: 10px 0;
+}
+.breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--condensed); font-size: 11px;
+  letter-spacing: 0.08em; color: var(--gray-3); text-transform: uppercase;
+}
+.breadcrumb a { color: var(--gray-3); text-decoration: none; transition: color 0.2s; }
+.breadcrumb a:hover { color: var(--red); }
+.breadcrumb-sep { color: var(--gray-2); font-size: 10px; }
+.breadcrumb .current { color: var(--black); }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 1 — HERO
+═══════════════════════════════════════════════════════ */
+.hero-section {
+  background: var(--off-white);
+  position: relative;
+  overflow: hidden;
+  padding: 64px 0 56px;
+}
+.hero-bg-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(214,43,43,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(214,43,43,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.hero-bg-corner {
+  position: absolute; top: 0; right: 0;
+  width: 600px; height: 600px;
+  background: radial-gradient(ellipse at 80% 20%, rgba(214,43,43,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-inner {
+  display: grid; grid-template-columns: 1fr 480px;
+  gap: 64px; align-items: center;
+  position: relative;
+}
+.hero-content {}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--red-dim); border: 1px solid rgba(214,43,43,0.2);
+  padding: 5px 14px;
+  font-family: var(--condensed); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase; color: var(--red);
+  margin-bottom: 20px;
+}
+.hero-badge::before { content: '●'; font-size: 6px; }
+.hero-h1 {
+  font-family: var(--condensed); font-weight: 800;
+  font-size: clamp(28px, 4vw, 48px); line-height: 1.05;
+  letter-spacing: -0.01em; color: var(--black);
+  margin-bottom: 12px;
+}
+.hero-sku {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 20px;
+}
+.sku-label {
+  font-family: var(--mono); font-size: 10px; color: var(--gray-3);
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.sku-code {
+  font-family: var(--mono); font-size: 12px; color: var(--black);
+  font-weight: 600; background: var(--gray-1);
+  padding: 3px 10px; border-left: 2px solid var(--red);
+}
+.hero-desc {
+  font-size: 15px; color: var(--gray-4); line-height: 1.7;
+  max-width: 480px; margin-bottom: 32px;
+  border-left: 3px solid var(--gray-1); padding-left: 16px;
+}
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 40px; }
+.hero-trust {
+  display: flex; align-items: center; gap: 24px;
+  padding-top: 28px;
+  border-top: 1px solid var(--gray-1);
+}
+.trust-item {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--condensed); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--gray-4);
+}
+.trust-item svg { color: var(--red); flex-shrink: 0; }
+
+/* Product Visual Stage */
+.hero-visual { position: relative; }
+.product-stage {
+  position: relative;
+  background: var(--white);
+  border: 1px solid var(--gray-1);
+  padding: 32px;
+  aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow:
+    0 0 0 1px var(--gray-1),
+    0 8px 32px rgba(0,0,0,0.08),
+    0 0 64px rgba(214,43,43,0.06);
+  overflow: hidden;
+  cursor: zoom-in;
+  transition: box-shadow 0.3s;
+}
+.product-stage:hover {
+  box-shadow:
+    0 0 0 1px var(--gray-2),
+    0 16px 48px rgba(0,0,0,0.12),
+    0 0 80px rgba(214,43,43,0.1);
+}
+.product-stage-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.product-stage-corner {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.product-stage-corner::before, .product-stage-corner::after {
+  content: '';
+  position: absolute;
+  width: 20px; height: 20px;
+  border-color: var(--red);
+  border-style: solid;
+}
+.product-stage-corner::before {
+  top: 12px; left: 12px;
+  border-width: 2px 0 0 2px;
+}
+.product-stage-corner::after {
+  bottom: 12px; right: 12px;
+  border-width: 0 2px 2px 0;
+}
+.product-img-placeholder {
+  position: relative; z-index: 1;
+  width: 75%; aspect-ratio: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.3s;
+}
+.product-stage:hover .product-img-placeholder { transform: scale(1.03); }
+/* SVG placeholder battery */
+.battery-svg {
+  width: 100%; height: 100%;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+}
+.zoom-badge {
+  position: absolute; bottom: 12px; right: 12px; z-index: 2;
+  display: flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.9); border: 1px solid var(--gray-1);
+  padding: 4px 10px;
+  font-family: var(--mono); font-size: 9px; color: var(--gray-3);
+  letter-spacing: 0.1em;
+}
+.gallery-thumbs {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 8px; margin-top: 12px;
+}
+.thumb {
+  aspect-ratio: 1; background: var(--white);
+  border: 1.5px solid var(--gray-1);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.thumb:hover { border-color: var(--gray-2); }
+.thumb.active { border-color: var(--red); }
+.thumb.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--red); }
+.thumb-inner { width: 70%; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; }
+.thumb-video-badge {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.4);
+}
+.thumb-video-badge svg { color: white; }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 2 — TECHNICAL SNAPSHOT (DASHBOARD)
+═══════════════════════════════════════════════════════ */
+.specs-section {
+  background: var(--graphite);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+.specs-label-bar {
+  background: var(--graphite-2);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.specs-label-inner {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.specs-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--red); display: flex; align-items: center; gap: 10px;
+}
+.specs-label::before { content: ''; width: 20px; height: 1px; background: var(--red); }
+.model-tag {
+  font-family: var(--mono); font-size: 11px;
+  color: rgba(255,255,255,0.3); letter-spacing: 0.1em;
+}
+.specs-dashboard {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  position: relative;
+}
+.spec-cell {
+  padding: 36px 24px 32px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  transition: background 0.2s;
+}
+.spec-cell:last-child { border-right: none; }
+.spec-cell:hover { background: rgba(255,255,255,0.03); }
+.spec-cell::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: transparent;
+  transition: background 0.2s;
+}
+.spec-cell:hover::before { background: var(--red); }
+.spec-value {
+  font-family: var(--condensed); font-weight: 800;
+  font-size: 36px; line-height: 1; letter-spacing: -0.02em;
+  color: var(--white); margin-bottom: 6px;
+  display: flex; align-items: baseline; gap: 4px;
+}
+.spec-unit {
+  font-size: 16px; font-weight: 400; color: var(--gray-3); letter-spacing: 0;
+}
+.spec-label {
+  font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gray-3);
+}
+.spec-sub {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--gray-4); margin-top: 4px;
+}
+.spec-cell.highlight .spec-value { color: var(--red-light); }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 3 — LỢI ÍCH NỔI BẬT
+═══════════════════════════════════════════════════════ */
+.benefits-section { padding: 80px 0; background: var(--white); }
+.benefits-inner { display: grid; grid-template-columns: 280px 1fr; gap: 80px; align-items: start; }
+.benefits-aside {}
+.benefits-title {
+  font-family: var(--condensed); font-weight: 800;
+  font-size: 42px; line-height: 1; letter-spacing: -0.02em;
+  color: var(--black); margin-bottom: 16px;
+}
+.benefits-desc { font-size: 14px; color: var(--gray-3); line-height: 1.7; }
+.benefits-list { display: flex; flex-direction: column; gap: 0; }
+.benefit-item {
+  display: grid; grid-template-columns: 48px 1fr;
+  gap: 20px; align-items: start;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--gray-1);
+  transition: all 0.2s;
+}
+.benefit-item:first-child { border-top: 1px solid var(--gray-1); }
+.benefit-item:hover { padding-left: 8px; }
+.benefit-num {
+  font-family: var(--condensed); font-weight: 800;
+  font-size: 36px; line-height: 1; color: var(--gray-1);
+  letter-spacing: -0.04em; transition: color 0.2s;
+}
+.benefit-item:hover .benefit-num { color: var(--red); }
+.benefit-content {}
+.benefit-title {
+  font-family: var(--condensed); font-weight: 700;
+  font-size: 17px; letter-spacing: 0.02em; color: var(--black);
+  margin-bottom: 4px;
+}
+.benefit-desc { font-size: 13px; color: var(--gray-3); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 4 — ỨNG DỤNG
+═══════════════════════════════════════════════════════ */
+.usecase-section {
+  padding: 80px 0;
+  background: var(--off-white);
+  position: relative; overflow: hidden;
+}
+.usecase-bg {
+  position: absolute; right: -200px; top: -100px;
+  width: 600px; height: 600px;
+  border: 1px solid rgba(214,43,43,0.08);
+  border-radius: 50%;
+}
+.usecase-bg-2 {
+  position: absolute; right: -100px; top: 0;
+  width: 400px; height: 400px;
+  border: 1px solid rgba(214,43,43,0.05);
+  border-radius: 50%;
+}
+.usecase-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.usecase-content {}
+.usecase-title {
+  font-family: var(--condensed); font-weight: 800;
+  font-size: 40px; line-height: 1.05; letter-spacing: -0.01em;
+  color: var(--black); margin-bottom: 20px;
+}
+.usecase-desc { font-size: 14px; color: var(--gray-4); line-height: 1.7; margin-bottom: 32px; }
+.usecase-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+.usecase-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid var(--gray-2);
+  font-family: var(--condensed); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--black); cursor: pointer; transition: all 0.2s; background: var(--white);
+}
+.usecase-tag svg { width: 14px; height: 14px; color: var(--gray-3); flex-shrink: 0; }
+.usecase-tag:hover, .usecase-tag.active {
+  background: var(--black); color: var(--white); border-color: var(--black);
+}
+.usecase-tag:hover svg, .usecase-tag.active svg { color: var(--red); }
+.usecase-visual {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.usecase-card {
+  aspect-ratio: 1;
+  background: var(--white);
+  border: 1px solid var(--gray-1);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 24px; transition: all 0.3s; cursor: pointer; position: relative; overflow: hidden;
+}
+.usecase-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--red); transform: scaleX(0); transition: transform 0.3s;
+}
+.usecase-card:hover { border-color: var(--black); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+.usecase-card:hover::after { transform: scaleX(1); }
+.usecase-card-icon { font-size: 32px; }
+.usecase-card-title {
+  font-family: var(--condensed); font-weight: 700;
+  font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--black); text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 5 — GALLERY
+═══════════════════════════════════════════════════════ */
+.gallery-section { padding: 80px 0; background: var(--white); }
+.gallery-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; }
+.gallery-title { font-family: var(--condensed); font-weight: 800; font-size: 36px; color: var(--black); }
+.gallery-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.gallery-item {
+  aspect-ratio: 1; background: var(--off-white);
+  border: 1px solid var(--gray-1);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; position: relative; overflow: hidden; transition: all 0.2s;
+}
+.gallery-item:first-child { grid-column: span 2; grid-row: span 2; }
+.gallery-item:hover { border-color: var(--gray-3); }
+.gallery-item:hover .gallery-overlay { opacity: 1; }
+.gallery-overlay {
+  position: absolute; inset: 0;
+  background: rgba(13,13,15,0.5);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s;
+}
+.gallery-overlay svg { color: white; }
+.gallery-label {
+  position: absolute; bottom: 8px; left: 8px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  color: var(--gray-3); background: rgba(255,255,255,0.9);
+  padding: 2px 8px;
+}
+.gallery-placeholder { width: 60%; aspect-ratio: 1; }
+.gallery-placeholder.large { width: 55%; }
+.gallery-video-badge {
+  position: absolute; top: 8px; right: 8px;
+  background: var(--red); color: white;
+  font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em;
+  padding: 3px 8px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 6 — BODY FLEXIBLE (Editorial block)
+═══════════════════════════════════════════════════════ */
+.body-section { padding: 80px 0; background: var(--black); position: relative; overflow: hidden; }
+.body-section-bg {
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent, transparent 60px,
+    rgba(255,255,255,0.01) 60px,
+    rgba(255,255,255,0.01) 61px
+  );
+}
+.body-inner { position: relative; }
+.body-editorial {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.body-block {
+  padding: 48px;
+  background: var(--graphite);
+}
+.body-block-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--red); margin-bottom: 16px;
+}
+.body-block-title {
+  font-family: var(--condensed); font-weight: 700;
+  font-size: 28px; line-height: 1.1; color: var(--white); margin-bottom: 16px;
+}
+.body-block-text { font-size: 14px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+.body-block.dark { background: var(--graphite-2); }
+.body-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px; }
+.body-stat-item {}
+.body-stat-value {
+  font-family: var(--condensed); font-weight: 800;
+  font-size: 40px; line-height: 1; color: var(--white); margin-bottom: 4px;
+}
+.body-stat-value span { font-size: 20px; color: var(--red); }
+.body-stat-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; color: rgba(255,255,255,0.35); text-transform: uppercase; }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 7 — BẢNG THÔNG SỐ KỸ THUẬT
+═══════════════════════════════════════════════════════ */
+.specs-table-section { padding: 80px 0; background: var(--off-white); }
+.specs-table-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; }
+.specs-table-title { font-family: var(--condensed); font-weight: 800; font-size: 36px; color: var(--black); }
+.specs-table-actions { display: flex; gap: 12px; }
+.specs-table-wrapper {
+  background: var(--white);
+  border: 1px solid var(--gray-1);
+  overflow: auto;
+}
+.specs-table { width: 100%; border-collapse: collapse; }
+.specs-table .group-header td {
+  background: var(--graphite); color: var(--white);
+  font-family: var(--condensed); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 12px 24px;
+}
+.specs-table .group-header td:first-child { color: var(--red); }
+.specs-table tr:not(.group-header) td {
+  padding: 14px 24px;
+  font-size: 13px; color: var(--black);
+  border-bottom: 1px solid var(--gray-1);
+}
+.specs-table tr:not(.group-header):nth-child(even) td { background: var(--off-white); }
+.specs-table tr:not(.group-header) td:first-child {
+  font-family: var(--condensed); font-weight: 600;
+  font-size: 12px; letter-spacing: 0.06em; color: var(--gray-4);
+  text-transform: uppercase; width: 240px;
+}
+.specs-table tr:not(.group-header) td:last-child {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  color: var(--black);
+}
+.specs-table tr:not(.group-header):hover td { background: rgba(214,43,43,0.03); }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 8 — OPTIONS CÙNG DÒNG
+═══════════════════════════════════════════════════════ */
+.options-section { padding: 64px 0; background: var(--white); border-top: 1px solid var(--gray-1); }
+.options-header { margin-bottom: 32px; }
+.options-title { font-family: var(--condensed); font-weight: 800; font-size: 32px; color: var(--black); }
+.options-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.option-card {
+  border: 1.5px solid var(--gray-1);
+  padding: 24px 20px;
+  cursor: pointer; transition: all 0.2s; position: relative; background: var(--white);
+}
+.option-card:hover { border-color: var(--gray-2); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+.option-card.active {
+  border-color: var(--red);
+  background: rgba(214,43,43,0.03);
+}
+.option-card.active::before {
+  content: 'ĐANG XEM';
+  position: absolute; top: -1px; right: -1px;
+  background: var(--red); color: white;
+  font-family: var(--mono); font-size: 8px; letter-spacing: 0.1em;
+  padding: 3px 8px;
+}
+.option-voltage {
+  font-family: var(--condensed); font-weight: 700; font-size: 13px;
+  color: var(--gray-3); letter-spacing: 0.1em; margin-bottom: 8px;
+}
+.option-capacity {
+  font-family: var(--condensed); font-weight: 800; font-size: 32px;
+  line-height: 1; color: var(--black); margin-bottom: 4px;
+}
+.option-capacity .unit { font-size: 16px; font-weight: 400; color: var(--gray-3); }
+.option-energy {
+  font-family: var(--mono); font-size: 10px; color: var(--gray-3);
+  margin-bottom: 16px;
+}
+.option-link {
+  font-family: var(--condensed); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--red);
+  text-decoration: none; display: flex; align-items: center; gap: 6px;
+}
+.option-card.active .option-link { color: var(--red); }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 9 — FILE DOWNLOAD
+═══════════════════════════════════════════════════════ */
+.downloads-section { padding: 64px 0; background: var(--off-white); }
+.downloads-title { font-family: var(--condensed); font-weight: 800; font-size: 32px; color: var(--black); margin-bottom: 32px; }
+.downloads-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.download-card {
+  background: var(--white); border: 1px solid var(--gray-1);
+  padding: 20px 24px;
+  display: flex; align-items: center; gap: 16px;
+  cursor: pointer; transition: all 0.2s; text-decoration: none;
+}
+.download-card:hover { border-color: var(--black); box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+.download-icon {
+  width: 40px; height: 48px;
+  background: var(--off-white); border: 1px solid var(--gray-1);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; position: relative;
+}
+.download-icon::after {
+  content: attr(data-ext);
+  position: absolute; bottom: -1px; left: -1px; right: -1px;
+  background: var(--red); color: white;
+  font-family: var(--mono); font-size: 7px; letter-spacing: 0.08em;
+  text-align: center; padding: 2px;
+}
+.download-info { flex: 1; }
+.download-name {
+  font-family: var(--condensed); font-weight: 700; font-size: 14px;
+  color: var(--black); margin-bottom: 2px; letter-spacing: 0.02em;
+}
+.download-meta {
+  font-family: var(--mono); font-size: 9px; color: var(--gray-3);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.download-btn {
+  width: 32px; height: 32px; background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.download-btn svg { color: white; }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 10 — BẢO HÀNH
+═══════════════════════════════════════════════════════ */
+.warranty-section { padding: 64px 0; background: var(--white); }
+.warranty-inner { display: grid; grid-template-columns: 280px 1fr; gap: 64px; }
+.warranty-aside {}
+.warranty-title { font-family: var(--condensed); font-weight: 800; font-size: 36px; color: var(--black); margin-bottom: 16px; }
+.warranty-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--red-dim); border: 1px solid rgba(214,43,43,0.2);
+  padding: 8px 16px; margin-top: 16px;
+  font-family: var(--condensed); font-size: 13px; font-weight: 700;
+  color: var(--red);
+}
+.warranty-hotline {
+  margin-top: 24px;
+  padding: 16px;
+  background: var(--off-white); border-left: 3px solid var(--red);
+}
+.warranty-hotline-label { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; color: var(--gray-3); text-transform: uppercase; margin-bottom: 6px; }
+.warranty-hotline-num { font-family: var(--condensed); font-weight: 700; font-size: 20px; color: var(--black); }
+.warranty-accordions { display: flex; flex-direction: column; }
+.accordion-item { border-bottom: 1px solid var(--gray-1); }
+.accordion-trigger {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 0; cursor: pointer; transition: all 0.2s;
+}
+.accordion-trigger:hover .accordion-q { color: var(--red); }
+.accordion-q {
+  font-family: var(--condensed); font-weight: 700; font-size: 16px;
+  letter-spacing: 0.02em; color: var(--black); transition: color 0.2s;
+}
+.accordion-icon {
+  width: 24px; height: 24px; border: 1px solid var(--gray-2);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.3s;
+}
+.accordion-item.open .accordion-icon { background: var(--red); border-color: var(--red); transform: rotate(45deg); }
+.accordion-item.open .accordion-icon svg { color: white; }
+.accordion-body {
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+}
+.accordion-item.open .accordion-body { max-height: 400px; }
+.accordion-content { padding: 0 0 24px; font-size: 14px; color: var(--gray-4); line-height: 1.8; }
+.accordion-content ul { padding-left: 20px; margin-top: 8px; }
+.accordion-content li { margin-bottom: 4px; }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 11 — SẢN PHẨM LIÊN QUAN
+═══════════════════════════════════════════════════════ */
+.related-section { padding: 64px 0; background: var(--off-white); }
+.related-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+.related-title { font-family: var(--condensed); font-weight: 800; font-size: 32px; color: var(--black); }
+.related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.related-card {
+  background: var(--white); border: 1px solid var(--gray-1);
+  transition: all 0.2s; cursor: pointer;
+}
+.related-card:hover { border-color: var(--gray-2); box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.related-card-img {
+  aspect-ratio: 1; background: var(--off-white);
+  display: flex; align-items: center; justify-content: center;
+  border-bottom: 1px solid var(--gray-1); position: relative; overflow: hidden;
+}
+.related-card-img::after { content: ''; position: absolute; inset: 0; background: transparent; transition: background 0.2s; }
+.related-card:hover .related-card-img::after { background: rgba(214,43,43,0.04); }
+.related-card-body { padding: 20px; }
+.related-cat { font-family: var(--mono); font-size: 9px; letter-spacing: 0.14em; color: var(--red); text-transform: uppercase; margin-bottom: 6px; }
+.related-name { font-family: var(--condensed); font-weight: 700; font-size: 15px; color: var(--black); line-height: 1.3; margin-bottom: 12px; }
+.related-specs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.related-spec-tag {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+  background: var(--off-white); border: 1px solid var(--gray-1);
+  padding: 3px 8px; color: var(--gray-4);
+}
+.related-link {
+  font-family: var(--condensed); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--black);
+  text-decoration: none; display: flex; align-items: center; gap: 6px;
+  border-top: 1px solid var(--gray-1); padding-top: 16px;
+  transition: color 0.2s;
+}
+.related-link:hover { color: var(--red); }
+
+/* ═══════════════════════════════════════════════════════
+   SECTION 12 — CONTACT FORM
+═══════════════════════════════════════════════════════ */
+.contact-section {
+  padding: 80px 0;
+  background: var(--graphite);
+  position: relative; overflow: hidden;
+}
+.contact-bg {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(214,43,43,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(214,43,43,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.contact-inner {
+  position: relative;
+  display: grid; grid-template-columns: 380px 1fr; gap: 80px; align-items: start;
+}
+.contact-aside {}
+.contact-headline {
+  font-family: var(--condensed); font-weight: 800;
+  font-size: 42px; line-height: 1.0; letter-spacing: -0.01em;
+  color: var(--white); margin-bottom: 16px;
+}
+.contact-headline .accent { color: var(--red); }
+.contact-sub { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.7; margin-bottom: 32px; }
+.contact-trust { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.08); }
+.contact-trust-item {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--condensed); font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.5); letter-spacing: 0.04em;
+}
+.contact-trust-item::before {
+  content: '✓'; width: 20px; height: 20px;
+  background: rgba(214,43,43,0.2); border: 1px solid rgba(214,43,43,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: var(--red); flex-shrink: 0;
+}
+.contact-form {}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field.full { grid-column: 1 / -1; }
+.form-label {
+  font-family: var(--condensed); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+}
+.form-label .req { color: var(--red); margin-left: 2px; }
+.form-input, .form-textarea, .form-select {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+  color: var(--white); font-family: var(--body); font-size: 14px;
+  padding: 12px 16px; outline: none; transition: all 0.2s;
+  -webkit-appearance: none;
+}
+.form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.2); }
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--red); background: rgba(255,255,255,0.08);
+}
+.form-textarea { resize: vertical; min-height: 100px; }
+.form-select { color: rgba(255,255,255,0.6); }
+.form-select option { background: var(--graphite); color: var(--white); }
+.form-submit { margin-top: 8px; width: 100%; justify-content: center; font-size: 14px; padding: 18px; }
+.form-microcopy {
+  margin-top: 10px; text-align: center;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.2); text-transform: uppercase;
+}
+
+/* ═══════════════════════════════════════════════════════
+   STICKY CTA
+═══════════════════════════════════════════════════════ */
+.sticky-cta-side {
+  position: fixed; right: 24px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 8px;
+  z-index: 50;
+}
+.sticky-btn-side {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; text-decoration: none;
+  position: relative;
+}
+.sticky-btn-side:hover .sticky-tooltip { opacity: 1; right: 60px; }
+.sticky-btn-side.cta-quote { background: var(--red); }
+.sticky-btn-side.cta-call { background: var(--graphite); border: 1px solid rgba(255,255,255,0.1); }
+.sticky-btn-side.cta-zalo { background: #0068FF; }
+.sticky-tooltip {
+  position: absolute; right: 0;
+  background: var(--black); color: white;
+  font-family: var(--condensed); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 6px 12px; white-space: nowrap;
+  opacity: 0; transition: all 0.2s; pointer-events: none;
+}
+
+/* FOOTER */
+.site-footer {
+  background: var(--black); padding: 48px 0 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.footer-inner { display: grid; grid-template-columns: 280px 1fr; gap: 64px; margin-bottom: 40px; }
+.footer-brand {}
+.footer-brand .logo { margin-bottom: 16px; }
+.footer-brand .logo-text { color: white; }
+.footer-desc { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.7; }
+.footer-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+.footer-group-title {
+  font-family: var(--condensed); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+}
+.footer-link-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.footer-link-list a { text-decoration: none; font-size: 13px; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+.footer-link-list a:hover { color: var(--red); }
+.footer-bottom {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.06);
+  font-family: var(--mono); font-size: 10px; color: rgba(255,255,255,0.2);
+  letter-spacing: 0.08em;
+}
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .specs-dashboard { grid-template-columns: repeat(4, 1fr); }
+  .spec-cell:nth-child(4) { border-right: none; }
+  .spec-cell:nth-child(5), .spec-cell:nth-child(6), .spec-cell:nth-child(7) { border-top: 1px solid rgba(255,255,255,0.06); }
+}
+@media (max-width: 900px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-visual { order: -1; max-width: 400px; margin: 0 auto; width: 100%; }
+  .benefits-inner { grid-template-columns: 1fr; }
+  .usecase-inner { grid-template-columns: 1fr; }
+  .usecase-visual { display: none; }
+  .options-grid { grid-template-columns: repeat(3, 1fr); }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-inner { grid-template-columns: 1fr; }
+  .warranty-inner { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .gallery-item:first-child { grid-column: span 2; grid-row: span 1; }
+  .downloads-grid { grid-template-columns: 1fr 1fr; }
+  .body-editorial { grid-template-columns: 1fr; }
+  .specs-table-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+}
+@media (max-width: 600px) {
+  .container, .container-sm { padding: 0 20px; }
+  .hero-section { padding: 40px 0; }
+  .specs-dashboard { grid-template-columns: repeat(2, 1fr); }
+  .spec-cell { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .spec-cell:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.06); }
+  .options-grid { grid-template-columns: 1fr 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .downloads-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-item:first-child { grid-column: span 2; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-field.full { grid-column: 1; }
+  .nav-links { display: none; }
+  .sticky-cta-side { display: none; }
+  .footer-links { grid-template-columns: 1fr 1fr; }
+  .hero-trust { flex-wrap: wrap; gap: 12px; }
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.hero-content > * { animation: fadeUp 0.5s ease both; }
+.hero-badge { animation-delay: 0.05s; }
+.hero-h1 { animation-delay: 0.1s; }
+.hero-sku { animation-delay: 0.15s; }
+.hero-desc { animation-delay: 0.2s; }
+.hero-ctas { animation-delay: 0.25s; }
+.hero-trust { animation-delay: 0.3s; }
+.hero-visual { animation: fadeUp 0.6s 0.2s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ═══════ HEADER ═══════ -->
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark"><span>PKG</span></div>
+        <div class="logo-text">
+          PKG Battery
+          <small>Industrial Lithium Solutions</small>
+        </div>
+      </a>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#">Sản phẩm</a></li>
+          <li><a href="#">Giải pháp</a></li>
+          <li><a href="#">Kỹ thuật</a></li>
+          <li><a href="#">Dự án</a></li>
+          <li><a href="#">Về PKG</a></li>
+        </ul>
+      </nav>
+      <div class="nav-cta">
+        <div class="hotline-chip">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.56a16 16 0 0 0 6.56 6.56l1.05-.91a2 2 0 0 1 2.1-.45c.9.339 1.84.573 2.8.7A2 2 0 0 1 22 16.92z"/></svg>
+          1800 xxxx
+        </div>
+        <a href="#contact" class="btn-primary" style="padding: 10px 20px; font-size: 12px;">Báo giá</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════ BREADCRUMB ═══════ -->
+<div class="breadcrumb-bar">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="#">Trang chủ</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="#">Sản phẩm</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="#">Pin xe nâng điện</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="current">24V 230Ah</span>
+    </nav>
+  </div>
+</div>
+
+<!-- ═══════ SECTION 1: HERO ═══════ -->
+<section class="hero-section">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-bg-corner"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <!-- Left: Content -->
+      <div class="hero-content">
+        <div class="hero-badge">Pin lithium cho xe nâng điện</div>
+        <h1 class="hero-h1">Bình ắc quy pin lithium<br><span class="red-accent">xe nâng điện</span><br>24V 230Ah</h1>
+        <div class="hero-sku">
+          <span class="sku-label">Mã SP</span>
+          <span class="sku-code">PKGFF-24230V1</span>
+        </div>
+        <p class="hero-desc">
+          Giải pháp pin lithium công nghiệp cho xe nâng vận hành ổn định, sạc nhanh và giảm chi phí bảo trì — thiết kế tích hợp BMS thông minh, sẵn sàng thay thế trực tiếp ắc quy chì truyền thống.
+        </p>
+        <div class="hero-ctas">
+          <a href="#contact" class="btn-primary">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"/><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"/></svg>
+            Yêu cầu báo giá
+          </a>
+          <a href="#contact" class="btn-secondary">
+            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+            Tư vấn kỹ thuật
+          </a>
+          <a href="#" class="btn-ghost" style="border-color: #0068FF; color: #0068FF;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+            Nhắn Zalo
+          </a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-item">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Bảo hành chính hãng 24 tháng
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Lắp đặt tại nhà máy
+          </div>
+          <div class="trust-item">
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            Hỗ trợ kỹ thuật 24/7
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Product Visual -->
+      <div class="hero-visual">
+        <div class="product-stage" onclick="openLightbox()">
+          <div class="product-stage-pattern"></div>
+          <div class="product-stage-corner"></div>
+          <div class="product-img-placeholder">
+            <!-- SVG Battery Illustration -->
+            <svg class="battery-svg" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2A2D35"/>
+                  <stop offset="100%" stop-color="#1A1C22"/>
+                </linearGradient>
+                <linearGradient id="topGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3A3D48"/>
+                  <stop offset="100%" stop-color="#2A2D35"/>
+                </linearGradient>
+                <linearGradient id="redGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#D62B2B"/>
+                  <stop offset="100%" stop-color="#E84040"/>
+                </linearGradient>
+                <linearGradient id="glowGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="rgba(214,43,43,0.12)"/>
+                  <stop offset="100%" stop-color="rgba(214,43,43,0)"/>
+                </linearGradient>
+              </defs>
+              <!-- Glow -->
+              <ellipse cx="160" cy="260" rx="100" ry="16" fill="rgba(0,0,0,0.12)"/>
+              <!-- Main Body -->
+              <rect x="52" y="60" width="216" height="230" rx="6" fill="url(#bodyGrad)" stroke="#3A3D48" stroke-width="1"/>
+              <!-- Side panels -->
+              <rect x="52" y="60" width="24" height="230" rx="6" fill="#252830"/>
+              <rect x="244" y="60" width="24" height="230" rx="6" fill="#252830"/>
+              <!-- Front Face -->
+              <rect x="80" y="60" width="160" height="230" rx="0" fill="url(#bodyGrad)"/>
+              <!-- Red accent stripe -->
+              <rect x="80" y="60" width="160" height="4" fill="url(#redGrad)"/>
+              <!-- PKG Logo Area -->
+              <rect x="100" y="90" width="120" height="44" rx="2" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+              <text x="160" y="116" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="800" font-size="22" fill="#FFFFFF" letter-spacing="4">PKG</text>
+              <!-- Model text -->
+              <text x="160" y="152" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="rgba(255,255,255,0.4)" letter-spacing="1">PKGFF-24230V1</text>
+              <!-- Spec Block -->
+              <rect x="90" y="164" width="140" height="72" rx="2" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+              <text x="160" y="188" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-weight="800" font-size="28" fill="#FFFFFF">230<tspan font-size="14" fill="rgba(255,255,255,0.4)">Ah</tspan></text>
+              <text x="160" y="208" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-size="11" fill="rgba(255,255,255,0.25)">25.6 V  ·  5.8 kWh</text>
+              <text x="160" y="222" text-anchor="middle" font-family="'Barlow Condensed', sans-serif" font-size="10" fill="rgba(255,255,255,0.15)">LiFePO4  ·  BMS Integrated</text>
+              <!-- Ports area -->
+              <rect x="100" y="252" width="48" height="22" rx="2" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+              <text x="124" y="267" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="rgba(255,255,255,0.3)">DC+</text>
+              <rect x="155" y="252" width="65" height="22" rx="2" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/>
+              <text x="187" y="267" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="7" fill="rgba(255,255,255,0.3)">COMM</text>
+              <!-- BMS LED indicator -->
+              <circle cx="220" cy="97" r="4" fill="#D62B2B" opacity="0.9"/>
+              <circle cx="220" cy="97" r="7" fill="rgba(214,43,43,0.2)"/>
+              <!-- Terminals on top -->
+              <rect x="108" y="44" width="40" height="18" rx="2" fill="#3A3D48" stroke="#4A4D58" stroke-width="0.5"/>
+              <rect x="172" y="44" width="40" height="18" rx="2" fill="#3A3D48" stroke="#4A4D58" stroke-width="0.5"/>
+              <rect x="114" y="36" width="28" height="10" rx="1" fill="#2A2D35"/>
+              <rect x="178" y="36" width="28" height="10" rx="1" fill="#2A2D35"/>
+              <!-- Red line accent -->
+              <line x1="80" y1="246" x2="240" y2="246" stroke="rgba(214,43,43,0.2)" stroke-width="0.5"/>
+              <!-- Certification badge -->
+              <circle cx="226" cy="202" r="14" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <text x="226" y="200" text-anchor="middle" font-size="6" fill="rgba(255,255,255,0.2)" font-family="'Barlow Condensed'">CE</text>
+              <text x="226" y="208" text-anchor="middle" font-size="5" fill="rgba(255,255,255,0.15)" font-family="'Barlow Condensed'">UL</text>
+            </svg>
+          </div>
+          <div class="zoom-badge">
+            <svg width="10" height="10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg>
+            Xem toàn màn hình
+          </div>
+        </div>
+
+        <!-- Thumbnail Gallery -->
+        <div class="gallery-thumbs">
+          <div class="thumb active" onclick="setThumb(this)">
+            <div class="thumb-inner">
+              <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:70%">
+                <rect x="10" y="15" width="40" height="36" rx="2" fill="#2A2D35"/>
+                <rect x="10" y="15" width="40" height="3" fill="#D62B2B"/>
+                <text x="30" y="36" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="9" fill="white">PKG</text>
+              </svg>
+            </div>
+          </div>
+          <div class="thumb" onclick="setThumb(this)">
+            <div class="thumb-inner">
+              <svg viewBox="0 0 60 60" fill="none" style="width:70%">
+                <rect x="5" y="8" width="50" height="44" rx="2" fill="#252830"/>
+                <circle cx="30" cy="30" r="10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+                <text x="30" y="34" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.3)" font-family="sans-serif">SIDE</text>
+              </svg>
+            </div>
+          </div>
+          <div class="thumb" onclick="setThumb(this)">
+            <div class="thumb-inner">
+              <svg viewBox="0 0 60 60" fill="none" style="width:70%">
+                <rect x="8" y="8" width="44" height="44" rx="2" fill="#252830"/>
+                <rect x="16" y="22" width="12" height="8" rx="1" fill="#3A3D48" stroke="#4A4D58" stroke-width="0.5"/>
+                <rect x="32" y="22" width="12" height="8" rx="1" fill="#3A3D48" stroke="#4A4D58" stroke-width="0.5"/>
+                <text x="30" y="46" text-anchor="middle" font-size="6" fill="rgba(255,255,255,0.3)" font-family="sans-serif">PORTS</text>
+              </svg>
+            </div>
+          </div>
+          <div class="thumb" onclick="setThumb(this)">
+            <div class="thumb-inner">
+              <svg viewBox="0 0 60 60" fill="none" style="width:70%">
+                <rect x="8" y="8" width="44" height="44" rx="2" fill="#1a3a2a"/>
+                <rect x="14" y="30" width="32" height="14" rx="1" fill="#2A2D35"/>
+                <text x="30" y="22" text-anchor="middle" font-size="6" fill="rgba(255,255,255,0.4)" font-family="sans-serif">INSTALL</text>
+              </svg>
+            </div>
+          </div>
+          <div class="thumb" onclick="setThumb(this)">
+            <div class="thumb-video-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <div class="thumb-inner" style="background:#111;width:100%;height:100%;display:flex;align-items:center;justify-content:center;">
+              <svg viewBox="0 0 60 60" fill="none" style="width:70%">
+                <rect width="60" height="60" fill="#111"/>
+                <circle cx="30" cy="30" r="14" fill="rgba(214,43,43,0.2)" stroke="#D62B2B" stroke-width="1"/>
+                <polygon points="26,22 26,38 42,30" fill="#D62B2B"/>
+              </svg>
+            </div>
+            <div class="gallery-video-badge">VIDEO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 2: TECHNICAL SNAPSHOT ═══════ -->
+<section class="specs-section">
+  <div class="specs-label-bar">
+    <div class="container">
+      <div class="specs-label-inner">
+        <span class="specs-label">Thông số kỹ thuật chính</span>
+        <span class="model-tag">PKGFF-24230V1 — LiFePO4 Industrial Battery</span>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="padding:0;max-width:none;">
+    <div class="specs-dashboard">
+      <div class="spec-cell highlight">
+        <div class="spec-value">PKGFF<span style="font-size:14px;color:var(--gray-3)">‑24230V1</span></div>
+        <div class="spec-label">Mã sản phẩm</div>
+        <div class="spec-sub">SKU / Part No.</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-value">230<span class="spec-unit">Ah</span></div>
+        <div class="spec-label">Dung lượng</div>
+        <div class="spec-sub">Nominal Capacity</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-value">5.8<span class="spec-unit">kWh</span></div>
+        <div class="spec-label">Năng lượng</div>
+        <div class="spec-sub">Energy Storage</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-value">25.6<span class="spec-unit">V</span></div>
+        <div class="spec-label">Điện áp định mức</div>
+        <div class="spec-sub">Nominal Voltage</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-value">2–4<span class="spec-unit">h</span></div>
+        <div class="spec-label">Thời gian sạc</div>
+        <div class="spec-sub">Charge Time</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-value" style="font-size:24px;line-height:1.2;">630<span style="font-size:14px;color:var(--gray-3)">×175×450</span></div>
+        <div class="spec-label" style="margin-top:4px;">Kích thước (mm)</div>
+        <div class="spec-sub">L × W × H</div>
+      </div>
+      <div class="spec-cell">
+        <div class="spec-value">~54<span class="spec-unit">kg</span></div>
+        <div class="spec-label">Khối lượng</div>
+        <div class="spec-sub">Gross Weight</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 3: LỢI ÍCH NỔI BẬT ═══════ -->
+<section class="benefits-section" id="benefits">
+  <div class="container">
+    <div class="benefits-inner">
+      <div class="benefits-aside">
+        <div class="section-label">Vì sao chọn PKG</div>
+        <h2 class="benefits-title">Lợi ích<br><span class="red-accent">nổi bật</span></h2>
+        <p class="benefits-desc">Được tối ưu cho môi trường công nghiệp, dòng pin PKG mang lại hiệu suất vận hành vượt trội và chi phí tổng thể thấp hơn ắc quy chì truyền thống.</p>
+      </div>
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <div class="benefit-num">01</div>
+          <div class="benefit-content">
+            <div class="benefit-title">Sạc nhanh trong 2–4 giờ</div>
+            <div class="benefit-desc">Tích hợp BMS thông minh cho phép sạc nhanh không gây hại cell, hỗ trợ cả sạc thường và sạc nhanh công nghiệp.</div>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-num">02</div>
+          <div class="benefit-content">
+            <div class="benefit-title">Không cần châm nước định kỳ</div>
+            <div class="benefit-desc">Khác biệt hoàn toàn với ắc quy chì — giảm tuyệt đối chi phí bảo trì định kỳ và nhân công vận hành kho.</div>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-num">03</div>
+          <div class="benefit-content">
+            <div class="benefit-title">BMS bảo vệ thông minh đa lớp</div>
+            <div class="benefit-desc">Giám sát nhiệt độ, dòng điện, điện áp cell theo thời gian thực. Tự ngắt khi phát hiện bất thường để bảo vệ thiết bị và người vận hành.</div>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-num">04</div>
+          <div class="benefit-content">
+            <div class="benefit-title">Điện áp ổn định toàn chu kỳ</div>
+            <div class="benefit-desc">Đường cong xả phẳng của LiFePO4 duy trì hiệu suất xe nâng ổn định từ đầu đến cuối ca làm việc.</div>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-num">05</div>
+          <div class="benefit-content">
+            <div class="benefit-title">Giảm downtime cho đội xe</div>
+            <div class="benefit-desc">Tuổi thọ trên 2000 chu kỳ, không cần thay thế thường xuyên — tối ưu uptime cho ca sản xuất liên tục.</div>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <div class="benefit-num">06</div>
+          <div class="benefit-content">
+            <div class="benefit-title">Phù hợp môi trường công nghiệp khắc nghiệt</div>
+            <div class="benefit-desc">Chịu rung, chống bụi và độ ẩm cao, hoạt động ổn định từ 0°C đến 45°C — tiêu chuẩn kho vận và nhà máy.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 4: ỨNG DỤNG ═══════ -->
+<section class="usecase-section" id="usecases">
+  <div class="usecase-bg"></div>
+  <div class="usecase-bg-2"></div>
+  <div class="container">
+    <div class="usecase-inner">
+      <div class="usecase-content">
+        <div class="section-label">Phạm vi ứng dụng</div>
+        <h2 class="usecase-title">Phù hợp với<br>thiết bị nào?</h2>
+        <p class="usecase-desc">Pin PKGFF-24230V1 được thiết kế để thay thế trực tiếp ắc quy chì 24V trong xe nâng điện và thiết bị công nghiệp — lắp đặt không cần chỉnh sửa cơ khí.</p>
+        <div class="usecase-tags">
+          <div class="usecase-tag active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            Xe nâng điện
+          </div>
+          <div class="usecase-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            Kho vận — Logistics
+          </div>
+          <div class="usecase-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M6 20V10L12 4l6 6v10M9 20v-5h6v5"/></svg>
+            Nhà máy sản xuất
+          </div>
+          <div class="usecase-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            Thay thế ắc quy chì
+          </div>
+          <div class="usecase-tag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Cảng — Terminal
+          </div>
+        </div>
+        <a href="#contact" class="btn-primary">Hỏi phù hợp với thiết bị của tôi</a>
+      </div>
+      <div class="usecase-visual">
+        <div class="usecase-card">
+          <div class="usecase-card-icon">🏭</div>
+          <div class="usecase-card-title">Nhà máy sản xuất</div>
+        </div>
+        <div class="usecase-card">
+          <div class="usecase-card-icon">📦</div>
+          <div class="usecase-card-title">Kho vận logistics</div>
+        </div>
+        <div class="usecase-card">
+          <div class="usecase-card-icon">⚡</div>
+          <div class="usecase-card-title">Thay thế chì axit</div>
+        </div>
+        <div class="usecase-card">
+          <div class="usecase-card-icon">🚢</div>
+          <div class="usecase-card-title">Cảng biển — Terminal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 5: GALLERY ═══════ -->
+<section class="gallery-section" id="gallery">
+  <div class="container">
+    <div class="gallery-header">
+      <div>
+        <div class="section-label">Hình ảnh sản phẩm</div>
+        <h2 class="gallery-title">Gallery chi tiết</h2>
+      </div>
+      <a href="#" class="btn-ghost">Xem tất cả ảnh</a>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-placeholder large">
+          <svg viewBox="0 0 160 160" fill="none" style="width:100%">
+            <rect width="160" height="160" fill="#F0F0F4"/>
+            <rect x="30" y="20" width="100" height="120" rx="4" fill="#2A2D35"/>
+            <rect x="30" y="20" width="100" height="6" fill="#D62B2B"/>
+            <text x="80" y="75" text-anchor="middle" font-family="sans-serif" font-weight="800" font-size="20" fill="white">PKG</text>
+            <text x="80" y="100" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.4)">PKGFF-24230V1</text>
+            <text x="80" y="118" text-anchor="middle" font-family="sans-serif" font-weight="700" font-size="14" fill="white">230<tspan font-size="9" fill="rgba(255,255,255,0.4)">Ah</tspan></text>
+          </svg>
+        </div>
+        <div class="gallery-overlay"><svg width="24" height="24" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="gallery-label">Ảnh chính</div>
+      </div>
+      <!-- More thumbnails -->
+      <div class="gallery-item">
+        <div class="gallery-placeholder">
+          <svg viewBox="0 0 80 80" fill="none" style="width:70%">
+            <rect width="80" height="80" fill="#EAEAEE"/>
+            <rect x="10" y="10" width="60" height="60" rx="2" fill="#2A2D35" transform="rotate(15 40 40)"/>
+            <text x="40" y="44" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="monospace">SIDE L</text>
+          </svg>
+        </div>
+        <div class="gallery-overlay"><svg width="18" height="18" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="gallery-label">Góc trái</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">
+          <svg viewBox="0 0 80 80" fill="none" style="width:70%">
+            <rect width="80" height="80" fill="#EAEAEE"/>
+            <rect x="10" y="10" width="60" height="60" rx="2" fill="#2A2D35" transform="rotate(-15 40 40)"/>
+            <text x="40" y="44" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.5)" font-family="monospace">SIDE R</text>
+          </svg>
+        </div>
+        <div class="gallery-overlay"><svg width="18" height="18" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="gallery-label">Góc phải</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">
+          <svg viewBox="0 0 80 80" fill="none" style="width:70%">
+            <rect width="80" height="80" fill="#EAEAEE"/>
+            <rect x="15" y="30" width="22" height="14" rx="1" fill="#3A3D48" stroke="#555" stroke-width="0.5"/>
+            <rect x="44" y="30" width="22" height="14" rx="1" fill="#3A3D48" stroke="#555" stroke-width="0.5"/>
+            <text x="40" y="58" text-anchor="middle" font-size="7" fill="#888" font-family="monospace">TERMINAL</text>
+          </svg>
+        </div>
+        <div class="gallery-overlay"><svg width="18" height="18" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="gallery-label">Cổng kết nối</div>
+      </div>
+      <div class="gallery-item" style="background:#0D0D0F;">
+        <div class="gallery-placeholder">
+          <svg viewBox="0 0 80 80" fill="none" style="width:70%">
+            <rect width="80" height="80" fill="#0D0D0F"/>
+            <circle cx="40" cy="32" r="14" fill="none" stroke="rgba(214,43,43,0.4)" stroke-width="1"/>
+            <polygon points="36,26 36,38 48,32" fill="rgba(214,43,43,0.8)"/>
+            <text x="40" y="58" text-anchor="middle" font-size="7" fill="rgba(255,255,255,0.3)" font-family="monospace">VIDEO</text>
+          </svg>
+        </div>
+        <div class="gallery-video-badge">VIDEO</div>
+        <div class="gallery-label" style="color:rgba(255,255,255,0.5)">Demo vận hành</div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-placeholder">
+          <svg viewBox="0 0 80 80" fill="none" style="width:70%">
+            <rect width="80" height="80" fill="#EAEAEE"/>
+            <!-- Dimensional drawing style -->
+            <rect x="15" y="25" width="50" height="30" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="2,1"/>
+            <line x1="12" y1="25" x2="12" y2="55" stroke="#D62B2B" stroke-width="0.5"/>
+            <text x="40" y="15" text-anchor="middle" font-size="6" fill="#666" font-family="monospace">630mm</text>
+            <line x1="15" y1="12" x2="65" y2="12" stroke="#D62B2B" stroke-width="0.5"/>
+          </svg>
+        </div>
+        <div class="gallery-overlay"><svg width="18" height="18" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></div>
+        <div class="gallery-label">Bản vẽ kỹ thuật</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 6: BODY FLEXIBLE (Demo editorial block) ═══════ -->
+<section class="body-section" id="about-product">
+  <div class="body-section-bg"></div>
+  <div class="container body-inner">
+    <div class="section-label" style="color:rgba(214,43,43,0.7);margin-bottom:28px;">Thông tin chuyên sâu — Nội dung linh hoạt</div>
+    <div class="body-editorial">
+      <div class="body-block">
+        <div class="body-block-label">Công nghệ LiFePO4</div>
+        <div class="body-block-title">Tại sao LiFePO4 là tiêu chuẩn mới cho xe nâng công nghiệp?</div>
+        <div class="body-block-text">Lithium Iron Phosphate (LiFePO4) là hóa học cell pin ổn định nhất hiện nay cho ứng dụng công nghiệp. Không có nguy cơ nhiệt lý (thermal runaway), tuổi thọ chu kỳ vượt trội và duy trì điện áp ổn định trong toàn bộ quá trình xả — điều mà ắc quy chì không thể đạt được.
+        <br><br>PKG Battery sử dụng cell A-grade từ các nhà sản xuất tier-1, đảm bảo đồng đều về dung lượng và hiệu suất trong toàn bộ pack.</div>
+        <div class="body-stat-grid">
+          <div class="body-stat-item">
+            <div class="body-stat-value">2000<span>+</span></div>
+            <div class="body-stat-label">Chu kỳ sạc (DOD 80%)</div>
+          </div>
+          <div class="body-stat-item">
+            <div class="body-stat-value">97<span>%</span></div>
+            <div class="body-stat-label">Hiệu suất năng lượng</div>
+          </div>
+        </div>
+      </div>
+      <div class="body-block dark">
+        <div class="body-block-label">BMS Tích hợp</div>
+        <div class="body-block-title">Battery Management System — Không chỉ là bảo vệ</div>
+        <div class="body-block-text">BMS tích hợp trong PKGFF-24230V1 theo dõi từng cell trong pack theo thời gian thực. Hệ thống tự cân bằng điện áp cell (cell balancing), giám sát nhiệt độ và trạng thái sạc (SOC/SOH) — dữ liệu có thể truy xuất qua cổng giao tiếp CANBus hoặc RS485.
+        <br><br>Tương thích với hầu hết hệ thống xe nâng và charger công nghiệp tiêu chuẩn hiện hành trên thị trường Việt Nam và quốc tế.</div>
+        <div class="body-stat-grid">
+          <div class="body-stat-item">
+            <div class="body-stat-value">±1<span>%</span></div>
+            <div class="body-stat-label">Độ chính xác SOC</div>
+          </div>
+          <div class="body-stat-item">
+            <div class="body-stat-value">CAN<span style="font-size:14px;color:rgba(255,255,255,0.4)">/RS485</span></div>
+            <div class="body-stat-label">Giao tiếp</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 7: BẢNG THÔNG SỐ KỸ THUẬT ═══════ -->
+<section class="specs-table-section" id="specs">
+  <div class="container">
+    <div class="specs-table-header">
+      <div>
+        <div class="section-label">Datasheet</div>
+        <h2 class="specs-table-title">Bảng thông số kỹ thuật đầy đủ</h2>
+      </div>
+      <div class="specs-table-actions">
+        <a href="#" class="btn-ghost">
+          <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Tải PDF
+        </a>
+        <a href="#" class="btn-secondary" style="font-size:12px;padding:10px 16px;">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy specs
+        </a>
+      </div>
+    </div>
+    <div class="specs-table-wrapper">
+      <table class="specs-table">
+        <tr class="group-header"><td colspan="2">THÔNG SỐ ĐIỆN</td></tr>
+        <tr><td>Điện áp định mức</td><td>25.6 V (8S LiFePO4)</td></tr>
+        <tr><td>Điện áp sạc đầy</td><td>29.2 V</td></tr>
+        <tr><td>Điện áp ngắt xả</td><td>20.0 V</td></tr>
+        <tr><td>Dung lượng định mức</td><td>230 Ah (C5)</td></tr>
+        <tr><td>Năng lượng lưu trữ</td><td>5.888 kWh</td></tr>
+        <tr><td>Dòng xả liên tục</td><td>230 A (1C)</td></tr>
+        <tr><td>Dòng xả đỉnh (30s)</td><td>460 A (2C)</td></tr>
+        <tr><td>Dòng sạc tiêu chuẩn</td><td>115 A (0.5C)</td></tr>
+        <tr><td>Dòng sạc tối đa</td><td>230 A (1C)</td></tr>
+
+        <tr class="group-header"><td colspan="2">ĐẶC TÍNH VẬT LÝ</td></tr>
+        <tr><td>Kích thước (D × R × C)</td><td>630 × 175 × 450 mm</td></tr>
+        <tr><td>Khối lượng</td><td>~54 kg</td></tr>
+        <tr><td>Vỏ hộp</td><td>Thép carbon sơn tĩnh điện</td></tr>
+        <tr><td>Mức bảo vệ</td><td>IP55</td></tr>
+        <tr><td>Kết nối</td><td>Anderson SB320 / Tùy chỉnh</td></tr>
+
+        <tr class="group-header"><td colspan="2">ĐIỀU KIỆN VẬN HÀNH</td></tr>
+        <tr><td>Nhiệt độ vận hành (xả)</td><td>-10°C đến +55°C</td></tr>
+        <tr><td>Nhiệt độ vận hành (sạc)</td><td>0°C đến +45°C</td></tr>
+        <tr><td>Nhiệt độ bảo quản</td><td>-20°C đến +60°C</td></tr>
+        <tr><td>Độ ẩm tối đa</td><td>95% RH (không ngưng tụ)</td></tr>
+
+        <tr class="group-header"><td colspan="2">BMS — BATTERY MANAGEMENT SYSTEM</td></tr>
+        <tr><td>Loại BMS</td><td>Tích hợp Active Balancing</td></tr>
+        <tr><td>Giao tiếp</td><td>CANBus 2.0B / RS485</td></tr>
+        <tr><td>Bảo vệ quá áp cell</td><td>3.65 V / cell</td></tr>
+        <tr><td>Bảo vệ dưới áp cell</td><td>2.50 V / cell</td></tr>
+        <tr><td>Bảo vệ nhiệt độ cao</td><td>Tự ngắt tại 60°C</td></tr>
+        <tr><td>Bảo vệ ngắn mạch</td><td>≤ 200μs</td></tr>
+
+        <tr class="group-header"><td colspan="2">TUỔI THỌ & CHỨNG NHẬN</td></tr>
+        <tr><td>Tuổi thọ chu kỳ</td><td>> 2000 chu kỳ (DOD 80%)</td></tr>
+        <tr><td>Tuổi thọ dự kiến</td><td>7–10 năm (điều kiện tiêu chuẩn)</td></tr>
+        <tr><td>Tự xả</td><td>< 3% / tháng</td></tr>
+        <tr><td>Tiêu chuẩn</td><td>IEC 62619, UL 1973, CE, UN38.3</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 8: OPTIONS CÙNG DÒNG ═══════ -->
+<section class="options-section" id="options">
+  <div class="container">
+    <div class="options-header">
+      <div class="section-label">Cùng dòng sản phẩm</div>
+      <h2 class="options-title">Pin lithium 24V — Các dung lượng khác</h2>
+    </div>
+    <div class="options-grid">
+      <div class="option-card">
+        <div class="option-voltage">24V</div>
+        <div class="option-capacity">150<span class="unit">Ah</span></div>
+        <div class="option-energy">3.84 kWh</div>
+        <a href="#" class="option-link">Xem chi tiết →</a>
+      </div>
+      <div class="option-card">
+        <div class="option-voltage">24V</div>
+        <div class="option-capacity">200<span class="unit">Ah</span></div>
+        <div class="option-energy">5.12 kWh</div>
+        <a href="#" class="option-link">Xem chi tiết →</a>
+      </div>
+      <div class="option-card active">
+        <div class="option-voltage">24V</div>
+        <div class="option-capacity">230<span class="unit">Ah</span></div>
+        <div class="option-energy">5.88 kWh</div>
+        <a href="#" class="option-link" style="color:var(--red)">Đang xem ●</a>
+      </div>
+      <div class="option-card">
+        <div class="option-voltage">24V</div>
+        <div class="option-capacity">280<span class="unit">Ah</span></div>
+        <div class="option-energy">7.17 kWh</div>
+        <a href="#" class="option-link">Xem chi tiết →</a>
+      </div>
+      <div class="option-card">
+        <div class="option-voltage">24V</div>
+        <div class="option-capacity">340<span class="unit">Ah</span></div>
+        <div class="option-energy">8.70 kWh</div>
+        <a href="#" class="option-link">Xem chi tiết →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 9: DOWNLOAD ═══════ -->
+<section class="downloads-section" id="downloads">
+  <div class="container">
+    <div class="section-label">Tài liệu kỹ thuật</div>
+    <h2 class="downloads-title">Trung tâm tài liệu</h2>
+    <div class="downloads-grid">
+      <a href="#" class="download-card">
+        <div class="download-icon" data-ext="PDF">
+          <svg width="20" height="20" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="download-info">
+          <div class="download-name">Product Datasheet</div>
+          <div class="download-meta">PDF  ·  2.4 MB  ·  Rev. 2024.Q4</div>
+        </div>
+        <div class="download-btn">
+          <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        </div>
+      </a>
+      <a href="#" class="download-card">
+        <div class="download-icon" data-ext="PDF">
+          <svg width="20" height="20" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="download-info">
+          <div class="download-name">Catalogue PKG Battery 2024</div>
+          <div class="download-meta">PDF  ·  8.1 MB  ·  Bản mới nhất</div>
+        </div>
+        <div class="download-btn">
+          <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        </div>
+      </a>
+      <a href="#" class="download-card">
+        <div class="download-icon" data-ext="PDF">
+          <svg width="20" height="20" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="download-info">
+          <div class="download-name">Hướng dẫn lắp đặt & vận hành</div>
+          <div class="download-meta">PDF  ·  1.8 MB  ·  Tiếng Việt</div>
+        </div>
+        <div class="download-btn">
+          <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        </div>
+      </a>
+      <a href="#" class="download-card">
+        <div class="download-icon" data-ext="DWG">
+          <svg width="20" height="20" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <div class="download-info">
+          <div class="download-name">Bản vẽ kỹ thuật 2D/3D</div>
+          <div class="download-meta">DWG + STEP  ·  4.2 MB</div>
+        </div>
+        <div class="download-btn">
+          <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        </div>
+      </a>
+      <a href="#" class="download-card">
+        <div class="download-icon" data-ext="PDF">
+          <svg width="20" height="20" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="download-info">
+          <div class="download-name">Chứng nhận CE / UL / UN38.3</div>
+          <div class="download-meta">PDF  ·  0.9 MB  ·  Valid 2025</div>
+        </div>
+        <div class="download-btn">
+          <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        </div>
+      </a>
+      <a href="#" class="download-card">
+        <div class="download-icon" data-ext="PDF">
+          <svg width="20" height="20" fill="none" stroke="#999" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 0 0 1.946-.806 3.42 3.42 0 0 1 4.438 0 3.42 3.42 0 0 0 1.946.806 3.42 3.42 0 0 1 3.138 3.138 3.42 3.42 0 0 0 .806 1.946 3.42 3.42 0 0 1 0 4.438 3.42 3.42 0 0 0-.806 1.946 3.42 3.42 0 0 1-3.138 3.138 3.42 3.42 0 0 0-1.946.806 3.42 3.42 0 0 1-4.438 0 3.42 3.42 0 0 0-1.946-.806 3.42 3.42 0 0 1-3.138-3.138 3.42 3.42 0 0 0-.806-1.946 3.42 3.42 0 0 1 0-4.438 3.42 3.42 0 0 0 .806-1.946 3.42 3.42 0 0 1 3.138-3.138z"/></svg>
+        </div>
+        <div class="download-info">
+          <div class="download-name">Chứng nhận bảo hành chính hãng</div>
+          <div class="download-meta">PDF  ·  0.4 MB</div>
+        </div>
+        <div class="download-btn">
+          <svg width="14" height="14" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 10: BẢO HÀNH ═══════ -->
+<section class="warranty-section" id="warranty">
+  <div class="container">
+    <div class="warranty-inner">
+      <div class="warranty-aside">
+        <div class="section-label">Chính sách</div>
+        <h2 class="warranty-title">Bảo hành & Hỗ trợ</h2>
+        <div class="warranty-badge">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Bảo hành 24 tháng chính hãng
+        </div>
+        <div class="warranty-hotline">
+          <div class="warranty-hotline-label">Hotline kỹ thuật</div>
+          <div class="warranty-hotline-num">1800 xxxx</div>
+        </div>
+      </div>
+      <div class="warranty-accordions">
+        <div class="accordion-item open">
+          <div class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Thời gian và phạm vi bảo hành</span>
+            <span class="accordion-icon">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              Sản phẩm được bảo hành <strong>24 tháng</strong> kể từ ngày xuất kho PKG Battery, bao gồm:
+              <ul>
+                <li>Lỗi sản xuất, lỗi linh kiện</li>
+                <li>Sụt giảm dung lượng dưới 80% so với công bố (điều kiện vận hành chuẩn)</li>
+                <li>Lỗi BMS không do tác động ngoại lực</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Điều kiện bảo hành</span>
+            <span class="accordion-icon">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              Sản phẩm được bảo hành khi còn tem niêm phong PKG, được vận hành đúng thông số kỹ thuật công bố và không có dấu hiệu tác động vật lý, hóa chất từ bên ngoài.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Trường hợp không áp dụng bảo hành</span>
+            <span class="accordion-icon">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <ul>
+                <li>Lỗi do va đập, ngập nước, cháy nổ ngoài phạm vi kỹ thuật</li>
+                <li>Sạc sai điện áp / dòng điện vượt thông số cho phép</li>
+                <li>Tự ý tháo vỏ, can thiệp BMS</li>
+                <li>Sử dụng không đúng mục đích</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-trigger" onclick="toggleAccordion(this)">
+            <span class="accordion-q">Quy trình tiếp nhận bảo hành</span>
+            <span class="accordion-icon">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              Liên hệ hotline kỹ thuật hoặc gửi email — đội ngũ PKG sẽ điều phối kiểm tra tại chỗ hoặc hướng dẫn gửi về trung tâm. Thời gian xử lý trung bình 3–5 ngày làm việc sau khi tiếp nhận.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 11: SẢN PHẨM LIÊN QUAN ═══════ -->
+<section class="related-section" id="related">
+  <div class="container">
+    <div class="related-header">
+      <div>
+        <div class="section-label">Có thể bạn quan tâm</div>
+        <h2 class="related-title">Sản phẩm liên quan</h2>
+      </div>
+      <a href="#" class="btn-ghost">Xem tất cả sản phẩm</a>
+    </div>
+    <div class="related-grid">
+      <div class="related-card">
+        <div class="related-card-img">
+          <svg viewBox="0 0 120 120" fill="none" style="width:55%">
+            <rect x="20" y="15" width="80" height="90" rx="3" fill="#2A2D35"/>
+            <rect x="20" y="15" width="80" height="5" fill="#D62B2B"/>
+            <text x="60" y="55" text-anchor="middle" font-weight="800" font-size="10" fill="white" font-family="sans-serif">PKG</text>
+            <text x="60" y="72" text-anchor="middle" font-size="14" fill="white" font-weight="700" font-family="sans-serif">48V</text>
+            <text x="60" y="84" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.4)" font-family="monospace">200Ah</text>
+          </svg>
+        </div>
+        <div class="related-card-body">
+          <div class="related-cat">Pin xe nâng điện</div>
+          <div class="related-name">Pin lithium xe nâng 48V 200Ah</div>
+          <div class="related-specs">
+            <span class="related-spec-tag">48V</span>
+            <span class="related-spec-tag">200Ah</span>
+            <span class="related-spec-tag">9.6kWh</span>
+          </div>
+          <a href="#" class="related-link">Xem chi tiết <span>→</span></a>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-card-img">
+          <svg viewBox="0 0 120 120" fill="none" style="width:55%">
+            <rect x="20" y="15" width="80" height="90" rx="3" fill="#1E2A3A"/>
+            <rect x="20" y="15" width="80" height="5" fill="#D62B2B"/>
+            <text x="60" y="55" text-anchor="middle" font-weight="800" font-size="10" fill="white" font-family="sans-serif">PKG</text>
+            <text x="60" y="72" text-anchor="middle" font-size="14" fill="white" font-weight="700" font-family="sans-serif">24V</text>
+            <text x="60" y="84" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.4)" font-family="monospace">150Ah</text>
+          </svg>
+        </div>
+        <div class="related-card-body">
+          <div class="related-cat">Pin xe nâng điện</div>
+          <div class="related-name">Pin lithium xe nâng 24V 150Ah</div>
+          <div class="related-specs">
+            <span class="related-spec-tag">24V</span>
+            <span class="related-spec-tag">150Ah</span>
+            <span class="related-spec-tag">3.84kWh</span>
+          </div>
+          <a href="#" class="related-link">Xem chi tiết <span>→</span></a>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-card-img">
+          <svg viewBox="0 0 120 120" fill="none" style="width:55%">
+            <rect x="10" y="25" width="100" height="70" rx="3" fill="#2A2D35"/>
+            <rect x="10" y="25" width="100" height="5" fill="#D62B2B"/>
+            <text x="60" y="60" text-anchor="middle" font-weight="800" font-size="10" fill="white" font-family="sans-serif">PKG</text>
+            <text x="60" y="76" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.6)" font-family="sans-serif">AGV 48V</text>
+          </svg>
+        </div>
+        <div class="related-card-body">
+          <div class="related-cat">Pin AGV / Robot</div>
+          <div class="related-name">Pin lithium cho robot AGV 48V 100Ah</div>
+          <div class="related-specs">
+            <span class="related-spec-tag">48V</span>
+            <span class="related-spec-tag">100Ah</span>
+            <span class="related-spec-tag">AGV</span>
+          </div>
+          <a href="#" class="related-link">Xem chi tiết <span>→</span></a>
+        </div>
+      </div>
+      <div class="related-card">
+        <div class="related-card-img">
+          <svg viewBox="0 0 120 120" fill="none" style="width:55%">
+            <rect x="20" y="10" width="80" height="100" rx="3" fill="#1A2A1A"/>
+            <rect x="20" y="10" width="80" height="5" fill="#D62B2B"/>
+            <text x="60" y="58" text-anchor="middle" font-weight="800" font-size="10" fill="white" font-family="sans-serif">PKG</text>
+            <text x="60" y="74" text-anchor="middle" font-size="13" fill="white" font-weight="700" font-family="sans-serif">80V</text>
+            <text x="60" y="86" text-anchor="middle" font-size="8" fill="rgba(255,255,255,0.4)" font-family="monospace">400Ah</text>
+          </svg>
+        </div>
+        <div class="related-card-body">
+          <div class="related-cat">Pin xe nâng công suất lớn</div>
+          <div class="related-name">Pin lithium xe nâng 80V 400Ah</div>
+          <div class="related-specs">
+            <span class="related-spec-tag">80V</span>
+            <span class="related-spec-tag">400Ah</span>
+            <span class="related-spec-tag">32kWh</span>
+          </div>
+          <a href="#" class="related-link">Xem chi tiết <span>→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SECTION 12: CONTACT FORM ═══════ -->
+<section class="contact-section" id="contact">
+  <div class="contact-bg"></div>
+  <div class="container contact-inner">
+    <div class="contact-aside">
+      <div class="section-label" style="color:rgba(214,43,43,0.7)">Liên hệ chúng tôi</div>
+      <h2 class="contact-headline">Cần tư vấn cấu hình <span class="accent">pin phù hợp</span> cho thiết bị của bạn?</h2>
+      <p class="contact-sub">Gửi thông tin xe hoặc nhu cầu vận hành, đội ngũ kỹ thuật PKG sẽ tư vấn model pin phù hợp và phương án thay thế tối ưu.</p>
+      <div class="contact-trust">
+        <div class="contact-trust-item">Phản hồi trong 2 giờ làm việc</div>
+        <div class="contact-trust-item">Tư vấn kỹ thuật miễn phí</div>
+        <div class="contact-trust-item">Hỗ trợ lắp đặt tại nhà máy</div>
+        <div class="contact-trust-item">Không ràng buộc — hoàn toàn miễn phí</div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Họ và tên <span class="req">*</span></label>
+          <input type="text" class="form-input" placeholder="Nguyễn Văn A">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Số điện thoại <span class="req">*</span></label>
+          <input type="tel" class="form-input" placeholder="0900 000 000">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="email@congty.com">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Công ty</label>
+          <input type="text" class="form-input" placeholder="Tên công ty / nhà máy">
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Loại thiết bị / Model xe</label>
+          <input type="text" class="form-input" placeholder="VD: Xe nâng điện Linde E18, 24V — hoặc ghi loại thiết bị cần dùng pin">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Số lượng cần</label>
+          <select class="form-select">
+            <option value="">Chọn số lượng</option>
+            <option>1–3 bộ</option>
+            <option>4–10 bộ</option>
+            <option>11–30 bộ</option>
+            <option>Trên 30 bộ</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Nhu cầu sử dụng</label>
+          <select class="form-select">
+            <option value="">Chọn nhu cầu</option>
+            <option>Mua mới hoàn toàn</option>
+            <option>Thay thế ắc quy chì</option>
+            <option>Mở rộng đội xe</option>
+            <option>Đánh giá kỹ thuật trước</option>
+          </select>
+        </div>
+        <div class="form-field full">
+          <label class="form-label">Ghi chú thêm</label>
+          <textarea class="form-textarea" placeholder="Mô tả thêm về môi trường vận hành, ca làm việc, yêu cầu đặc biệt..."></textarea>
+        </div>
+        <div class="form-field full">
+          <button class="btn-primary form-submit" type="button">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"/><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"/></svg>
+            Gửi yêu cầu báo giá
+          </button>
+          <p class="form-microcopy">🔒 Thông tin của bạn được bảo mật — PKG cam kết không chia sẻ với bên thứ ba</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <div class="logo-mark"><span>PKG</span></div>
+          <div class="logo-text" style="color:white;">
+            PKG Battery
+            <small>Industrial Lithium Solutions</small>
+          </div>
+        </a>
+        <p class="footer-desc">Nhà sản xuất và cung cấp giải pháp pin lithium công nghiệp hàng đầu cho xe nâng điện, robot AGV và thiết bị lưu trữ năng lượng tại Việt Nam.</p>
+      </div>
+      <div class="footer-links">
+        <div>
+          <div class="footer-group-title">Sản phẩm</div>
+          <ul class="footer-link-list">
+            <li><a href="#">Pin xe nâng điện</a></li>
+            <li><a href="#">Pin robot AGV</a></li>
+            <li><a href="#">Pin lưu trữ năng lượng</a></li>
+            <li><a href="#">Sạc lithium công nghiệp</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-group-title">Công ty</div>
+          <ul class="footer-link-list">
+            <li><a href="#">Về PKG Battery</a></li>
+            <li><a href="#">Năng lực kỹ thuật</a></li>
+            <li><a href="#">Dự án tham chiếu</a></li>
+            <li><a href="#">Tuyển dụng</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-group-title">Hỗ trợ</div>
+          <ul class="footer-link-list">
+            <li><a href="#">Chính sách bảo hành</a></li>
+            <li><a href="#">Tài liệu kỹ thuật</a></li>
+            <li><a href="#">Câu hỏi thường gặp</a></li>
+            <li><a href="#">Liên hệ</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 PKG Battery. All rights reserved.</span>
+      <span>Thiết kế & phát triển bởi đội ngũ PKG Digital</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════ STICKY CTA (DESKTOP) ═══════ -->
+<div class="sticky-cta-side">
+  <a href="#contact" class="sticky-btn-side cta-quote" title="Báo giá">
+    <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"/><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"/></svg>
+    <span class="sticky-tooltip">Yêu cầu báo giá</span>
+  </a>
+  <a href="tel:1800xxxx" class="sticky-btn-side cta-call" title="Hotline">
+    <svg width="20" height="20" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.56a16 16 0 0 0 6.56 6.56l1.05-.91a2 2 0 0 1 2.1-.45c.9.339 1.84.573 2.8.7A2 2 0 0 1 22 16.92z"/></svg>
+    <span class="sticky-tooltip">Gọi hotline</span>
+  </a>
+  <a href="#" class="sticky-btn-side cta-zalo" title="Zalo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.94.53 3.75 1.44 5.31L2 22l4.84-1.41C8.33 21.5 10.1 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm1.5 14.5H9c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5h4.5c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/></svg>
+    <span class="sticky-tooltip">Nhắn Zalo</span>
+  </a>
+</div>
+
+<!-- ═══════ JAVASCRIPT ═══════ -->
+<script>
+// Accordion
+function toggleAccordion(trigger) {
+  const item = trigger.parentElement;
+  const wasOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+  // Open clicked if wasn't open
+  if (!wasOpen) item.classList.add('open');
+}
+
+// Gallery thumb switcher
+function setThumb(el) {
+  document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// Lightbox placeholder
+function openLightbox() {
+  const lb = document.createElement('div');
+  lb.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:1000;display:flex;align-items:center;justify-content:center;cursor:zoom-out;';
+  lb.innerHTML = `<div style="max-width:600px;width:90%;position:relative;">
+    <div style="background:#1A1C22;padding:40px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.1);">
+      <div style="font-family:'Barlow Condensed',sans-serif;color:rgba(255,255,255,0.2);font-size:14px;letter-spacing:0.1em;text-align:center;text-transform:uppercase;">
+        [Ảnh sản phẩm full size]<br>
+        <span style="font-size:10px;margin-top:8px;display:block;font-family:monospace;">PKGFF-24230V1</span>
+      </div>
+    </div>
+    <div style="position:absolute;top:-16px;right:-16px;width:36px;height:36px;background:#D62B2B;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:white;">×</div>
+  </div>`;
+  lb.onclick = () => document.body.removeChild(lb);
+  document.body.appendChild(lb);
+}
+
+// Use case tag interaction
+document.querySelectorAll('.usecase-tag').forEach(tag => {
+  tag.onclick = function() {
+    document.querySelectorAll('.usecase-tag').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  };
+});
+
+// Smooth reveal on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.benefit-item, .option-card, .download-card, .related-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(16px)';
+  el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
